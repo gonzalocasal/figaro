@@ -1,0 +1,79 @@
+<!Doctype html>
+<html>
+<head>
+  <title>Configuraci&oacute;n</title>
+  <#include "/html/common/head.html">
+</head>
+<body ng-app=figaro ng-controller=configuracionController data-ng-init="init()">
+<#include "/html/common/menu.html">
+<div id=content class=content>
+
+    <div class="card servicios">
+      <form ng-submit="addServicio()">
+        <div class=card-title><i class="material-icons">content_cut</i><label>SERVICIOS</label></div>
+        <input tipe="text" placeholder="Descripci&oacute;n" ng-model="ngServicio.descripcion" maxlength="25" pattern="^[^\s].*([A-zÀ-ž\s]){2,25}" ng-pattern-restrict required>
+        <input type="number" placeholder="Precio" ng-model="ngServicio.precio" step="0.01" required>
+        <button class="button accept" type="submit"></button>
+        <table id=table>
+          <tbody>
+          <tr ng-cloak id={{servicio.id}}  class=data-row  ng-repeat="servicio in servicios" >
+          <td data-id={{servicio.id}} ng-click="loadServicio($event)">{{servicio.descripcion}}</td>
+          <td data-id={{servicio.id}} ng-click="loadServicio($event)" class=servicio-precio>{{servicio.precio | currency}}</td>
+          <td class=delete ><i class="material-icons" data-id={{servicio.id}} ng-click="removeServicio($event)">clear</i></td>
+          </tr>
+          </tbody>
+        </table>
+        <label  ng-cloak class=form-message>{{messageServicio}}</label>
+      </form>
+    </div>
+
+      <div class="card peluqueros"> 
+      
+        <div class=card-title><i class="material-icons">group </i><label class=card-title> PELUQUEROS HABILITADOS</label></div>
+        <table id=table >
+          <tbody>
+          <tr ng-cloak id={{ciudad.id}} class=data-row ng-repeat="peluquero in peluqueros" >
+          <td ><input type="checkbox"  value="servicio" ng-click=togglePeluquero(peluquero) ng-model=peluquero.habilitado> {{peluquero.nombre}} {{peluquero.apellido}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <label  ng-cloak class=form-message>{{messagePeluquero}}</label>
+      
+    </div>
+
+    <div class="card categorias">
+      <form ng-submit="addCategoria()">
+        <div class=card-title><i class="material-icons">label</i><label class=card-title>CATEGOR&Iacute;AS</label></div>
+        <input type="text" placeholder="Nombre" ng-model="ngCategoria.nombre" maxlength="25" pattern="^[^\s].*([A-zÀ-ž\s]){2,25}" ng-pattern-restrict required>
+        <table id=table>
+          <tbody>
+          <tr ng-cloak id={{categoria.id}} class=data-row ng-repeat="categoria in categorias" >
+          <td>{{categoria.nombre}}</td>
+          <td class=delete ><i class="material-icons" data-id={{categoria.id}} ng-click="removeCategoria($event)">clear</i></td>
+          </tr>
+          </tbody>
+        </table>
+        <label  ng-cloak class=form-message>{{messageCategoria}}</label>
+      </form>
+    </div>
+
+    <div class="card ciudades"> 
+      <form ng-submit="addCiudad()">
+        <div class=card-title><i class="material-icons">place </i><label class=card-title> CIUDADES</label></div>
+        <input type="text" placeholder="Ciudad" ng-model="ngCiudad.nombre"  maxlength="25" pattern="^[^\s].*([A-zÀ-ž\s]){2,25}" ng-pattern-restrict required>
+        <table id=table >
+          <tbody>
+          <tr ng-cloak id={{ciudad.id}} class=data-row ng-repeat="ciudad in ciudades" >
+          <td >{{ciudad.nombre}}</td>
+          <td class=delete ><i class="material-icons" data-id={{ciudad.id}} ng-click="removeCiudad($event)">clear</i></td>
+          </tr>
+          </tbody>
+        </table>
+        <label  ng-cloak class=form-message>{{messageCiudad}}</label>
+      </form>
+    </div>
+</div>
+<#include "/html/common/javascript.html">
+<script src="js/configuracionController.js" ></script>
+</body>
+</html>

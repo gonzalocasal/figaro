@@ -1,0 +1,33 @@
+<div id=modal-clientes class=modal>
+  <div class=modal-content>
+    <form ng-submit="sendClient()">
+      <div class=form-field><label>NOMBRE:</label><input id=modal-clientes-focus type="text"  ng-model="ngCliente.nombre" maxlength="25" pattern="^[^\s].*([A-zÀ-ž\s]){2,25}" ng-pattern-restrict required></div>
+      <div class=form-field><label>APELLIDO:</label><input type="text" ng-model="ngCliente.apellido" maxlength="25" pattern="^[^\s].*([A-zÀ-ž\s]){2,25}" ng-pattern-restrict required></div>
+      <div class=form-field><label>SEXO:</label>
+        <input type="radio" name=sexo ng-model="ngCliente.sexo" value="hombre" required> Hombre
+        <input type="radio" name=sexo ng-model="ngCliente.sexo" value="mujer" required> Mujer
+      </div>
+      <div class=form-field><label>TELEFONO:</label><input type="text"  maxlength="25" ng-model="ngCliente.telefono" ></div>
+      <div class=form-field><label>EMAIL:</label><input type="email"    maxlength="35" ng-model="ngCliente.email" ></div>
+      <div class=form-field><label>CIUDAD:</label>
+        <select ng-model="ngCliente.dirCiudad">
+          <option value="{{ciudad.nombre}}" ng-repeat="ciudad in ciudades">{{ciudad.nombre}}</option>
+        </select>
+      </div>
+      <div class=form-field><label>CALLE:</label><input type="text"      maxlength="25" pattern="([A-z0-9À-ž\s]){1,25}" ng-model="ngCliente.dirCalle"></div>
+      <div class=form-field><label>N&Uacute;MERO:</label><input type="number"   ng-model="ngCliente.dirNumeroCalle" min="0"  maxlength="5"></div>
+      <div class=form-field><label>PISO:</label><input type="number"     ng-model="ngCliente.dirPiso"  ></div>
+      <div class=form-field><label>DPTO:</label><input type="text"       ng-model="ngCliente.dirDpto"></div>
+      <div class=form-field><label>NOTAS:</label><input type="text" ng-model="ngCliente.notas"></div>
+      <div class=form-field ng-if="ngCliente.id != null">
+        <a class=link ng-href="/turnos/cliente/{{ngCliente.id}}">VER TURNOS</a>
+      </div>
+
+      <div class=buttons>
+        <button class="button cancel"  type="button" ng-click="discardClient()">CANCELAR</button>
+        <button class="button accept" type="submit">ACEPTAR</button>
+      </div>
+      <label class=form-message>{{message}}</label>
+    </form>
+  </div>
+</div>

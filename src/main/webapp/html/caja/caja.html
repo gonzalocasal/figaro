@@ -1,0 +1,117 @@
+<!Doctype html>
+<html>
+<head> 
+  <title>Caja</title>
+  <#include "/html/common/head.html">   
+</head>
+<body ng-app=figaro ng-controller=movimientosController>
+<#include "/html/common/menu.html">
+<div id=content class=content>
+  <div class=banner>
+      <label class="banner-button add" ng-click="newMovimiento()"><i class="material-icons" >add_circle_outline</i> Nuevo</label>   
+      <div class="separator"></div>
+      <label class=banner-button ng-click="ShowHideDia()"><i class=material-icons>search</i> D&iacute;a </label>    
+      <label class=banner-button ng-click="ShowHideEntreDia()"><i class=material-icons >search</i> Semana </label>
+      <label class=banner-button ng-click="ShowHideMes()"><i class=material-icons >search</i> Mes </label>
+      <div class="separator"></div>
+      <label class=banner-button><i class=material-icons >label_outline</i>Categor&Iacute;a: 
+      <select   class="input-banner" ng-model="searchC" ng-change="searchCategoria()" ng-click="limpiarSelect()" ng-cloak>
+            <option value = "Turnos">Turnos</option>
+            <option value = "Peluqueros">Peluqueros</option>
+            <option value = "Ventas">Ventas</option>
+            <option value="{{categoria.nombre}}" ng-repeat="categoria in categorias">{{categoria.nombre}}</option>
+      </select>
+      </label>
+      <i class=material-icons ng-click="limpiaCategoria()" >clear</i></label>
+  </div>
+
+  
+<div class=banner-busqueda ng-hide = "IsHiddenDia" ng-cloak>
+    <div>       
+      <label class=banner-label-busqueda ng-click="ShowHideDia()"><i class=material-icons >clear</i></label>
+      <label class=banner-label-busqueda> B&Uacute;squeda por D&iacute;a: </label>    
+        <input class=banner-label-busqueda type="date" ng-model="search" ng-change="searchMovimientoDia()"></input> 
+    </div>
+</div>
+
+<div class=banner-busqueda ng-hide = "IsHiddenEntreDia" ng-cloak>
+    <div>       
+      <label class=banner-label-busqueda ng-click="ShowHideEntreDia()"><i class=material-icons >clear</i></label>
+      <label class=banner-label-busqueda> Buscar Semana:</label>    
+        <input class=banner-label-busqueda type="week" ng-model="search" ng-change="searchMovimientoSem()"></input>
+    </div>
+</div>
+
+<div class=banner-busqueda ng-hide = "IsHiddenMes" ng-cloak>
+  <div>       
+      <label class=banner-label-busqueda ng-click="ShowHideMes()"><i class=material-icons >clear</i></label>
+      <label class=banner-label-busqueda> B&uacute;squeda por mes: </label>     
+        <input class=banner-label-busqueda type="month" ng-model="search" ng-change="searchMovimientoMes()"></input>
+    </div>  
+</div>
+  
+  <table ng-cloak ng-if="movimientos.length > 0" id=table class=main-table>
+
+    <thead>
+      <tr>          
+          <th>FECHA</th>
+          <th>CATEGORIA</th>
+          <th>MONTO</th>
+          <th>PAGO</th>
+          <th>DETALLE</th>          
+          <th></th>           
+      </tr>
+    </thead>
+    <tbody>
+    
+    <tr ng-cloak id={{movimiento.id}} data-id={{movimiento.id}} class=data-row ng-repeat="movimiento in movimientos | orderBy : sortFecha : true">
+    
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimiento($event)" ng-if="movimiento.categoria != 'Turnos' && movimiento.categoria != 'Peluqueros' && movimiento.categoria != 'Ventas'">{{movimiento.fecha | date }}</td>
+        <td data-id={{movimiento.id}} ng-if="movimiento.categoria == 'Turnos' || movimiento.categoria == 'Peluqueros' || movimiento.categoria == 'Ventas'">{{movimiento.fecha | date }}</td>
+        
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimiento($event)" ng-if="movimiento.categoria != 'Turnos' && movimiento.categoria != 'Peluqueros' && movimiento.categoria != 'Ventas'">{{movimiento.categoria}}</td>
+        <td data-id={{movimiento.id}} ng-if="movimiento.categoria == 'Turnos' || movimiento.categoria == 'Peluqueros' || movimiento.categoria == 'Ventas'">{{movimiento.categoria}}</td>
+        
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimiento($event)" ng-if="movimiento.categoria != 'Turnos' && movimiento.categoria != 'Peluqueros' && movimiento.categoria != 'Ventas'"> <font ng-class='{green : !movimiento.isGasto, red: movimiento.isGasto}'>{{movimiento.precio | currency }}</font></td>
+        <td data-id={{movimiento.id}} ng-if="movimiento.categoria == 'Turnos' || movimiento.categoria == 'Peluqueros' || movimiento.categoria == 'Ventas'"> <font ng-class='{green : !movimiento.isGasto, red: movimiento.isGasto}'>{{movimiento.precio | currency}}</font></td>
+      
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimiento($event)" ng-if="(movimiento.categoria != 'Turnos' && movimiento.categoria != 'Peluqueros' && movimiento.categoria != 'Ventas') && movimiento.tipoPago == 'contado'">{{mostrarDescuento(movimiento)}}</td>
+        <td data-id={{movimiento.id}} ng-if="(movimiento.categoria == 'Turnos' || movimiento.categoria == 'Peluqueros' || movimiento.categoria == 'Ventas') && movimiento.tipoPago == 'contado'">{{mostrarDescuento(movimiento)}}</td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimiento($event)" ng-if="(movimiento.categoria != 'Turnos' && movimiento.categoria != 'Peluqueros' && movimiento.categoria != 'Ventas') && movimiento.tipoPago != 'contado'"><i class=material-icons>credit_card</i>{{mostrarDescuento(movimiento)}}</td>
+        <td data-id={{movimiento.id}} ng-if="(movimiento.categoria == 'Turnos' || movimiento.categoria == 'Peluqueros' || movimiento.categoria == 'Ventas') && movimiento.tipoPago != 'contado'"><i class=material-icons >credit_card</i>{{mostrarDescuento(movimiento)}}</td>
+
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimiento($event)" ng-if="movimiento.categoria != 'Turnos' && movimiento.categoria != 'Peluqueros' && movimiento.categoria != 'Ventas'">{{movimiento.detalle}}</td>
+        <td data-id={{movimiento.id}} ng-if="movimiento.categoria == 'Turnos' || movimiento.categoria == 'Peluqueros'">{{movimiento.detalle}}</td>
+        <td class=link data-id={{movimiento.id}} data-ng-click="detailMovimientoVenta($event)" ng-if="movimiento.categoria == 'Ventas'">Ver Detalle</td>
+                  
+        <td class="tachotd" id={{movimiento.id}} data-id={{movimiento.id}} data-ng-click="confirmDelete(movimiento.id)" ng-if="movimiento.categoria != 'Turnos' && movimiento.categoria != 'Peluqueros' && movimiento.categoria != 'Ventas'"><label><i class="material-icons tachoi" >clear</i></label></td>
+        <td class="tachotd" ng-if="movimiento.categoria == 'Turnos' || movimiento.categoria == 'Peluqueros' || movimiento.categoria == 'Ventas'"></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class=banner ng-cloak ng-if="movimientos.length > 0">
+      <label class=banner-label ><i class=material-icons >account_balance_wallet</i> Total: <font ng-cloak ng-class='{green : calculaTotal() >= 0, red: calculaTotal() < 0}'>{{ calculaTotal() | currency }}</font></label>
+      
+      <div class="separator"></div>
+      <label class=banner-label >Egreso: <font ng-cloak ng-class='{red: calculaTotalNegativo() <= 0}'>{{ calculaTotalNegativo() | currency }}</font></label>
+      <div class="separator"></div>
+      <label class=banner-label >Ingreso: <font ng-cloak ng-class='{green : calculaTotalPositivo() >= 0}'>{{ calculaTotalPositivo() | currency }}</font></label>
+
+      <label class=banner-label-right ><i class=material-icons >account_balance_wallet</i> Total Tarjeta: <font ng-cloak ng-class='{green : calculaTotalTarjeta() >= 0, red: calculaTotalTarjeta() < 0}'>{{ calculaTotalTarjeta() | currency }}</font></label>
+      
+      <label class=banner-label-right ><i class=material-icons >account_balance_wallet</i> Total Efectivo: <font ng-cloak ng-class='{green : calculaTotalEfectivo() >= 0, red: calculaTotalEfectivo() < 0}'>{{ calculaTotalEfectivo() | currency }}</font></label>
+  </div>
+
+
+
+</div>
+  <div ng-cloak ng-if="movimientos.length < 1" class="message">
+    <div class="message-content">No hay movimientos para este d&iacute;a.</div>
+  </div>
+<#include "/html/caja/caja-modal.html">
+<#include "/html/caja/caja-modal-venta.html">
+<#include "/html/common/javascript.html">
+<#include "/html/common/confirm.html">
+<script src="js/movimientosController.js" ></script>
+</body>
+</html>

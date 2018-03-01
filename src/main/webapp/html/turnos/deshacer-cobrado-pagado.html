@@ -1,0 +1,24 @@
+<div id=modal-cancelar-cobro class=modalConf>
+    <div class=modal-content>
+      <form ng-submit="toggleCobro(turnoTarget)"> 
+        <div class=confirm-message>&iquest;Seguro que desea deshacer el cobro?</div>
+ 		<div class=buttons>
+          <button class="button cancel" type="button" ng-click="discardCancelarCobro(turnoTarget)">CANCELAR</button>
+          <button class="button accept" type="submit">ACEPTAR</button>
+        </div>  
+      </form>
+    </div>
+</div>
+
+
+<div id=modal-cancelar-pago class=modalConf>
+    <div class=modal-content>
+      <form ng-submit="togglePago(turnoTarget)"> 
+        <div class=confirm-message>&iquest;Seguro que desea deshacer el pago?</div>
+ 		<div class=buttons>
+          <button class="button cancel" type="button" ng-click="discardCancelarPago(turnoTarget)">CANCELAR</button>
+          <button class="button accept" type="submit">ACEPTAR</button>
+        </div>  
+      </form>
+    </div>
+</div>

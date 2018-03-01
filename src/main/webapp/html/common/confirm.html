@@ -1,0 +1,11 @@
+<div id=modal-confirmarDelete class=modalConf>
+    <div class=modal-content>
+      <form ng-submit="deleteTarget(idTarget)"> 
+        <div class=confirm-message>&iquest;Seguro que desea eliminar?</div>
+ 		<div class=buttons>
+          <button class="button cancel" type="button" ng-click="discardConfirm()">CANCELAR</button>
+          <button class="button accept" type="submit">ACEPTAR</button>
+        </div>  
+      </form>
+    </div>
+</div>

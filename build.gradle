@@ -1,0 +1,39 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.6.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'gs-spring-boot'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+	compile("org.hibernate:hibernate-core:5.2.10.Final")
+
+	compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.39'
+    compile group: 'c3p0', name: 'c3p0', version: '0.9.1.2'  
+    compile group: 'org.springframework', name: 'spring-core', version: '4.3.5.RELEASE'
+    compile group: 'org.springframework', name: 'spring-orm', version: '4.2.5.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-freemarker', version: '1.1.7.RELEASE'
+    compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
+    compile("org.springframework.boot:spring-boot-starter-security")
+
+    testCompile("junit:junit")
+}

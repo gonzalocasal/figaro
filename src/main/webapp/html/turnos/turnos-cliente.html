@@ -1,0 +1,56 @@
+<!Doctype html>
+<html>
+<head> 
+  <title>Turnos</title>
+  <#include "/html/common/head.html">
+</head>
+<body ng-app=figaro ng-controller=clientesController  data-ng-init="getTurnosDeCliente()" >
+  <#include "/html/common/menu.html">
+  <div ng-controller=turnosController  >
+  <div ng-if="turnos.length > 0" id=content class=content>
+    <div class=banner>
+        <label ng-cloak class="banner-title" >Cliente: {{cliente}}</label>
+    </div>
+    <table  id=table class="main-table banner">
+        <thead>
+          <tr>
+              <th>FECHA</th>
+              <th>TRABAJOS</th>
+              <th>PRECIO</th>
+              <th>PELUQUERO</th>
+              <th>COBRADO</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr ng-cloak class=data-row ng-repeat="turno in turnos  track by turno.id"  >
+          <td id={{turno.id}} data-id={{turno.id}}>{{turno.desde.split(' ')[0] | date}} - {{turno.desde.split(' ')[1]}} hs</td>
+          <td id={{turno.id}} data-id={{turno.id}}><span ng-repeat="trabajo in turno.trabajos"> {{trabajo.servicio.descripcion}} </span></td>
+          <td id={{turno.id}} data-id={{turno.id}} ng-controller=turnosController >{{getTotalTurno(turno.trabajos) | currency}}</td>
+          <td data-id={{turno.id}} ><a class=link ng-href="/turnos/peluquero/{{turno.peluquero.id}}"><div class=td-link> {{turno.peluquero.nombre}} {{turno.peluquero.apellido}}</div></a></td>
+          <td><input ng-model="turno.cobrado"   ng-click="setCobrado(turno)" type="checkbox" ></td>
+        </tr>
+        </tbody>
+      </table>
+      <div ng-cloak class=banner>
+          <label ng-controller=turnosController data-ng-init="getTotalDiario(turnos)" ><i class=material-icons  >account_balance_wallet</i>Total: {{totalDiario | currency}}</label>
+          <div class="separator"></div>
+           <label  ><i class=material-icons >date_range</i>Turnos: {{turnos.length}}</label>
+      </div>
+  
+  </div>
+      <#include "/html/turnos/cobrar.html">
+      <#include "/html/turnos/deshacer-cobrado-pagado.html">
+  </div>
+  <div ng-cloak ng-if="turnos.length < 1" class="message">
+    <div class="message-content">No existen turnos para este cliente.</div>
+  </div>
+
+  <div ng-controller=clientesController >
+  <#include "/html/clientes/clientes-modal.html">
+  </div>
+  
+  <#include "/html/common/javascript.html">
+  <script src="/js/turnosController.js" ></script>
+  <script src="/js/clientesController.js" ></script>
+</body>
+</html>

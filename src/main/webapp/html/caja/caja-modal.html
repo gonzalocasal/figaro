@@ -1,0 +1,35 @@
+<div id=modal-caja class=modal>
+    <div class=modal-content>
+      <form ng-submit="sendMovimiento()">    
+       	<div class=form-field><label>CATEGOR&Iacute;A:</label> 
+          <select name=categoria  ng-model="ngMovimiento.categoria" ng-options="categoria.nombre as categoria.nombre for categoria in categorias" required>
+            <option value=""></option>
+          </select>
+        </div> 
+        <div class=form-field><label>MONTO:</label> <input type="number" ng-model="ngMovimiento.precio" min="0" required></input></div>        
+        <div class=form-field><label>FECHA:</label> <input type="date" ng-model="ngMovimiento.fecha" ng-model-options="{timezone:'UTC'}" required></input></div>
+        <div class=form-field><label>TIPO:</label>
+          <input type="radio" name=isGasto ng-model="ngMovimiento.isGasto" ng-value="true" value="true" required> Gasto
+          <input type="radio" name=isGasto ng-model="ngMovimiento.isGasto" ng-value="false" value="false" required> Ingreso
+        </div>
+        <div class=form-field><label>FORMA DE PAGO:</label>          
+              <input type="radio" name=tipoPago ng-model="ngMovimiento.tipoPago" ng-change="ngMovimiento.cuotas=0"  value="contado"  required> Contado
+              <input type="radio" name=tipoPago ng-model="ngMovimiento.tipoPago" ng-change="ngMovimiento.cuotas=0"  value="debito"  required> D&eacute;bito
+              <input type="radio" name=tipoPago ng-model="ngMovimiento.tipoPago" ng-change="ngMovimiento.cuotas=1"  value="credito" required> Cr&eacute;dito         
+        </div>
+        <div class=form-field><label>CUOTAS:</label>
+              <input class="cuotas" type="number" min="1" ng-disabled="ngMovimiento.tipoPago !== 'credito'" ng-model="ngMovimiento.cuotas"></input>
+        </div>
+        <div class=form-field><label>DESCUENTO:</label>
+              <input class="cuotas" type="number" min="0" ng-model="ngMovimiento.descuento"></input>
+        </div>
+        <div class=form-field><label>DETALLE:</label>      <input type="text"          ng-model="ngMovimiento.detalle"></input></div>
+ 
+ 		   <div class=buttons>
+          <button class="button cancel" type="button" ng-click="discardMovimiento()">CANCELAR</button>
+          <button class="button accept" type="submit">ACEPTAR</button>
+        </div>
+  
+      </form>
+    </div>
+</div>

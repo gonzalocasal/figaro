@@ -1,0 +1,121 @@
+/*    -------------------------------------------------------------
+    FIGARO
+    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    Description:    Base setup styles
+    Filename:       src.main.webaap.css.venta.css
+    Version:        1.0
+    Date:           23 Feb, 2018
+    -------------------------------------------------------------    */
+
+/* LINKS */
+.td-link-venta{
+    height:100%;
+    width:100%
+}
+
+.link {
+    color: #292961;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+
+/* CARD */
+
+.card-title{
+    margin-bottom: 20px;
+
+}
+
+
+.card.venta button{
+    cursor: pointer;
+    font-weight: 800;
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    width: auto;
+    border-width: 0;
+    outline: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+    background-color: #292961;
+    color: white  
+}
+
+.card table>tbody>tr:nth-child(odd) {
+    background-color: white;
+}
+
+.card  tr:hover td {
+    background-color: white;
+    color:black;
+    cursor: pointer
+}
+
+.venta{
+    display: inline-flex;
+    float: left;
+    margin-right: 30px;
+    width: 450px;
+    height:auto;
+    min-height: 317px;
+    padding: 20px
+}
+
+
+/* BOTONES */
+.boton-stock{
+    cursor: pointer;
+}
+
+
+/*STOCK - campo disponible editable */
+.disponibletr{
+border-width: 0px;
+background: transparent;
+width: 50px;
+}
+
+/*STOCK - campo numericos */
+.numericotr{
+    width: 120px;
+    text-align: center;
+}
+
+/*STOCK - campo numericos */
+tr:hover .disponibletr{
+    background-color: #292961;
+    color: white;
+    cursor: pointer
+}
+
+.text-align{
+    text-align: left
+}
+
+.colum-width{
+    width: auto;
+    min-width: 120px;
+    max-width: 220px;
+}
+
+.historial-venta{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.negrita{
+    font-weight: bold;
+}
+
+.colum-nombre-with{
+    width:200px
+}
+
+tbody.prueba tr:hover td {
+    background-color: #292961;
+    color: white;
+}

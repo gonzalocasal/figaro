@@ -1,0 +1,17 @@
+ <div id=modal-stock class=modal>
+    <div class=modal-content>
+      <form ng-submit="sendProducto()">
+        <div class=form-field><label>NOMBRE:</label>      <input title="Ingresar nombre" id=modal-stock-focus type="text"   ng-model="ngProducto.nombre" maxlength="25"  ng-pattern-restrict required></input></div>
+        <div class=form-field><label>DESCRIPCI&Oacute;N:</label> <input title="Ingresar descripci&oacute;n" type="text"   ng-model="ngProducto.descripcion" id="ngProducto.descripcion" maxlength="40" ng-pattern-restrict required></input></div>
+        <div class=form-field><label>CANTIDAD:</label>    <input title="Ingresar cantidad disponible" type="number" min="0" ng-model="ngProducto.cantidad" min="0" max="9999"></input></div>
+        <div class=form-field><label>M&Iacute;NIMO:</label>      <input title="Ingresar cantidad m&iacute;nima" type="number" ng-model="ngProducto.cantidadMinima" min="0" max="9999"></input></div>
+        <div class=form-field><label>PRECIO:</label>      <input title="Ingresar precio" type="number" ng-model="ngProducto.precio" step="0.01" min="0" max="999999999"></input></div>
+
+        <div class="buttons">
+          <button class="button cancel" type="button" ng-click="discardProducto()">CANCELAR</button>
+          <button class="button accept" type="submit">ACEPTAR</button>
+        </div>
+        <label class=form-message>{{message}}</label>
+      </form>
+    </div>
+  </div>

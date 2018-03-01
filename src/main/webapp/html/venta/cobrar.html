@@ -1,0 +1,24 @@
+<div id=modal-cobrar class=modalConf>
+    <div class=modal-content>
+      <form ng-submit="crearVenta()"> 
+        
+          <div class=form-field ng-init="initMovimiento()">
+            <label>FORMA DE PAGO:</label>          
+            <input type="radio" name=tipoPago ng-model="ngMovimiento.tipoPago" ng-change="ngMovimiento.cuotas=0"  value="contado"  required> Contado
+            <input type="radio" name=tipoPago ng-model="ngMovimiento.tipoPago" ng-change="ngMovimiento.cuotas=0"  value="debito"  required> D&eacute;bito
+            <input type="radio" name=tipoPago ng-model="ngMovimiento.tipoPago" ng-change="ngMovimiento.cuotas=1"  value="credito" required> Cr&eacute;dito         
+          </div>
+ 			    <div class=form-field><label>CUOTAS:</label>
+          		<input class="cuotas" type="number" min="1" ng-disabled="ngMovimiento.tipoPago !== 'credito'" ng-model="ngMovimiento.cuotas"></input>
+        	</div>
+          <div class=form-field><label>DESCUENTO:</label>
+              <input  type="number" max="100000" min="0" value="0" step=".01" ng-model="ngMovimiento.descuento"></input>
+          </div>
+          <label class=form-message>{{message}}</label>
+    		<div class=buttons>
+          <button class="button cancel" type="button" ng-click="discardCobro()">CANCELAR</button>
+          <button class="button accept" type="submit">ACEPTAR</button>
+        </div>  
+      </form>
+    </div>
+</div>

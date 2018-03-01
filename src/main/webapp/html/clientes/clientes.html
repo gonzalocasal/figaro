@@ -1,0 +1,43 @@
+<!Doctype html>
+<html>
+<head>
+	<title>Clientes</title>
+  <#include "/html/common/head.html">
+</head>
+<body ng-app=figaro ng-controller=clientesController data-ng-init="init()" >
+  <#include "/html/common/menu.html">
+  <div id=content class=content>
+    <div class="banner">
+        <label class="banner-button add" ng-click="newClient()"><i class=material-icons  >person_add</i> Nuevo</label>
+        <div class="separator"></div>
+        <i class="material-icons search-input-icon ">search</i>
+        <input class=input-banner type="text" placeholder="Buscar..." ng-model="search" ng-keyup="searchCliente()">
+    </div>
+    <table id=table class=main-table>
+      <thead>
+        <tr>
+            <th>NOMBRE</th>
+            <th>APELLIDO</th>
+            <th>EMAIL</th>
+            <th>TEL&Eacute;FONO</th>
+            <th>&Uacute;LTIMA VISITA</th>
+            <th>NOTAS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id={{cliente.id}} data-id={{cliente.id}} class=data-row ng-repeat="cliente in clientes" data-ng-click="detailClient($event)" ng-cloak>
+          <td>{{cliente.nombre}}</td>
+          <td>{{cliente.apellido}}</td>
+          <td>{{cliente.email}}</td>
+          <td>{{cliente.telefono}}</td>
+          <td>{{cliente.ultimaVisita | date}}</td>
+          <td>{{cliente.notas}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <#include "/html/clientes/clientes-modal.html">
+  <#include "/html/common/javascript.html">
+  <script src="js/clientesController.js" ></script>
+</body>
+</html>

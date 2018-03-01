@@ -1,0 +1,38 @@
+<!Doctype html>
+<html>
+<head>
+	<title>Peluqueros</title>
+  <#include "/html/common/head.html">
+</head>
+<body ng-app=figaro ng-controller=peluquerosController data-ng-init="init()" >
+  <#include "/html/common/menu.html">
+  <div id=content class=content>
+     <div class=banner>
+      <label class="banner-button add" ng-click="newPeluquero()"><i class="material-icons" >add content_cut</i> Nuevo</label>   
+    </div>
+    <div class=main-card>
+      <table class=main-table>
+        <thead>
+        <tr>
+            <th>NOMBRE</th>
+            <th>APELLIDO</th>
+            <th>PAGAR</th>
+            <th>HISTORIAL</th>
+        </tr>
+      </thead>
+        <tbody>
+          <tr data-id={{peluquero.id}} class=data-row ng-repeat="peluquero in peluqueros" ng-show="peluquero.habilitado"  ng-cloak>
+            <td ng-click="detailPeluquero(peluquero.id)">{{peluquero.nombre}}</td>
+            <td ng-click="detailPeluquero(peluquero.id)">{{peluquero.apellido}}</td>
+            <td><a class=link ng-href="/turnos/peluquero/{{peluquero.id}}/sinpagar"><div class=td-link><i class="material-icons"> payment </i></div></a></td>
+            <td><a class=link ng-href="/turnos/peluquero/{{peluquero.id}}"><div class=td-link><i class="material-icons"> history </i></div></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <#include "/html/peluqueros/peluqueros-modal.html">
+  <#include "/html/common/javascript.html">
+  <script src="js/peluquerosController.js" ></script>
+</body>
+</html>

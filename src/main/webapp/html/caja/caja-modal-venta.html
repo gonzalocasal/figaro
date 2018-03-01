@@ -1,0 +1,40 @@
+<div id=modal-caja-venta class=modal>
+    <div class=modal-content id=cv>
+      <form>    
+      
+
+       <div class=form-field><label>DETALLE:</label> </div>
+
+       <table ng-cloak ng-if="movimientos.length > 0" id=table class=main-table>
+
+    <thead>
+      <tr>          
+          <th>NOMBRE</th>
+          <th>PRECIO UNITARIO</th>
+          <th>CANTIDAD</th>
+          <th>PRECIO TOTAL</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr ng-cloak id={{movimiento.id}} data-id={{movimiento.id}} class=data-row ng-repeat="movimiento in ngMovimientoVenta">
+    
+        <td data-id={{movimiento.id}}>{{movimiento.nombreProducto}}({{movimiento.descripcionProducto}})</td>
+        <td data-id={{movimiento.id}}>{{movimiento.precioUnitario}}</td>
+        <td data-id={{movimiento.id}}>{{movimiento.cantidad}}</td>
+        <td data-id={{movimiento.id}}>{{movimiento.precioTotal}}</td>
+
+      </tr>
+    </tbody>
+  </table>
+     <div class=banner ng-cloak>
+      <label class=banner-label ><i class=material-icons >account_balance_wallet</i> Total: <font ng-cloak ng-class=green>{{ calculaTotalVenta() | currency }}</font></label>  
+  
+  </div>
+       <div class=buttons>
+          <button class="button accept" type="button" ng-click="discardMovimientoVenta()">ACEPTAR</button>
+        </div>
+  
+      </form>
+    </div>
+</div>

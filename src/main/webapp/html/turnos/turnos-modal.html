@@ -1,0 +1,58 @@
+<div id=modal-turnos class=modal>
+    <div class=modal-content>
+      <form ng-submit="sendTurno()">      
+        <div class=form-field><label>CLIENTE:</label>
+          <input id=modal-turnos-focus tipe="text" placeholder="Buscar cliente" ng-model="queryCliente" ng-model-options="{debounce:300}" ng-change="searchCliente()">
+          <i class="material-icons add" ng-controller=clientesController ng-init="isModalOpen=true" ng-click="newClient()" >person_add</i>
+        </div>
+        <div class="form-field add" ng-click="setCliente(cliente)" ng-repeat="cliente in clientes" >
+          <i class="material-icons add"  ng-value=cliente >add</i>{{cliente.nombre}} {{cliente.apellido}}
+        </div>
+
+        <div class=form-field><label>FECHA: </label><input type="date" ng-model="ngDateTurno" required></input></div>
+        <div class=form-field>
+        <label>DESDE:</label>
+          <select  class=time-input ng-model="startHour" ng-options="item for item in horarios" required>
+            <option value=""></option>
+          </select>
+      
+        <label>HASTA:</label>
+          <select class=time-input ng-model="endHour" ng-options="item for item in horarios" required>
+            <option value=""></option>
+          </select>
+        </div> 
+              
+        <div class=form-field><label>PELUQUERO:</label>
+          <select name=peluquero  ng-model="peluquero" ng-change="bindTrabajos()" ng-options="peluquero as peluquero.nombre + ' ' + peluquero.apellido   for peluquero in peluqueros" required>
+            <option value=""></option>
+          </select>
+        </div>
+
+        <div class=trabajos-list>  
+          <div class=form-field><label>TRABAJOS:</label></div>
+          <table id=table>
+            <tbody>
+            <tr ng-cloak   class=data-row  ng-repeat="trabajo in trabajosPeluquero" >
+            <td ><input id={{trabajo.id}} type="checkbox"  value="trabajo"  ng-click="toggleTrabajo(trabajo)" ng-model=trabajo.selected> </td>
+            <td >{{trabajo.servicio.descripcion}} </td>
+            <td >{{trabajo.servicio.precio | currency}}</td>
+            </tr>
+          </tbody>
+          </table>
+        </div>
+
+        <hr class=resume noshade>
+        <div class="form-field"  ng-repeat="trabajo in trabajosSeleccionados" >
+          {{trabajo.descripcion}} {{trabajo.precio | currency}}
+        </div>
+        <div class="form-field">TOTAL: <span >{{totalTrabajosSeleccionados | currency}}</span></div>
+        <div class="form-field"><span>CLIENTE: </span><a class=link target="_blank" ng-href="/turnos/cliente/{{ngTurno.cliente.id}}"> {{ngTurno.cliente.nombre}} {{ngTurno.cliente.apellido}} </a> </div>
+        <label>{{ngTurno.cliente.notas}}</label>
+        <div class=buttons>
+          <button class="button cancel" type="button" ng-click="discardTurno()">CANCELAR</button>
+          <button class="button accept" type="submit">ACEPTAR</button>
+        </div>
+        <label class=form-message>{{message}}</label>
+      </form>
+    </div>
+</div>
