@@ -26,7 +26,7 @@
           <td id={{turno.id}} data-id={{turno.id}}>{{turno.desde.split(' ')[0] | date}} - {{turno.desde.split(' ')[1]}} hs</td>
           <td id={{turno.id}} data-id={{turno.id}}><span ng-repeat="trabajo in turno.trabajos"> {{trabajo.servicio.descripcion}} </span></td>
           <td id={{turno.id}} data-id={{turno.id}} ng-controller=turnosController >{{getTotalTurno(turno.trabajos) | currency}}</td>
-          <td data-id={{turno.id}} ><a class=link ng-href="/turnos/peluquero/{{turno.peluquero.id}}"><div class=td-link> {{turno.peluquero.nombre}} {{turno.peluquero.apellido}}</div></a></td>
+          <td data-id={{turno.id}} ><a class=link ng-href="/turnos/peluquero/{{turno.peluquero.id}}"> {{turno.peluquero.nombre}} {{turno.peluquero.apellido}}</a></td>
           <td><input ng-model="turno.cobrado"   ng-click="setCobrado(turno)" type="checkbox" ></td>
         </tr>
         </tbody>

@@ -27,7 +27,7 @@
         <tbody>
         <tr ng-cloak class=data-row ng-repeat="turno in turnos  track by turno.id">
           <td id={{turno.id}} data-id={{turno.id}}>{{turno.desde.split(' ')[0] | date}} - {{turno.desde.split(' ')[1]}} hs</td>
-          <td data-id={{turno.id}} ><a class=link ng-href="/turnos/cliente/{{turno.cliente.id}}"><div class=td-link> {{turno.cliente.nombre}} {{turno.cliente.apellido}}</div> </a></td>
+          <td data-id={{turno.id}} ><a class=link ng-href="/turnos/cliente/{{turno.cliente.id}}"> {{turno.cliente.nombre}} {{turno.cliente.apellido}}</a></td>
           <td id={{turno.id}} data-id={{turno.id}}><span ng-repeat="trabajo in turno.trabajos"> {{trabajo.servicio.descripcion}} </span></td>
           <td id={{turno.id}} data-id={{turno.id}}>{{getTotalTurno(turno.trabajos) | currency}}</td>
           <td id={{turno.id}} data-id={{turno.id}}  >{{ (getPago(turno.trabajos)*100) / getTotalTurno(turno.trabajos) | number:0 }}%</td>

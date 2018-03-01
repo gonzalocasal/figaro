@@ -136,7 +136,7 @@ body{
     margin-bottom: 20px;
     margin-left: -5px;
     user-select: none;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .banner-busqueda{
@@ -145,7 +145,7 @@ body{
     margin-top: 12px; 
     width: 95%;
     margin-bottom: 20px;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .banner-label-busqueda{    
@@ -167,7 +167,7 @@ table {
 .main-table{
     text-align: left;
     background-color: white;
-    font-size: 12px;
+    font-size: 13px;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12)
 }
 
@@ -331,20 +331,20 @@ li a:hover {
 
 .form-message{
     margin-top: 5px;
-    font-size: 12px;
+    font-size: 13px;
     color: red;
 
 }
 
 .form-message-ok{
     margin-top: 5px;
-    font-size: 12px;
+    font-size: 13px;
     color: green;
 
 }
     
 .form-field{
-    font-size: 12px;
+    font-size: 13px;
     margin-bottom: 17px
 }
 
@@ -432,7 +432,7 @@ li a:hover {
 
 .banner-button a, .banner-button a:visited, .banner-button a:hover, .banner-button a:active {
   color: inherit;
-      font-size: 12px;
+      font-size: 13px;
 }
 
 .banner-button select{
@@ -542,7 +542,7 @@ li a:hover {
 
 .main-card{
     max-width: 600px;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+
 }
 
 .main-card table{

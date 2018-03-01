@@ -4,6 +4,8 @@ public class Constants{
 
 	public static final String DATE_FORMAT = "yyyy-MM-dd";
 	public static final String DATE_TIME_FORMAT ="yyyy-MM-dd HH:mm";
+	public static final String FRONT_DATE_FORMAT = "dd/MM/yyyy";
+	
 	
 	public static final String CATEGORIA_TURNOS = "Turnos";
 	public static final String CATEGORIA_PELUQUERO = "Peluqueros";

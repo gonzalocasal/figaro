@@ -1,9 +1,13 @@
 package com.figaro.service;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import static com.figaro.util.Constants.TIPO_PAGO_CONTADO;
 import static com.figaro.util.Constants.CATEGORIA_PELUQUERO;
 import static com.figaro.util.Constants.CATEGORIA_TURNOS;
+import static com.figaro.util.Constants.FRONT_DATE_FORMAT;
 
 import java.util.Date;
 import java.util.List;
@@ -22,6 +26,8 @@ import com.figaro.repository.TurnosRepository;
 
 public class TurnosService {
 	
+	
+
 	final static Logger LOGGER = Logger.getLogger(TurnosService.class);
 	
 	private ClientesService clientesService;
@@ -103,7 +109,7 @@ public class TurnosService {
 		movimiento.setPrecio(turno.calculatePrecio());
 		movimiento.setDescuento(cobro.getDescuento());
 		movimiento.descontar();
-		movimiento.setDetalle(generateDescripcion(turno)) ;
+		movimiento.setDetalle(generateCobroDescripcion(turno)) ;
 		return movimiento;
 	}
 	
@@ -113,7 +119,7 @@ public class TurnosService {
 		Movimiento movimiento = new Movimiento();
 		movimiento.setCategoria(CATEGORIA_PELUQUERO);
 		movimiento.setCuotas(0);
-		movimiento.setDetalle(turno.getPeluquero().getNombre() +" "+ turno.getPeluquero().getApellido());
+		movimiento.setDetalle(generatePagoDescripcion(turno)); 
 		movimiento.setFecha(new Date());
 		movimiento.setIsGasto(true);
 		movimiento.setPrecio(montoTotal);
@@ -132,9 +138,17 @@ public class TurnosService {
 		return montoTotal;
 	}
 	
-	private String generateDescripcion (Turno turno){
-		List<String> descripionesTrabjo = turno.getTrabajos().stream().map(t -> t.getServicio().getDescripcion()).collect(Collectors.toList());
-		return String.join(" ", descripionesTrabjo);
+	private String generateCobroDescripcion (Turno turno){
+		String descripionesTrabajo = String.join(" ", turno.getTrabajos().stream().map(t -> t.getServicio().getDescripcion()).collect(Collectors.toList()));
+		String cliente = turno.getCliente().getNombre() + " " + turno.getCliente().getApellido();
+		return "("+descripionesTrabajo+") "+cliente ;
+	}
+	
+	private String generatePagoDescripcion (Turno turno){
+		DateFormat formatter = new SimpleDateFormat(FRONT_DATE_FORMAT);
+		String fecha = formatter.format(turno.getHasta());
+		String peluquero = turno.getPeluquero().getNombre() +" "+ turno.getPeluquero().getApellido();
+		return peluquero+" "+generateCobroDescripcion(turno)+" "+fecha;
 	}
 	
 	private void updateCobro(Turno turno) {
@@ -185,13 +199,16 @@ public class TurnosService {
 	}
 	
 	private boolean horarioInicioOcupado(Turno nuevoTurno, Turno turno) {
-		return turno.getDesde().after(nuevoTurno.getDesde()) &&
-			   turno.getDesde().before(nuevoTurno.getHasta());
+		return (turno.getDesde().after(nuevoTurno.getDesde()) &&
+			   turno.getDesde().before(nuevoTurno.getHasta()) ||
+			   turno.getDesde().compareTo(nuevoTurno.getDesde()) == 0);
 	}
 	
 	private boolean horarioFinOcupado(Turno nuevoTurno, Turno turno) {
-		return turno.getHasta().after(nuevoTurno.getDesde()) && 
-			   turno.getHasta().before(nuevoTurno.getHasta());
+		return (turno.getHasta().after(nuevoTurno.getDesde()) && 
+			   turno.getHasta().before(nuevoTurno.getHasta()) ||
+			   turno.getHasta().compareTo(nuevoTurno.getHasta()) == 0);
+				
 	}
 
 	private boolean mismoHorario(Turno nuevoTurno, Turno turno) {
