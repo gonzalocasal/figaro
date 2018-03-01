@@ -22,7 +22,16 @@
 		<property name="driverClass"><value>${jdbc.driverClassName}</value></property>
 		<property name="jdbcUrl" value="#{ 'jdbc:mysql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>
 		<property name="user" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
-		<property name="password"  value="#{ @dbUrl.getUserInfo().split(':')[1] }" />	
+		<property name="password"  value="#{ @dbUrl.getUserInfo().split(':')[1] }" />
+
+		<property name="checkoutTimeout" value="30000" />
+		<property name="idleConnectionTestPeriod" value="30"/>
+		<property name="initialPoolSize" value="1" />
+		<property name="maxIdleTime" value="30" />
+		<property name="maxPoolSize" value="7" />
+		<property name="minPoolSize" value="1" />
+		<property name="maxStatements" value="50" />
+	 
 	 
 	</bean>
 	
