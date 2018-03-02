@@ -4,9 +4,9 @@
   <title>Configuraci&oacute;n</title>
   <#include "/html/common/head.html">
 </head>
-<body >
+<body ng-app=figaro ng-controller=configuracionController data-ng-init="init()">
 <#include "/html/common/menu.html">
-<div id=content class=content ng-app=figaro ng-controller=configuracionController data-ng-init="init()">
+<div id=content class=content>
 
     <div class="card servicios">
       <form ng-submit="addServicio()">
