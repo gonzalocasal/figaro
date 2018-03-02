@@ -8,10 +8,10 @@
   <#include "/html/common/menu.html">
   <div ng-controller=turnosController  >
   <div ng-if="turnos.length > 0" id=content class=content>
-    <div class=banner>
-        <label ng-cloak class="banner-title" >Cliente: {{cliente}}</label>
+    <div class=banner ng-cloak>
+        <label  class="banner-title" >Cliente: {{cliente}}</label>
     </div>
-    <table  id=table class="main-table banner">
+    <table ng-cloak id=table class="main-table banner">
         <thead>
           <tr>
               <th>FECHA</th>
@@ -21,7 +21,7 @@
               <th>COBRADO</th>
           </tr>
         </thead>
-        <tbody ng-cloak>
+        <tbody >
         <tr class=data-row ng-repeat="turno in turnos  track by turno.id"  >
           <td id={{turno.id}} data-id={{turno.id}}>{{turno.desde.split(' ')[0] | date}} - {{turno.desde.split(' ')[1]}} hs</td>
           <td id={{turno.id}} data-id={{turno.id}}><span ng-repeat="trabajo in turno.trabajos"> {{trabajo.servicio.descripcion}} </span></td>
