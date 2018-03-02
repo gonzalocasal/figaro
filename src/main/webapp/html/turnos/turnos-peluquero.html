@@ -7,7 +7,7 @@
 <body ng-app=figaro ng-controller=peluquerosController  data-ng-init="initTurnosPeluquero()" >
   <#include "/html/common/menu.html">
   <div ng-controller=turnosController  >
-  <div ng-if="turnos.length > 0" id=content class=content>
+  <div ng-cloak ng-if="turnos.length > 0" id=content class=content>
     <div ng-cloak class=banner>
         <label class="banner-title">Peluquero: {{peluquero}}</label>
     </div>
