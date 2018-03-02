@@ -107,9 +107,15 @@ app.controller('stockController', function ($scope, $http) {
     });
 
     //INIT
+    
+
+    //INIT STOCK
+    $scope.init = function(){
     $scope.activeStock = true;
     $scope.search = '';
     $scope.ngProducto = {};
     $scope.getAll();
+
+    }
 
 });
