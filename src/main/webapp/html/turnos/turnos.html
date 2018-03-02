@@ -4,9 +4,9 @@
   <title>Turnos</title>
   <#include "/html/common/head.html">
 </head>
-<body ng-app=figaro ng-controller=turnosController  data-ng-init="init()" >
+<body >
   <#include "/html/common/menu.html">
-  <div id=content class=content>
+  <div id=content class=content ng-app=figaro ng-controller=turnosController  data-ng-init="init()" >
     <div class=banner>
         <label class="banner-button add" ng-click="newTurno()" ><i class=material-icons>addtoday</i> Nuevo</label>
         <div class="separator"></div>
