@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.figaro.model.Persona"  abstract="true" table="PERSONA">
+		
+		<id name="id" type="int" column="ID_PERSONA" >
+			<generator class="increment"/>
+		</id>
+	 	<property name="nombre"  		column="NOMBRE"   type="string"/>
+	 	<property name="apellido" 		column="APELLIDO" type="string"/>
+	 	<property name="email" 			column="EMAIL"    type="string"/>
+	 	<property name="sexo" 			column="SEXO" 	  type="string"/>
+		<property name="telefono" 		column="TELEFONO" type="string"/>
+		<property name="fechaIngreso" 	column="INGRESO"  type="date"/>
+	    <property name="dirCiudad" 		column="CIUDAD"   type="string"/>
+	    <property name="dirCalle" 	    column="CALLE"    type="string"/> 	
+	    <property name="dirNumeroCalle" column="NUMERO"   type="int"/> 	
+	    <property name="dirPiso" 	    column="PISO"     type="int"/>
+	    <property name="dirDpto" 		column="DPTO"     type="string"/>
+     	
+     	<union-subclass name="com.figaro.model.Cliente" table="CLIENTE">
+     			<property name="notas" 		    column="NOTAS"    type="string"/>
+				<property name="ultimaVisita" 	column="ULT_VISITA" type="date"/>
+		</union-subclass>
+	     	
+	     <union-subclass name="com.figaro.model.Peluquero" table="PELUQUERO" >
+     		 <property name="habilitado" 	    column="HABILITADO"    type="boolean"/> 
+   		     <set name="trabajos" inverse="false"   cascade="all" lazy="false" fetch="select">
+         		<key><column name="ID_PERSONA" not-null="true" /></key>
+         		<one-to-many entity-name="Trabajo"/>
+    	     </set>
+      				
+		</union-subclass>
+		
+		
+		 
+	</class>
+</hibernate-mapping>

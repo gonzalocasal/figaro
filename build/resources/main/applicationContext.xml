@@ -1,0 +1,345 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-3.1.xsd 
+       http://www.springframework.org/schema/jdbc 
+       http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	
+	<context:property-placeholder location="application.properties" />
+
+	<!-- POOL DE CONEXIONES PROD 
+	<bean class="java.net.URI" id="dbUrl">
+		<constructor-arg value="#{systemEnvironment['CLEARDB_DATABASE_URL']}"/>
+	</bean>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+
+		<property name="driverClass"><value>${jdbc.driverClassName}</value></property>
+		<property name="jdbcUrl" value="#{ 'jdbc:mysql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>
+		<property name="user" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
+		<property name="password"  value="#{ @dbUrl.getUserInfo().split(':')[1] }" />
+
+		<property name="checkoutTimeout" value="30000" />
+		<property name="idleConnectionTestPeriod" value="30"/>
+		<property name="initialPoolSize" value="1" />
+		<property name="maxIdleTime" value="30" />
+		<property name="maxPoolSize" value="7" />
+		<property name="minPoolSize" value="1" />
+		<property name="maxStatements" value="50" />
+	 
+	 
+	</bean>
+	
+-->
+    
+    <!-- POOL DE CONEXIONES -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass"><value>${jdbc.driverClassName}</value></property>
+		<property name="jdbcUrl"><value>${jdbc.url}</value></property>
+		<property name="user"><value>${jdbc.username}</value></property>
+		<property name="password"><value>${jdbc.password}</value></property>
+	</bean>
+ 	
+
+    
+   	<!-- SESSION FACTORY  HIBERNATE -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+
+		<property name="mappingResources">
+			<list>
+  				<value>hibernate/categoria.hbm.xml</value>
+  				<value>hibernate/ciudad.hbm.xml</value>
+  				<value>hibernate/movimiento.hbm.xml</value>
+  				<value>hibernate/persona.hbm.xml</value>
+  				<value>hibernate/producto.hbm.xml</value>
+				<value>hibernate/trabajo.hbm.xml</value>
+				<value>hibernate/servicio.hbm.xml</value>
+				  				
+  				<value>hibernate/turno.hbm.xml</value>
+				<value>hibernate/venta.hbm.xml</value>
+				<value>hibernate/item.hbm.xml</value>
+ 			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">${hibernate.showsql}</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.c3p0.idle_test_period">28680</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.auto}</prop>
+			</props>
+		</property>
+	</bean>
+        
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- CLIENTES !-->
+	<bean id="ClientesServiceTransactional" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="ClientesService" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="ClientesService" class="com.figaro.service.ClientesService">
+		<property name="repository">
+			<ref bean="ClientesRepository" />
+		</property>
+	</bean>
+
+	<bean id="ClientesRepository"	class="com.figaro.repository.ClientesRepository">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!-- STOCK !-->
+	<bean id="ProductosServiceTransactional" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="ProductosService" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="ProductosService" class="com.figaro.service.ProductosService">
+		<property name="repository">
+			<ref bean="ProductosRepository" />
+		</property>
+	</bean>
+
+	<bean id="ProductosRepository"	class="com.figaro.repository.ProductosRepository">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	
+	
+	<!-- VENTA !-->
+	<bean id="VentaServiceTransactional" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="VentaService" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="VentaService" class="com.figaro.service.VentaService">
+		
+		<property name="repository">
+			<ref bean="VentaRepository" />
+		</property>
+		
+		<property name="productosService">
+			<ref bean="ProductosServiceTransactional" />
+		</property>
+		
+		<property name="movimientosRepository">
+			<ref bean="MovimientosRepository" />
+		</property>
+		
+	</bean>
+
+	<bean id="VentaRepository"	class="com.figaro.repository.VentaRepository">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	<!-- PELUQUEROS !-->
+	<bean id="PeluquerosServiceTransactional" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="PeluquerosService" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="PeluquerosService" class="com.figaro.service.PeluquerosService">
+		<property name="repository">
+			<ref bean="PeluquerosRepository" />
+		</property>
+	</bean>
+
+	<bean id="PeluquerosRepository"	class="com.figaro.repository.PeluquerosRepository">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	<!-- CONFIGURACION !-->
+	<bean id="ConfiguracionServiceTransactional" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="ConfiguracionService" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="ConfiguracionService" class="com.figaro.service.ConfiguracionService">
+		<property name="repository">
+			<ref bean="ConfiguracionRepository" />
+		</property>
+	</bean>
+
+	<bean id="ConfiguracionRepository"	class="com.figaro.repository.ConfiguracionRepository">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- MOVIMIENTO !-->
+	<bean id="MovimientosServiceTransactional" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="MovimientosService" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="MovimientosService" class="com.figaro.service.MovimientosService">
+		<property name="repository">
+			<ref bean="MovimientosRepository" />
+		</property>
+	</bean>
+
+	<bean id="MovimientosRepository"	class="com.figaro.repository.MovimientosRepository">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!-- TURNOS !-->
+	<bean id="TurnosServiceTransactional" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="TurnosService" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="TurnosService" class="com.figaro.service.TurnosService">
+		
+		<property name="ClientesService">
+			<ref bean="ClientesServiceTransactional" />
+		</property>
+		
+		<property name="repository">
+			<ref bean="TurnosRepository" />
+		</property>
+		
+		<property name="movimientosRepository">
+			<ref bean="MovimientosRepository" />
+		</property>
+		
+	</bean>
+
+	<bean id="TurnosRepository"	class="com.figaro.repository.TurnosRepository">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!-- ESTADISTICAS !-->
+	<bean id="EstadisticasServiceTransactional" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="EstadisticasService" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="EstadisticasService" class="com.figaro.service.EstadisticasService">
+		<property name="repository">
+			<ref bean="EstadisticasRepository" />
+		</property>
+		<property name="clientesService">
+			<ref bean="ClientesServiceTransactional" />
+		</property>
+		<property name="movimientosService">
+			<ref bean="MovimientosServiceTransactional" />
+		</property>
+		<property name="ventasService">
+			<ref bean="VentaServiceTransactional" />
+		</property>
+		<property name="turnosService">
+			<ref bean="TurnosServiceTransactional" />
+		</property>
+	</bean>
+	
+
+	<bean id="EstadisticasRepository"	class="com.figaro.repository.EstadisticasRepository">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+</beans>
