@@ -99,4 +99,13 @@ function loading(){
 	$('.ver-mas').hide();
 }
 
+function loadingTurnos(){
+	$('.loading-turnos').show();
+}
+
+function loadTurnosComplete(){
+	$('.loading-turnos').hide();
+}
+
+
 var app = angular.module('figaro', []);

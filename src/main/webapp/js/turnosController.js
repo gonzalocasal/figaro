@@ -121,18 +121,19 @@ app.controller('turnosController', function ($scope, $http) {
 
     //OBTENER TURNOS
     $scope.getTurnos = function() {
-        loading();
+        loadingTurnos();
         if ($scope.ngDateTurno== null)
              $scope.getTurnosHoy();
         $http.get('/rest/turnos',{params:{fecha: getStringDate($scope.ngDateTurno)}})
         .then(function successCallback(response) {
             $scope.turnos = response.data;
             $scope.getTotalDiario($scope.turnos);
-            loadComplete();
+            loadTurnosComplete();
         });
     };
 
 
+ 
     //OBTENER TURNOS DIA ANTERIOR
     $scope.getTurnosDiaAnterior = function() {
         var date = new Date($scope.ngDateTurno.getTime());

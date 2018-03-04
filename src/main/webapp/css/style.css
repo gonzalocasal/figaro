@@ -129,8 +129,7 @@ body{
     display: inline-block;
 }
 
-.loading{
-    display: none;
+.loading, .loading-turnos{
     text-align: center;
     width: 100%;
     margin-left: -50px;
