@@ -17,6 +17,7 @@ app.controller('clientesController', function ($scope, $http) {
         $http.get('/rest/turnos/cliente/'+clienteId)
         .then(function successCallback(response) {
             $scope.turnos = response.data;
+            loadComplete();
             if ( $scope.turnos.length > 0){
                 $scope.cliente = ($scope.turnos[0].cliente.nombre +' '+ $scope.turnos[0].cliente.apellido) 
             }
@@ -26,8 +27,10 @@ app.controller('clientesController', function ($scope, $http) {
 
     //OBTENER LISTA DE CLIENTES
     $scope.getAll = function() {
+        loading();
         $http.get("/rest/clientes").then(function (response) {
             $scope.clientes = response.data;
+            loadComplete();
         });
     };
 
@@ -75,9 +78,11 @@ app.controller('clientesController', function ($scope, $http) {
 
     //BUSCAR
     $scope.searchCliente = function() {
+        loading();
         $http.get('/rest/clientes/buscar',{params: { search: $scope.search }})
         .then(function successCallback(response) {
             $scope.clientes = response.data; 
+            loadComplete();
         });  
     };
 

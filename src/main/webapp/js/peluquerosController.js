@@ -5,6 +5,7 @@ app.controller('peluquerosController', function ($scope, $http) {
         $scope.activePeluqueros = true;
         $scope.loaded = false;
         $scope.ngPeluquero = {"trabajos" :[]};
+        loading();
         $scope.getAll();
         $scope.getAllCiudades();
         $scope.getAllTrabajos();
@@ -123,6 +124,7 @@ app.controller('peluquerosController', function ($scope, $http) {
     $scope.getAll = function() {
         $http.get("/rest/peluqueros/habilitados").then(function (response) {
             $scope.peluqueros = response.data;
+            loadComplete();
         });
     };
 

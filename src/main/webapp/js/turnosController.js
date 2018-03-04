@@ -126,9 +126,9 @@ app.controller('turnosController', function ($scope, $http) {
              $scope.getTurnosHoy();
         $http.get('/rest/turnos',{params:{fecha: getStringDate($scope.ngDateTurno)}})
         .then(function successCallback(response) {
-            loadComplete();
             $scope.turnos = response.data;
             $scope.getTotalDiario($scope.turnos);
+            loadComplete();
         });
     };
 

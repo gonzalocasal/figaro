@@ -3,8 +3,10 @@ app.controller('stockController', function ($scope, $http) {
     
     //OBTENER LISTA DE PRODUCTOS
     $scope.getAll = function() {
+        loading();
         $http.get("/rest/stock/todos").then(function (response) {
             $scope.productos = response.data;
+            loadComplete();
         });
     };
 
@@ -85,17 +87,21 @@ app.controller('stockController', function ($scope, $http) {
     };
     
     //BUSCAR POR NOMBRE Y DESCRIPCION
-    $scope.searchProducto = function() {        
+    $scope.searchProducto = function() {
+        loading();        
         $http.get('/rest/stock/buscar',{params: { search: $scope.search }})
         .then(function successCallback(response) {
             $scope.productos = response.data;
+            loadComplete();
         })
     };
 
     //BUSCAR PRUDUCTOS CON FALTANTES DE STOCK
     $scope.searchProductoFaltante = function() {
+        loading();
         $http.get('/rest/stock/faltante').then(function successCallback(response){
             $scope.productos = response.data;
+            loadComplete();
         })
     };
 
@@ -114,6 +120,7 @@ app.controller('stockController', function ($scope, $http) {
     $scope.activeStock = true;
     $scope.search = '';
     $scope.ngProducto = {};
+  
     $scope.getAll();
 
     }
