@@ -140,7 +140,7 @@ body{
 .page-loading{
     width: 100%;
     margin-top: 100px;
-    margin-left: 100px;
+    
     text-align: center;
 }
 
@@ -313,7 +313,7 @@ li a:hover {
     display: flex;
     justify-content: center;
     margin-top: 100px;
-    margin-left: 200px;
+    margin-left: 20px;
 }
 
 .message-content {
