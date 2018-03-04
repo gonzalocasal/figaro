@@ -54,11 +54,12 @@ public class TurnosRepository extends AbstractRepository{
 	
 	
 	public List<Turno> getTurnosPeluquero(int peluqueroId, int index ) {
-		return getCurrentSession().createQuery( "FROM Turno AS t WHERE t.peluquero.id = :peluqueroId ORDER BY t.desde DESC")
+		List<Turno> turnos = getCurrentSession().createQuery( "FROM Turno AS t WHERE t.peluquero.id = :peluqueroId ORDER BY t.desde DESC")
 				.setParameter("peluqueroId", peluqueroId)
 				.setFirstResult(index*pageSize)
 				.setMaxResults(pageSize)
 				.list();
+		return turnos;
 	}
 	
 	public List<Turno> getTurnosPeluqueroSinPagar(int peluqueroId) {
@@ -68,10 +69,10 @@ public class TurnosRepository extends AbstractRepository{
 	}
 	
 	public Integer getCantidadTurnosPeluquero(int peluqueroId) {
-		return getCurrentSession().createQuery( "FROM Turno AS t WHERE t.peluquero.id = :peluqueroId ORDER BY t.desde DESC")
-				.setParameter("peluqueroId", peluqueroId).list().size();
+		Long cantidad = (Long) getCurrentSession().createQuery( "SELECT COUNT (*) FROM Turno AS t WHERE t.peluquero.id = :peluqueroId").setParameter("peluqueroId", peluqueroId).uniqueResult();
+		return Integer.valueOf(cantidad.intValue());
 	}
-	
+		
 	public List<Turno> searchTurno (Date desdeParam) {
 		LocalDate localDate = desdeParam.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		Calendar calendar = Calendar.getInstance();
