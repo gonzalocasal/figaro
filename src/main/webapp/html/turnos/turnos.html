@@ -6,7 +6,10 @@
 </head>
 <body ng-app=figaro ng-controller=turnosController  data-ng-init="init()" >
   <#include "/html/common/menu.html">
-  <div id=content class=content>
+  <div class=page-loading>
+        <img widh=50 height=50 src="/imgs/loading.gif">
+  </div>
+  <div  ng-cloak ng-if="turnos.length > 0" id=content class=content>
     <div class=banner>
         <label class="banner-button add" ng-click="newTurno()" ><i class=material-icons>addtoday</i> Nuevo</label>
         <div class="separator"></div>
@@ -16,7 +19,8 @@
         <div class="separator"></div>
         <label >Fecha: <input class=input-banner type=date ng-model=ngDateTurno ng-focus="focus=true" ng-blur="focus=false" ng-change="getTurnos()"></label>
     </div>
-  <table  ng-cloak ng-if="turnos.length > 0" id=table class=main-table>
+  
+    <table  id=table class=main-table>
     <thead>
       <tr>
           <th>HORARIO</th>
@@ -39,14 +43,14 @@
       <td data-id={{turno.id}} data-ng-click="confirmDelete(turno.id)" class="tachotd" ><i class="material-icons tachoi">clear</i></td>
     </tr>
     </tbody>
-
-  </table>
-  
-   <div ng-cloak ng-if="turnos.length > 0" class=banner>
+    </table>
+    <div ng-cloak ng-if="turnos.length > 0" class=banner>
         <label ><i class=material-icons >account_balance_wallet</i> Total: {{getTotalDiario(turnos) | currency}}</label>
     </div>
+    <div class=loading>
+      <img widh=25 height=25 src="/imgs/loading.gif">
+    </div>
 
-      
   </div>
   <#include "/html/turnos/turnos-modal.html">
   

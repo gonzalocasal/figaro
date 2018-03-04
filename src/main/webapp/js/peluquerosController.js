@@ -38,9 +38,11 @@ app.controller('peluquerosController', function ($scope, $http) {
 
     //GET TURNOS PELUQUEROS PAGINADO
     $scope.getTurnosPeluquero = function(){
+        loading();
         url = '/rest/turnos/peluquero/'+ $scope.peluqueroId;
         $http.get(url,{params: {index: $scope.index}})
         .then(function successCallback(response) {
+            loadComplete();
             $scope.loaded = true;
             turnos = response.data;
             Array.prototype.push.apply($scope.turnos, turnos);
@@ -57,8 +59,9 @@ app.controller('peluquerosController', function ($scope, $http) {
     url = '/rest/turnos/peluquero/'+ $scope.peluqueroId +'/sinpagar';
     $http.get(url)
         .then(function successCallback(response) {
-            turnos = response.data;
+            loadComplete();
             $scope.loaded = true;
+            turnos = response.data;
             Array.prototype.push.apply($scope.turnos, turnos);
             if ( $scope.turnos.length > 0){
                 $scope.peluquero = ($scope.turnos[0].peluquero.nombre +' '+ $scope.turnos[0].peluquero.apellido) 

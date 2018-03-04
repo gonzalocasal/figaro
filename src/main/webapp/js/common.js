@@ -86,4 +86,17 @@ function logout(){
 	});
 };
 
+
+function loadComplete(){
+	$('.loading').hide();
+	$('.page-loading').hide();
+	$('.ver-mas').show();
+}
+
+
+function loading(){
+	$('.loading').show();
+	$('.ver-mas').hide();
+}
+
 var app = angular.module('figaro', []);

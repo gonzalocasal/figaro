@@ -16,6 +16,8 @@
         <tr>
             <th>NOMBRE</th>
             <th>APELLIDO</th>
+            <th>TEL&Eacute;FONO</th>
+            <th>EMAIL</th>
             <th>PAGAR</th>
             <th>HISTORIAL</th>
         </tr>
@@ -24,6 +26,8 @@
           <tr data-id={{peluquero.id}} class=data-row ng-repeat="peluquero in peluqueros" ng-show="peluquero.habilitado"  ng-cloak>
             <td ng-click="detailPeluquero(peluquero.id)">{{peluquero.nombre}}</td>
             <td ng-click="detailPeluquero(peluquero.id)">{{peluquero.apellido}}</td>
+            <td ng-click="detailPeluquero(peluquero.id)">{{peluquero.telefono}}</td>
+            <td ng-click="detailPeluquero(peluquero.id)">{{peluquero.email}}</td>
             <td><a class=link ng-href="/turnos/peluquero/{{peluquero.id}}/sinpagar"><div class=td-link><i class="material-icons"> payment </i></div></a></td>
             <td><a class=link ng-href="/turnos/peluquero/{{peluquero.id}}"><div class=td-link><i class="material-icons"> history </i></div></a></td>
           </tr>

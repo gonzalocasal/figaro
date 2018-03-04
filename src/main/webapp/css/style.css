@@ -129,6 +129,20 @@ body{
     display: inline-block;
 }
 
+.loading{
+    display: none;
+    text-align: center;
+    width: 100%;
+    margin-left: -50px;
+    margin-top: 10px;
+}
+
+.page-loading{
+    width: 100%;
+    margin-top: 100px;
+    margin-left: 100px;
+    text-align: center;
+}
 
 .banner{
     width: 95%;
@@ -419,6 +433,7 @@ li a:hover {
 .ver-mas {
     text-align: center;
     width: 100%;
+    margin-left: -50px;
     margin-bottom: 50px;
 }
 
@@ -541,7 +556,7 @@ li a:hover {
 }
 
 .main-card{
-    max-width: 600px;
+    max-width: 800px;
 
 }
 
