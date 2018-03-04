@@ -15,14 +15,14 @@
 
 	<!-- POOL DE CONEXIONES PROD 
 	<bean class="java.net.URI" id="dbUrl">
-		<constructor-arg value="#{systemEnvironment['CLEARDB_DATABASE_URL']}"/>
+		<constructor-arg value="#{systemEnvironment['DATABASE_URL']}"/>
 	</bean>
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 
 		<property name="driverClass"><value>${jdbc.driverClassName}</value></property>
 		<property name="jdbcUrl" value="#{ 'jdbc:mysql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>
 		<property name="user" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
-		<property name="password"  value="#{ @dbUrl.getUserInfo().split(':')[1] }" />
+		<property name="password"  value="#{ @dbUrl.getUserInfo().split(':')[1] }" />	
 
 		<property name="checkoutTimeout" value="30000" />
 		<property name="idleConnectionTestPeriod" value="30"/>
@@ -32,12 +32,11 @@
 		<property name="minPoolSize" value="1" />
 		<property name="maxStatements" value="50" />
 	 
-	 
 	</bean>
-	
--->
+	 -->
+
     
-    <!-- POOL DE CONEXIONES -->
+    <!-- POOL DE CONEXIONES-->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass"><value>${jdbc.driverClassName}</value></property>
 		<property name="jdbcUrl"><value>${jdbc.url}</value></property>
@@ -70,7 +69,7 @@
 		</property>
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
 				<prop key="hibernate.show_sql">${hibernate.showsql}</prop>
 				<prop key="hibernate.format_sql">true</prop>
 				<prop key="hibernate.c3p0.idle_test_period">28680</prop>
