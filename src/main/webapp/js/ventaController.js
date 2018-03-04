@@ -74,9 +74,12 @@ app.controller('ventaController', function ($scope, $http) {
 
     //FILTRO TOTAL
     function searchVenta(fInicio, fFin ) {
+        loading();
         $http.get('/rest/venta/historial-venta/buscar',{params: { from: fInicio, to: fFin}})		        
         .then(function successCallback(response) {	  	        	
             $scope.ngVentas = response.data;
+            $scope.loaded = true;
+            loadComplete();
         })
     }
         
@@ -254,6 +257,7 @@ app.controller('ventaController', function ($scope, $http) {
 
 //----------------------  Inicializacion  ---------------------------//
     $scope.activeVenta = true;
+    $scope.loaded = false;
     $scope.ngProductoVenta = {};
     $scope.ngCarrito = [];
     $scope.ngVenta={}; 

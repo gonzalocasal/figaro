@@ -45,7 +45,7 @@
 <!-- Fin Barra de filtros -->
 
       <div class="historial-venta" ng-repeat="venta in ngVentas | filter:{fecha: verFechaFiltro} ">
-        <table  class=main-table  class=data-row>
+        <table   ng-cloak class=main-table  class=data-row>
           <thead bgcolor="">
             <tr>
               <th colspan="5">Fecha: {{venta.fecha | date}}</th>
@@ -72,9 +72,10 @@
           </tbody>
         </table>
       </div>
+      <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
     </div>
 
-    <div ng-cloak ng-if="ngVentas.length < 1" class="message">
+    <div ng-cloak ng-if="ngVentas.length < 1 && loaded" class="message">
       <div class="message-content">No se han realizado ventas</div>
     </div>
 
