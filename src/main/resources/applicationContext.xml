@@ -13,7 +13,7 @@
 	
 	<context:property-placeholder location="application.properties" />
 
-	<!-- POOL DE CONEXIONES PROD 
+	<!-- POOL DE CONEXIONES PROD  --> 
 	<bean class="java.net.URI" id="dbUrl">
 		<constructor-arg value="#{systemEnvironment['DATABASE_URL']}"/>
 	</bean>
@@ -33,17 +33,17 @@
 		<property name="maxStatements" value="50" />
 	 
 	</bean>
-	 -->
+	
 
     
-    <!-- POOL DE CONEXIONES-->
+    <!-- POOL DE CONEXIONES
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass"><value>${jdbc.driverClassName}</value></property>
 		<property name="jdbcUrl"><value>${jdbc.url}</value></property>
 		<property name="user"><value>${jdbc.username}</value></property>
 		<property name="password"><value>${jdbc.password}</value></property>
 	</bean>
- 	
+ 	-->
 
     
    	<!-- SESSION FACTORY  HIBERNATE -->
