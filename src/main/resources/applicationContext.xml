@@ -11,7 +11,7 @@
        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	
 	
-	<context:property-placeholder location="application.properties" />
+	
 
 	<!-- POOL DE CONEXIONES PROD 
 	<bean class="java.net.URI" id="dbUrl">
@@ -39,9 +39,9 @@
     <!-- POOL DE CONEXIONES-->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass"><value>${jdbc.driverClassName}</value></property>
-		<property name="jdbcUrl"><value>${jdbc.url}</value></property>
 		<property name="user"><value>${jdbc.username}</value></property>
 		<property name="password"><value>${jdbc.password}</value></property>
+		<property name="jdbcUrl"><value>${jdbc.url}</value></property>
 	</bean>
  	
 
