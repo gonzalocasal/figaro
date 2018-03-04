@@ -5,7 +5,13 @@ body{
     font-family: 'Roboto', sans-serif;
     font-size: 12px
 }
-
+.fail-login{
+    display: none;
+    font-weight: 500;
+    color: white;
+    font-size: 15px;
+    clear: left;
+}
 .login-body{
     background-color: #292961;
 }
@@ -28,12 +34,11 @@ body{
 }
 
 .login-form label{
-    font-weight: 800;
+    font-weight: 500;
     color: white;
     font-size: 15px;
     display: inline-block;  
     clear: left;
-    width: 23px
 }
 
 .login-logo{
@@ -426,7 +431,7 @@ li a:hover {
 
 .link,.ver-mas {
     color: #292961;
-    font-weight: 800;
+    font-weight: 500;
     text-decoration: none;
 }
 

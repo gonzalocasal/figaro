@@ -60,7 +60,7 @@ app.controller('peluquerosController', function ($scope, $http) {
     url = '/rest/turnos/peluquero/'+ $scope.peluqueroId +'/sinpagar';
     $http.get(url)
         .then(function successCallback(response) {
-            loadComplete();
+
             $scope.loaded = true;
             turnos = response.data;
             Array.prototype.push.apply($scope.turnos, turnos);
