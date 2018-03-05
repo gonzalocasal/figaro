@@ -1,6 +1,6 @@
 package com.figaro.controllerREST;
 
-import static com.figaro.util.Constants.*;
+import static com.figaro.util.Constants.DATE_FORMAT;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.figaro.dto.TurnoDTO;
 import com.figaro.model.Movimiento;
 import com.figaro.model.Turno;
 import com.figaro.service.TurnosService;
@@ -42,18 +43,18 @@ public class TurnosControllerREST {
     }
 	
 	@RequestMapping(value = "turnos/cliente/{clienteId}",method=RequestMethod.GET,produces="application/json")
-    public ResponseEntity<List<Turno>> getTurnosCliente( @PathVariable int clienteId) {
-		return new ResponseEntity<List<Turno>>(service.getTurnosCliente(clienteId), HttpStatus.OK);
+    public ResponseEntity<List<TurnoDTO>> getTurnosCliente( @PathVariable int clienteId) {
+		return new ResponseEntity<List<TurnoDTO>>(service.getTurnosCliente(clienteId), HttpStatus.OK);
     }
 	
 	@RequestMapping(value = "turnos/peluquero/{peluqueroId}",method=RequestMethod.GET,produces="application/json")
-    public ResponseEntity<List<Turno>> getTurnosPeluquero( @PathVariable int peluqueroId, @RequestParam int index) {
-		return new ResponseEntity<List<Turno>>(service.getTurnosPeluquero(peluqueroId, index), HttpStatus.OK);
+    public ResponseEntity<List<TurnoDTO>> getTurnosPeluquero( @PathVariable int peluqueroId, @RequestParam int index) {
+		return new ResponseEntity<List<TurnoDTO>>(service.getTurnosPeluquero(peluqueroId, index), HttpStatus.OK);
     }
 	
 	@RequestMapping(value = "turnos/peluquero/{peluqueroId}/sinpagar",method=RequestMethod.GET,produces="application/json")
-    public ResponseEntity<List<Turno>> getTurnosPeluqueroSinPagar( @PathVariable int peluqueroId) {
-		return new ResponseEntity<List<Turno>>(service.getTurnosPeluqueroSinPagar(peluqueroId), HttpStatus.OK);
+    public ResponseEntity<List<TurnoDTO>> getTurnosPeluqueroSinPagar( @PathVariable int peluqueroId) {
+		return new ResponseEntity<List<TurnoDTO>>(service.getTurnosPeluqueroSinPagar(peluqueroId), HttpStatus.OK);
     }
 	
 	@RequestMapping(value = "turnos/peluquero/{peluqueroId}/cantidad",method=RequestMethod.GET,produces="application/json")
@@ -83,8 +84,8 @@ public class TurnosControllerREST {
 	}
 	
 	@RequestMapping(value = "turnos",method=RequestMethod.GET)
-    public ResponseEntity<List<Turno>> getTurnosDelDia(@RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date fecha) {
-		return new ResponseEntity<List<Turno>>(service.getTurnosDelDia(fecha), HttpStatus.CREATED);
+    public ResponseEntity<List<TurnoDTO>> getTurnosDelDia(@RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date fecha) {
+		return new ResponseEntity<List<TurnoDTO>>(service.getTurnosDelDia(fecha), HttpStatus.CREATED);
 	}
 	
 	

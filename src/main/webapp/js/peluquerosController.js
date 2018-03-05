@@ -49,7 +49,7 @@ app.controller('peluquerosController', function ($scope, $http) {
             Array.prototype.push.apply($scope.turnos, turnos);
             if ($scope.turnos.length > 0){
                 $scope.peluquero = ($scope.turnos[0].peluquero.nombre +' '+ $scope.turnos[0].peluquero.apellido) 
-                $scope.getTotalTurnosPeluquero($scope.turnos);
+                
             }
         });
     }    
@@ -60,13 +60,13 @@ app.controller('peluquerosController', function ($scope, $http) {
     url = '/rest/turnos/peluquero/'+ $scope.peluqueroId +'/sinpagar';
     $http.get(url)
         .then(function successCallback(response) {
-
+            loadComplete();
             $scope.loaded = true;
             turnos = response.data;
             Array.prototype.push.apply($scope.turnos, turnos);
             if ( $scope.turnos.length > 0){
                 $scope.peluquero = ($scope.turnos[0].peluquero.nombre +' '+ $scope.turnos[0].peluquero.apellido) 
-                $scope.getTotalTurnosPeluquero($scope.turnos);
+               
             }
         });
     }
@@ -82,16 +82,7 @@ app.controller('peluquerosController', function ($scope, $http) {
     }   
 
 
-    //OBTENER TOTAL TURNOS PELUQUERO
-    $scope.getTotalTurnosPeluquero = function(turnos) {
-        var total = 0;
-        for(var i = 0; i < turnos.length; i++)
-        for(var j = 0; j < turnos[i].trabajos.length; j++)
-            total += turnos[i].trabajos[j].servicio.precio;
-    return total;
-    };
-
-
+  
     //OBTENER TOTAL DE TURNO
     $scope.getTotalTurno = function(trabajos) {
         var total = 0;
@@ -101,19 +92,13 @@ app.controller('peluquerosController', function ($scope, $http) {
     };
 
   
-    //OBTENER PAGO A PELUQUERO POR TURNO
-    $scope.getPago = function(trabajos) {
-        var total = 0;
-        for(var i = 0; i < trabajos.length; i++)
-            total += (trabajos[i].servicio.precio * trabajos[i].comision) /100 ;
-        return total;
-    };
+   
 
     //OBTENER PAGO A PELUQUERO POR TURNO
     $scope.getTotalPagoTurnosPeluquero = function (turnos) {
         var total = 0;
         for(var i = 0; i < turnos.length; i++)
-            total += $scope.getPago(turnos[i].trabajos)
+            total += turnos[i].montoPago
         return total;
     };
 

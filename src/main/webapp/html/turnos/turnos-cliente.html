@@ -27,15 +27,15 @@
         <tbody >
         <tr class=data-row ng-repeat="turno in turnos  track by turno.id"  >
           <td id={{turno.id}} data-id={{turno.id}}>{{turno.desde.split(' ')[0] | date}} - {{turno.desde.split(' ')[1]}} hs</td>
-          <td id={{turno.id}} data-id={{turno.id}}><span ng-repeat="trabajo in turno.trabajos"> {{trabajo.servicio.descripcion}} </span></td>
-          <td id={{turno.id}} data-id={{turno.id}} ng-controller=turnosController >{{getTotalTurno(turno.trabajos) | currency}}</td>
+          <td id={{turno.id}} data-id={{turno.id}}> {{turno.descripcionTrabajos}} </td>
+          <td id={{turno.id}} data-id={{turno.id}} >{{turno.montoCobro | currency}}</td>
           <td data-id={{turno.id}} ><a class=link ng-href="/turnos/peluquero/{{turno.peluquero.id}}"> {{turno.peluquero.nombre}} {{turno.peluquero.apellido}}</a></td>
           <td><input ng-model="turno.cobrado"   ng-click="setCobrado(turno)" type="checkbox" ></td>
         </tr>
         </tbody>
       </table>
       <div ng-cloak class=banner>
-          <label ng-controller=turnosController data-ng-init="getTotalDiario(turnos)" ><i class=material-icons  >account_balance_wallet</i>Total: {{totalDiario | currency}}</label>
+          <label ng-controller=turnosController  ><i class=material-icons  >account_balance_wallet</i>Total: {{getTotalDiario(turnos) | currency}}</label>
           <div class="separator"></div>
            <label  ><i class=material-icons >date_range</i>Turnos: {{turnos.length}}</label>
       </div>

@@ -7,22 +7,29 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Turno {
 
 	private int id;
 	private Cliente cliente;
 	private Peluquero peluquero;
-	@JsonFormat(pattern=DATE_TIME_FORMAT)
-	private Date desde;
-	@JsonFormat(pattern=DATE_TIME_FORMAT)
-	private Date hasta;
 	private Boolean cobrado;
 	private Boolean pagado;
 	private Movimiento cobro;
 	private Movimiento pago;
+	private BigDecimal montoCobro;
+	private BigDecimal montoPago;
+	private String descripcionTrabajos;
+	
+	@JsonFormat(pattern=DATE_TIME_FORMAT)
+	private Date desde;
+	@JsonFormat(pattern=DATE_TIME_FORMAT)
+	private Date hasta;
+	
 	private Set<Trabajo> trabajos;
 	
 	public Turno () {
@@ -40,6 +47,9 @@ public class Turno {
 		this.cobro = turno.getCobro();
 		this.trabajos.removeAll(new ArrayList<Trabajo>(this.trabajos));
 		this.trabajos.addAll(turno.getTrabajos());
+		
+		generateTurnoInfo();
+		
 		this.cobro = turno.getCobro();
 		this.pago =  turno.getPago();
 		if(this.cobro != null) 
@@ -56,6 +66,29 @@ public class Turno {
 		return precio;
 	}
 	
+	
+	public BigDecimal calculatePrecioPago() {
+		BigDecimal montoTotal = new BigDecimal(0);
+		for (Trabajo t : this.getTrabajos()) {
+			BigDecimal precio = t.getServicio().getPrecio();
+			precio = precio.multiply(new BigDecimal(t.getComision()));
+			precio = precio.divide(new BigDecimal(100));
+			montoTotal = montoTotal.add(precio);
+		}
+		return montoTotal;
+	}
+	
+	public String generateDescripcionTrabajos() {
+		return String.join(" ", this.getTrabajos().stream().map(t -> t.getServicio().getDescripcion()).collect(Collectors.toList()));
+	}
+
+	
+
+	public void generateTurnoInfo() {
+		this.montoCobro = calculatePrecio();
+		this.montoPago  = calculatePrecioPago();
+		this.descripcionTrabajos = generateDescripcionTrabajos();
+	}
 	
 	public Cliente getCliente() {
 		return cliente;
@@ -144,5 +177,31 @@ public class Turno {
 	public String toString() {
 		return "Turno [id=" + id + ", cliente=" + cliente + ", peluquero=" + peluquero + ", desde=" + desde + ", hasta=" + hasta + ", cobrado=" + cobrado + ", movimiento=" + cobro + ", trabajos=" + trabajos + "]";
 	}
+
+	public BigDecimal getMontoCobro() {
+		return montoCobro;
+	}
+
+	public void setMontoCobro(BigDecimal montoCobro) {
+		this.montoCobro = montoCobro;
+	}
+
+	public BigDecimal getMontoPago() {
+		return montoPago;
+	}
+
+	public void setMontoPago(BigDecimal montoPago) {
+		this.montoPago = montoPago;
+	}
+
+	public String getDescripcionTrabajos() {
+		return descripcionTrabajos;
+	}
+
+	public void setDescripcionTrabajos(String descripcionTrabajos) {
+		this.descripcionTrabajos = descripcionTrabajos;
+	}
+
+
 
 }

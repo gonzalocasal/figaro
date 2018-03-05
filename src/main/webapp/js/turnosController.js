@@ -26,20 +26,17 @@ app.controller('turnosController', function ($scope, $http) {
         openModal("modal-turnos");
     };
 
-    //CLICK FILA TURNO
-    $scope.detailTurno = function(event){
-        $scope.update=true;
-        $scope.isNuevoTurno = false;
-        $scope.turnoId = event.currentTarget.getAttribute("data-id");
-    
-        $scope.ngTurno = null;
-        var i = 0;
-        while($scope.ngTurno == null){
-            if ($scope.turnoId == $scope.turnos[i].id) 
-                $scope.ngTurno= angular.copy($scope.turnos[i]);
-            else i++;
-        }
 
+
+
+    //OBTENER TURNO
+    $scope.getTurno = function(turnoId) {
+     
+        $http.get('/rest/turnos/'+turnoId)
+        .then(function successCallback(response) {
+            $scope.ngTurno = response.data;
+            
+        
         $scope.startHour = $scope.ngTurno.desde.split(' ')[1];
         $scope.endHour = $scope.ngTurno.hasta.split(' ')[1];
         
@@ -68,6 +65,17 @@ app.controller('turnosController', function ($scope, $http) {
                 $scope.trabajosPeluquero.push(trabajo);
         });  
         openModal("modal-turnos");
+
+        });
+    };
+
+
+    //CLICK FILA TURNO
+    $scope.detailTurno = function(event){
+        $scope.update=true;
+        $scope.isNuevoTurno = false;
+        $scope.turnoId = event.currentTarget.getAttribute("data-id");
+        $scope.getTurno($scope.turnoId);
     };
 
 
@@ -133,6 +141,8 @@ app.controller('turnosController', function ($scope, $http) {
     };
 
 
+
+
  
     //OBTENER TURNOS DIA ANTERIOR
     $scope.getTurnosDiaAnterior = function() {
@@ -169,9 +179,7 @@ app.controller('turnosController', function ($scope, $http) {
     $scope.getTotalDiario = function(turnos) {
         var total = 0;
         for(var i = 0; i < turnos.length; i++)
-        for(var j = 0; j < turnos[i].trabajos.length; j++)
-            total += turnos[i].trabajos[j].servicio.precio;
-        $scope.totalDiario = total;
+            total += turnos[i].montoCobro;
     return total;
     };
 

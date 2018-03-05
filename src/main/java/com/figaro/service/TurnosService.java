@@ -1,25 +1,23 @@
 package com.figaro.service;
 
-import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import static com.figaro.util.Constants.TIPO_PAGO_CONTADO;
 import static com.figaro.util.Constants.CATEGORIA_PELUQUERO;
 import static com.figaro.util.Constants.CATEGORIA_TURNOS;
 import static com.figaro.util.Constants.FRONT_DATE_FORMAT;
+import static com.figaro.util.Constants.TIPO_PAGO_CONTADO;
 
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
+import com.figaro.dto.TurnoDTO;
 import com.figaro.exception.HorarioInvalidoException;
 import com.figaro.exception.TurnoOcupadoException;
 import com.figaro.model.Cliente;
 import com.figaro.model.Movimiento;
-import com.figaro.model.Trabajo;
 import com.figaro.model.Turno;
 import com.figaro.repository.MovimientosRepository;
 import com.figaro.repository.TurnosRepository;
@@ -37,6 +35,7 @@ public class TurnosService {
 	public Turno saveTurno(Turno turno) {
 		LOGGER.info("Guardando un nuevo turno: " + turno.toString());
 		validateTurno(turno);
+		turno.generateTurnoInfo();
 		int newID = repository.saveTurno(turno);
 		turno.setId(newID);
 		return turno ;  
@@ -115,7 +114,7 @@ public class TurnosService {
 	
 	
 	private Movimiento generatePago(Turno turno) {
-		BigDecimal montoTotal = generatePrecioPeluquero(turno);
+		BigDecimal montoTotal = turno.calculatePrecioPago();
 		Movimiento movimiento = new Movimiento();
 		movimiento.setCategoria(CATEGORIA_PELUQUERO);
 		movimiento.setCuotas(0);
@@ -127,19 +126,10 @@ public class TurnosService {
 		return movimiento;
 	}
 	
-	private BigDecimal generatePrecioPeluquero(Turno turno) {
-		BigDecimal montoTotal = new BigDecimal(0);
-		for (Trabajo t : turno.getTrabajos()) {
-			BigDecimal precio = t.getServicio().getPrecio();
-			precio = precio.multiply(new BigDecimal(t.getComision()));
-			precio = precio.divide(new BigDecimal(100));
-			montoTotal = montoTotal.add(precio);
-		}
-		return montoTotal;
-	}
+	
 	
 	private String generateCobroDescripcion (Turno turno){
-		String descripionesTrabajo = String.join(" ", turno.getTrabajos().stream().map(t -> t.getServicio().getDescripcion()).collect(Collectors.toList()));
+		String descripionesTrabajo = turno.generateDescripcionTrabajos();
 		String cliente = turno.getCliente().getNombre() + " " + turno.getCliente().getApellido();
 		return "("+descripionesTrabajo+") "+cliente ;
 	}
@@ -175,7 +165,7 @@ public class TurnosService {
 		if (horarioInvalido(nuevoTurno))
 			throw new HorarioInvalidoException(nuevoTurno.getDesde() +" - "+nuevoTurno.getHasta());
 		
-		List<Turno> turnosDelDia = searchTurno(nuevoTurno.getDesde());
+		List<Turno> turnosDelDia = repository.searchTurnoValidation(nuevoTurno.getDesde());
 		turnosDelDia.remove(nuevoTurno);
 		
 		for(Turno turno : turnosDelDia) 
@@ -226,17 +216,18 @@ public class TurnosService {
 		return repository.getTurno(turnoId);
 	}
 	
-	public List<Turno> getTurnosCliente(int clienteId) {
+	
+	public List<TurnoDTO> getTurnosCliente(int clienteId) {
 		LOGGER.debug("Obteniendo los turnos para el cliente con ID: " +  clienteId);
 		return repository.getTurnosCliente(clienteId);
 	}
 	
-	public List<Turno> getTurnosPeluquero(int peluqueroId, int index) {
+	public List<TurnoDTO> getTurnosPeluquero(int peluqueroId, int index) {
 		LOGGER.debug("Obteniendo los turnos para el peluquero con ID: " +  peluqueroId);
 		return repository.getTurnosPeluquero(peluqueroId,index);
 	}
 	
-	public List<Turno> getTurnosPeluqueroSinPagar(int peluqueroId) {
+	public List<TurnoDTO> getTurnosPeluqueroSinPagar(int peluqueroId) {
 		LOGGER.debug("Obteniendo los turnos sin pagar para el peluquero con ID: " +  peluqueroId);
 		return repository.getTurnosPeluqueroSinPagar(peluqueroId);
 	}
@@ -245,12 +236,12 @@ public class TurnosService {
 		return repository.getCantidadTurnosPeluquero(peluqueroId);
 	}
 
-	public List<Turno> getTurnosDelDia(Date fecha) {
+	public List<TurnoDTO> getTurnosDelDia(Date fecha) {
 		LOGGER.debug("Obteniendo turnos del dia: " + fecha );
 		return searchTurno(fecha);
 	}
 
-	public List<Turno> searchTurno(Date desde) {
+	public List<TurnoDTO> searchTurno(Date desde) {
 		return repository.searchTurno(desde);
 	}
 

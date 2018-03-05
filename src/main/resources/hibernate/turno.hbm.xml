@@ -10,6 +10,9 @@
      	<property name="hasta"	column="HASTA"	type="java.sql.Timestamp"/>
      	<property name="cobrado"	column="COBRADO"	type="boolean"/>
 		<property name="pagado"	column="PAGADO"	type="boolean"/>
+		<property name="descripcionTrabajos" column="DESCRIPCION_TRABAJOS" type="string"/>
+	 	<property name="montoCobro" column="MONTO_COBRO" type="big_decimal"/>
+	 	<property name="montoPago" column="MONTO_PAGO" type="big_decimal"/>
 		
 	 	<many-to-one name="cliente" class="com.figaro.model.Cliente" lazy="false" fetch="select">
             <column name="ID_CLIENTE" not-null="true" />
@@ -26,7 +29,7 @@
             <column name="ID_PAGO" />
         </many-to-one>
         
-        <set name="trabajos" cascade="all-delete-orphan"  lazy="false" fetch="select" >
+        <set name="trabajos" cascade="all-delete-orphan"  lazy="true" fetch="select" >
           <key column="ID_TURNO" />
           <one-to-many  entity-name="TrabajoTurno"/>
       	</set>
