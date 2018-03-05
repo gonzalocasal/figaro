@@ -47,14 +47,14 @@
            <div class="separator"></div>
            <label  ><i class=material-icons >date_range</i>Turnos: {{sinPagar ? turnos.length : cantidadTurnosPeluquero}}</label>
       </div>
-      <div class=ver-mas ng-hide = "(turnos.length >= cantidadTurnosPeluquero) || sinPagar">
-        <label  ng-click=verMas() > Ver m&aacute;s</label>
-      </div>
-      <div class=loading>
-          <img widh=25 height=25 src="/imgs/loading.gif">
-      </div>  
   </div>
- 
+  <div class=loading >
+          <img widh=25 height=25 src="/imgs/loading.gif">
+  </div>  
+  <div class=ver-mas ng-cloak ng-hide = "(turnos.length >= cantidadTurnosPeluquero) || sinPagar">
+        <label  ng-click=verMas() > Ver m&aacute;s</label>
+  </div>
+     
   <#include "/html/turnos/cobrar.html">
   <#include "/html/turnos/deshacer-cobrado-pagado.html">
 </div>

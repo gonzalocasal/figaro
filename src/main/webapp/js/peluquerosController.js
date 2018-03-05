@@ -109,6 +109,10 @@ app.controller('peluquerosController', function ($scope, $http) {
     $scope.getAll = function() {
         $http.get("/rest/peluqueros/habilitados").then(function (response) {
             $scope.peluqueros = response.data;
+            if ($scope.peluqueros.length>0){
+                $scope.peluqueroSelected = $scope.peluqueros[0];
+                $scope.peluqueros[0].checked =true;
+            }
             loadComplete();
         });
     };
@@ -173,6 +177,18 @@ app.controller('peluquerosController', function ($scope, $http) {
         });
     return found;
     };
+
+
+    //ACTUALIZAR SELECCION
+    $scope.actualizarSeleccion = function(position, peluqueros) {
+      angular.forEach(peluqueros, function(peluquero, index) {
+        if (position != index) 
+          peluquero.checked = false;
+        else
+          $scope.peluqueroSelected = peluquero;
+      });
+    }
+
 
     //ASIGNAR TRABAJOS SELECCIONADOS A PELUQUEROS
     $scope.actualizarTrabajos = function() {

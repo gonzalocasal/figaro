@@ -9,33 +9,51 @@
   <div id=content class=content>
      <div class=banner>
       <label class="banner-button add" ng-click="newPeluquero()"><i class="material-icons" >add content_cut</i> Nuevo</label>   
+      
+      <span class=banner-buttons-hidden ng-hide=peluqueroSelected==null>
+      
+        <div class="separator"></div> 
+        <label class="banner-button add" >
+            <a class="button-link"   ng-href="/turnos/peluquero/{{peluqueroSelected.id}}/sinpagar" >
+              <i class="material-icons" >payment</i> Pagar
+            </a>
+        </label>   
+      
+        <div class="separator"></div>
+        <label class="banner-button add" >
+          <a class="button-link"   ng-href="/turnos/peluquero/{{peluqueroSelected.id}}" >
+          <i class="material-icons" >history</i> Historial
+          </a>
+        </label>   
+      
+      </span>  
+
+
     </div>
-    <div class=main-card>
+    
       <table class=main-table>
         <thead>
         <tr>
+            <th></th>
             <th>NOMBRE</th>
             <th>APELLIDO</th>
             <th>TEL&Eacute;FONO</th>
             <th>EMAIL</th>
-            <th>PAGAR</th>
-            <th>HISTORIAL</th>
         </tr>
       </thead>
         <tbody>
           <tr data-id={{peluquero.id}} class=data-row ng-repeat="peluquero in peluqueros" ng-show="peluquero.habilitado"  ng-cloak>
+            <td><input ng-model="peluquero.checked" ng-click="actualizarSeleccion($index, peluqueros)" type="checkbox" /></td>
             <td ng-click="detailPeluquero(peluquero.id)">{{peluquero.nombre}}</td>
             <td ng-click="detailPeluquero(peluquero.id)">{{peluquero.apellido}}</td>
             <td ng-click="detailPeluquero(peluquero.id)">{{peluquero.telefono}}</td>
             <td ng-click="detailPeluquero(peluquero.id)">{{peluquero.email}}</td>
-            <td><a class=link ng-href="/turnos/peluquero/{{peluquero.id}}/sinpagar"><div class=td-link><i class="material-icons"> payment </i></div></a></td>
-            <td><a class=link ng-href="/turnos/peluquero/{{peluquero.id}}"><div class=td-link><i class="material-icons"> history </i></div></a></td>
           </tr>
         </tbody>
       </table>
-      <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
-    </div>
+      
   </div>
+  <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
   <#include "/html/peluqueros/peluqueros-modal.html">
   <#include "/html/common/javascript.html">
   <script src="js/peluquerosController.js" ></script>
