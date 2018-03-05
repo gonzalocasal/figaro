@@ -9,7 +9,7 @@
   <div ng-controller=turnosController>
 
   <div class=page-loading>
-        <img widh=50 height=50 src="/imgs/loading.gif">
+        <img widh=25 height=25 src="/imgs/loading.gif">
   </div>  
     
   <div ng-cloak ng-if="turnos.length > 0" id=content class=content>
@@ -33,12 +33,12 @@
         <tr  class=data-row ng-repeat="turno in turnos  track by turno.id">
           <td id={{turno.id}} data-id={{turno.id}}>{{turno.desde.split(' ')[0] | date}} - {{turno.desde.split(' ')[1]}} hs</td>
           <td data-id={{turno.id}} ><a class=link ng-href="/turnos/cliente/{{turno.cliente.id}}"> {{turno.cliente.nombre}} {{turno.cliente.apellido}}</a></td>
-          <td id={{turno.id}} data-id={{turno.id}}>{{turno.descripcionTrabajos}}</td>
-          <td id={{turno.id}} data-id={{turno.id}}>{{turno.montoCobro | currency}}</td>
-          <td id={{turno.id}} data-id={{turno.id}}  >{{ (turno.montoPago *100) /turno.montoCobro | number:0 }}%</td>
-          <td id={{turno.id}} data-id={{turno.id}}  >{{turno.montoPago | currency}}</td>
-          <td><input ng-model="turno.cobrado"   ng-click="setCobrado(turno)" type="checkbox" ></td>
-          <td><input ng-model="turno.pagado"    ng-click="setPagado(turno)"  type="checkbox"></td>
+          <td data-id={{turno.id}} >{{turno.descripcionTrabajos}}</td>
+          <td data-id={{turno.id}} >{{turno.montoCobro | currency}}</td>
+          <td data-id={{turno.id}} >{{ (turno.montoPago *100) /turno.montoCobro | number:0 }}%</td>
+          <td data-id={{turno.id}} >{{turno.montoPago | currency}}</td>
+          <td data-id={{turno.id}} ><input ng-model="turno.cobrado"   ng-click="setCobrado(turno)" type="checkbox" ></td>
+          <td data-id={{turno.id}} ><input ng-model="turno.pagado"    ng-click="setPagado(turno)"  type="checkbox"></td>
         </tr>
         </tbody>
       </table>

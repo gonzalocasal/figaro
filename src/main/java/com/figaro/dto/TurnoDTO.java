@@ -39,11 +39,13 @@ public class TurnoDTO {
 		this.hasta = turno.getHasta();
 		this.cobrado = turno.getCobrado();
 		this.cobro = turno.getCobro();
+		this.pagado = turno.getPagado();
+		this.pago =  turno.getPago();
 		this.montoCobro = turno.getMontoCobro();
 		this.montoPago = turno.getMontoPago();
 		this.descripcionTrabajos = turno.getDescripcionTrabajos();
-		this.cobro = turno.getCobro();
-		this.pago =  turno.getPago();
+		
+		
 	}
 
 
