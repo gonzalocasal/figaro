@@ -234,6 +234,7 @@ app.controller('turnosController', function ($scope, $http) {
     //CANCELAR ELIMINAR
     $scope.discardConfirm = function(event){
         $scope.ngMovimiento = {};
+         $scope.modalOpen = false;
         closeModal("modal-confirmarDelete");
     };
 
