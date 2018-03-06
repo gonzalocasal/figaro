@@ -10,24 +10,15 @@
      <div class=banner>
       <label class="banner-button add" ng-click="newPeluquero()"><i class="material-icons" >add content_cut</i> Nuevo</label>   
       
-      <span class=banner-buttons-hidden ng-hide=peluqueroSelected==null>
+      <span class=banner-buttons-hidden>
       
         <div class="separator"></div> 
-        <label class="banner-button add" >
-            <a class="button-link"   ng-href="/turnos/peluquero/{{peluqueroSelected.id}}/sinpagar" >
-              <i class="material-icons" >payment</i> Pagar
-            </a>
-        </label>   
+        <label class="banner-button add" ng-click="irSinPagar()" ><i class="material-icons" >payment</i> Pagar</label>   
       
         <div class="separator"></div>
-        <label class="banner-button add" >
-          <a class="button-link"   ng-href="/turnos/peluquero/{{peluqueroSelected.id}}" >
-          <i class="material-icons" >history</i> Historial
-          </a>
-        </label>   
+        <label class="banner-button add" ng-click="irHistorial()" ><i class="material-icons" >history</i> Historial</label>   
       
       </span>  
-
 
     </div>
     

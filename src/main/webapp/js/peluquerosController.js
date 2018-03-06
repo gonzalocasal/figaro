@@ -82,7 +82,6 @@ app.controller('peluquerosController', function ($scope, $http) {
     }   
 
 
-  
     //OBTENER TOTAL DE TURNO
     $scope.getTotalTurno = function(trabajos) {
         var total = 0;
@@ -91,9 +90,23 @@ app.controller('peluquerosController', function ($scope, $http) {
     return total;
     };
 
-  
-   
 
+    //REDIRIGIR A LOS TURNOS SIN PAGAR
+    $scope.irSinPagar = function() {
+        if(typeof $scope.peluqueroSelected === "undefined")
+            alert('Seleccione un peluquero');
+        else
+           window.location.replace( "/turnos/peluquero/"+$scope.peluqueroSelected.id+"/sinpagar");
+    };
+  
+   //REDIRIGIR A HISTORIAL DE PELUQUERO
+    $scope.irHistorial = function() {
+        if(typeof $scope.peluqueroSelected === "undefined")
+            alert('Seleccione un peluquero');
+        else
+           window.location.replace( "/turnos/peluquero/"+$scope.peluqueroSelected.id);
+    };
+   
     //OBTENER PAGO A PELUQUERO POR TURNO
     $scope.getTotalPagoTurnosPeluquero = function (turnos) {
         var total = 0;
@@ -102,17 +115,10 @@ app.controller('peluquerosController', function ($scope, $http) {
         return total;
     };
 
-    
-
-
     //OBTENER LISTA DE PELUQUEROS
     $scope.getAll = function() {
         $http.get("/rest/peluqueros/habilitados").then(function (response) {
             $scope.peluqueros = response.data;
-            if ($scope.peluqueros.length>0){
-                $scope.peluqueroSelected = $scope.peluqueros[0];
-                $scope.peluqueros[0].checked =true;
-            }
             loadComplete();
         });
     };
@@ -213,7 +219,7 @@ app.controller('peluquerosController', function ($scope, $http) {
     //DESCARTAR FORMULARIO
     $scope.discardPeluquero = function(event){
         $scope.update = null;
-        $scope.ngPeluquero = {"servicios" :[]};
+        $scope.ngf = {"servicios" :[]};
         closeModal("modal-peluqueros");
     };
 
