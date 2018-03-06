@@ -173,6 +173,10 @@ body{
     text-align: center;
 }
 
+.menu{
+    z-index: 1;
+}
+
 .banner{
     width: 95%;
     margin-top: 30px;
