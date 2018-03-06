@@ -34,6 +34,7 @@
   				<value>hibernate/ciudad.hbm.xml</value>
   				<value>hibernate/movimiento.hbm.xml</value>
   				<value>hibernate/persona.hbm.xml</value>
+  				<value>hibernate/proveedor.hbm.xml</value>
   				<value>hibernate/producto.hbm.xml</value>
 				<value>hibernate/trabajo.hbm.xml</value>
 				<value>hibernate/servicio.hbm.xml</value>
@@ -154,6 +155,7 @@
 	
 	
 	
+		
 	
 	<!-- PELUQUEROS !-->
 	<bean id="PeluquerosServiceTransactional" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
@@ -177,6 +179,34 @@
 	</bean>
 
 	<bean id="PeluquerosRepository"	class="com.figaro.repository.PeluquerosRepository">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	
+	<!-- PROVEEDORES !-->
+	<bean id="ProveedoresServiceTransactional" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="ProveedoresService" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="ProveedoresService" class="com.figaro.service.ProveedoresService">
+		<property name="repository">
+			<ref bean="ProveedoresRepository" />
+		</property>
+	</bean>
+
+	<bean id="ProveedoresRepository"	class="com.figaro.repository.ProveedoresRepository">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>

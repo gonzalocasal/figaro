@@ -24,8 +24,6 @@ import com.figaro.repository.TurnosRepository;
 
 public class TurnosService {
 	
-	
-
 	final static Logger LOGGER = Logger.getLogger(TurnosService.class);
 	
 	private ClientesService clientesService;
