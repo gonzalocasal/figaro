@@ -52,7 +52,7 @@
   <#include "/html/turnos/deshacer-cobrado-pagado.html">
 </div>
 
-  <div  ng-if="turnos.length < 1 && loaded" class="message fade-in">
+  <div  ng-if="turnos.length < 1 && loaded" ng-cloak class="message fade-in">
     <div class="message-content">{{emptyMessage}}</div>
   </div>
 
