@@ -2,7 +2,7 @@ app.controller('movimientosController', function ($scope, $http) {
  	 
  
 	//OBTENER LISTA DE MOVIMIENTOS
-	    $scope.getAll = function() {	    	
+	    $scope.getAll = function() {    	
 	    	$scope.searchMovimiento();
 	    };
 
@@ -260,11 +260,13 @@ app.controller('movimientosController', function ($scope, $http) {
 	    }
 	    
 	  //FILTRO TOTAL
-	    $scope.searchMovimiento = function() {	
+	    $scope.searchMovimiento = function() {
+	    	loading();
 	    	$http.get('/rest/movimientos/buscar',{params: { from: $scope.busqueda.fechaInicio, to: $scope.busqueda.fechaFin, category: $scope.busqueda.categoria }})		        
 		        .then(function successCallback(response) {	  	        	
 		            $scope.movimientos = response.data;
-		            $scope.formatTipoPago();         
+		            $scope.formatTipoPago();
+		            loadComplete();
 		        })
 	    }
 	    	 

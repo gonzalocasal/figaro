@@ -87,10 +87,11 @@ function logout(){
 };
 
 
-function loadComplete(){
+function loadComplete(loaded){
 	$('.loading').hide();
 	$('.page-loading').hide();
 	$('.ver-mas').show();
+	loaded = true;
 }
 
 

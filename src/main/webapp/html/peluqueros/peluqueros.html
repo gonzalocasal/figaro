@@ -33,7 +33,7 @@
         </tr>
       </thead>
         <tbody>
-          <tr data-id={{peluquero.id}} class=data-row ng-repeat="peluquero in peluqueros" ng-show="peluquero.habilitado"  ng-cloak>
+          <tr data-id={{peluquero.id}} class="data-row fade-in" ng-repeat="peluquero in peluqueros" ng-show="peluquero.habilitado"  ng-cloak>
             <td><input ng-model="peluquero.checked" ng-click="actualizarSeleccion($index, peluqueros)" type="checkbox" /></td>
             <td ng-click="detailPeluquero(peluquero.id)">{{peluquero.nombre}}</td>
             <td ng-click="detailPeluquero(peluquero.id)">{{peluquero.apellido}}</td>

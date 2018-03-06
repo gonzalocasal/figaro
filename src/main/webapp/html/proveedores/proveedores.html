@@ -25,7 +25,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr id={{proveedor.id}} data-id={{proveedor.id}} class=data-row ng-repeat="proveedor in proveedores"  ng-cloak>
+        <tr id={{proveedor.id}} data-id={{proveedor.id}} class="data-row fade-in" ng-repeat="proveedor in proveedores"  ng-cloak>
           <td data-id={{proveedor.id}} data-ng-click="detailProveedor($event)">{{proveedor.nombre}}</td>
           <td data-id={{proveedor.id}} data-ng-click="detailProveedor($event)">{{proveedor.email}}</td>
           <td data-id={{proveedor.id}} data-ng-click="detailProveedor($event)">{{proveedor.telefono}}</td>

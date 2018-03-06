@@ -22,7 +22,7 @@
           </tr>
         </thead>
         <tbody >
-        <tr class=data-row ng-repeat="turno in turnos  track by turno.id"  >
+        <tr class="data-row fade-in" ng-repeat="turno in turnos  track by turno.id"  >
           <td id={{turno.id}} data-id={{turno.id}}>{{turno.desde.split(' ')[0] | date}} - {{turno.desde.split(' ')[1]}} hs</td>
           <td id={{turno.id}} data-id={{turno.id}}> {{turno.descripcionTrabajos}} </td>
           <td id={{turno.id}} data-id={{turno.id}} >{{turno.montoCobro | currency}}</td>

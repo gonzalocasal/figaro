@@ -61,7 +61,7 @@
             </tr>
           </tfoot>
           <tbody class="prueba">
-            <tr ng-cloak class=data-row  ng-repeat="item in venta.items" >
+            <tr ng-cloak class="data-row fade-in"  ng-repeat="item in venta.items" >
               <td class="colum-nombre-with">{{item.nombreProducto}}</td>
               <td>{{item.descripcionProducto}}</td>
               <td>{{item.precioUnitario | currency}}</td>
@@ -72,13 +72,11 @@
           </tbody>
         </table>
       </div>
-      <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
     </div>
-
     <div ng-cloak ng-if="ngVentas.length < 1 && loaded" class="message">
       <div class="message-content">No se han realizado ventas</div>
     </div>
-
+    <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
     <#include "/html/common/confirm.html">
     <#include "/html/common/javascript.html">
     <script src="../js/ventaController.js" ></script>    

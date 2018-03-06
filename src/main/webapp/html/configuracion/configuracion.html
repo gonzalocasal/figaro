@@ -16,7 +16,7 @@
         <button class="button accept" type="submit"></button>
         <table id=table>
           <tbody>
-          <tr ng-cloak id={{servicio.id}}  class=data-row  ng-repeat="servicio in servicios" >
+          <tr ng-cloak id={{servicio.id}}  class="data-row fade-in"  ng-repeat="servicio in servicios" >
           <td data-id={{servicio.id}} ng-click="loadServicio($event)">{{servicio.descripcion}}</td>
           <td data-id={{servicio.id}} ng-click="loadServicio($event)" class=servicio-precio>{{servicio.precio | currency}}</td>
           <td class=delete ><i class="material-icons" data-id={{servicio.id}} ng-click="removeServicio($event)">clear</i></td>
@@ -32,7 +32,7 @@
         <div class=card-title><i class="material-icons">group </i><label class=card-title> PELUQUEROS HABILITADOS</label></div>
         <table id=table >
           <tbody>
-          <tr ng-cloak id={{ciudad.id}} class=data-row ng-repeat="peluquero in peluqueros" >
+          <tr ng-cloak id={{ciudad.id}} class="data-row fade-in" ng-repeat="peluquero in peluqueros" >
           <td ><input type="checkbox"  value="servicio" ng-click=togglePeluquero(peluquero) ng-model=peluquero.habilitado> {{peluquero.nombre}} {{peluquero.apellido}}</td>
           </tr>
           </tbody>
@@ -47,7 +47,7 @@
         <input type="text" placeholder="Nombre" ng-model="ngCategoria.nombre" maxlength="25" pattern="^[^\s].*([A-zÀ-ž\s]){2,25}" ng-pattern-restrict required>
         <table id=table>
           <tbody>
-          <tr ng-cloak id={{categoria.id}} class=data-row ng-repeat="categoria in categorias" >
+          <tr ng-cloak id={{categoria.id}} class="data-row fade-in" ng-repeat="categoria in categorias" >
           <td>{{categoria.nombre}}</td>
           <td class=delete ><i class="material-icons" data-id={{categoria.id}} ng-click="removeCategoria($event)">clear</i></td>
           </tr>
@@ -64,7 +64,7 @@
         <input type="text" placeholder="Ciudad" ng-model="ngCiudad.nombre"  maxlength="25" pattern="^[^\s].*([A-zÀ-ž\s]){2,25}" ng-pattern-restrict required>
         <table id=table >
           <tbody>
-          <tr ng-cloak id={{ciudad.id}} class=data-row ng-repeat="ciudad in ciudades" >
+          <tr ng-cloak id={{ciudad.id}} class="data-row fade-in" ng-repeat="ciudad in ciudades" >
           <td >{{ciudad.nombre}}</td>
           <td class=delete ><i class="material-icons" data-id={{ciudad.id}} ng-click="removeCiudad($event)">clear</i></td>
           </tr>
