@@ -60,6 +60,9 @@
     padding: 20px
 }
 
+.venta table{
+    max-width: 450px;
+}
 
 /* BOTONES */
 .boton-stock{
