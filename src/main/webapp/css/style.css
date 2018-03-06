@@ -298,7 +298,7 @@ li a:hover {
 
 .active a{
     margin-left: -3px;
-    font-weight: 600;
+    font-weight: 500;
     color:white
 }
 
@@ -431,7 +431,7 @@ li a:hover {
 
 .modal-content form .button, .modal-double form .button{
     cursor: pointer;
-    font-weight: 800;
+    font-weight: 500;
     font-family: 'Roboto', sans-serif;
     position: relative;
     margin-left: auto;
