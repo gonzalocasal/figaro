@@ -13,7 +13,7 @@
         <div class="separator"></div>
         <label  ><i class=material-icons >date_range</i>Turnos: {{sinPagar ? turnos.length : totalCantidadTurnos}}</label>
         <div class="separator"></div>
-        <label  ><i class=material-icons >account_balance_wallet</i>Total pago: {{totalPago | currency}}</label>
+        <label  ><i class=material-icons >account_balance_wallet</i>Total pago: {{sinPagar ? calcularTotalPagoPeluquero(turnos) : totalPago | currency}}</label>
     </div>
     <table  ng-cloak id=table class="main-table banner">
         <thead>

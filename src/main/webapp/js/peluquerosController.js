@@ -83,14 +83,6 @@ app.controller('peluquerosController', function ($scope, $http) {
     }   
 
 
-    //OBTENER TOTAL DE TURNO
-    $scope.getTotalTurno = function(trabajos) {
-        var total = 0;
-        for(var i = 0; i < trabajos.length; i++)
-            total += trabajos[i].servicio.precio;
-    return total;
-    };
-
 
     //REDIRIGIR A LOS TURNOS SIN PAGAR
     $scope.irSinPagar = function() {

@@ -190,12 +190,11 @@ app.controller('turnosController', function ($scope, $http) {
         return total;
     };
 
-    //OBTENER TOTAL PAGOS
-    $scope.getTotalPago = function(turnos) {
+    //OBTENER TOTAL PAGO A PELUQUERO PENDIENTE
+    $scope.calcularTotalPagoPeluquero = function (turnos) {
         var total = 0;
         for(var i = 0; i < turnos.length; i++)
-        for(var j = 0; j < turnos[i].trabajos.length; j++)
-            total += (turnos[i].trabajos[j].servicio.precio * turnos[i].trabajos[j].comision) /100 ;
+            total += turnos[i].montoPago
         return total;
     };
 
