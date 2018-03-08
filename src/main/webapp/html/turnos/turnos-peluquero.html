@@ -9,7 +9,11 @@
   <div ng-controller=turnosController> 
   <div ng-cloak ng-if="turnos.length > 0" id=content class="content fade-in">
     <div ng-cloak class=banner>
-        <label class="banner-title">Peluquero: {{peluquero}}</label>
+        <label class="banner-title"><i class="material-icons">person</i>Peluquero: {{peluquero}}</label>
+        <div class="separator"></div>
+        <label  ><i class=material-icons >date_range</i>Turnos: {{sinPagar ? turnos.length : totalCantidadTurnos}}</label>
+        <div class="separator"></div>
+        <label  ><i class=material-icons >account_balance_wallet</i>Total pago: {{totalPago | currency}}</label>
     </div>
     <table  ng-cloak id=table class="main-table banner">
         <thead>
@@ -37,11 +41,6 @@
         </tr>
         </tbody>
     </table>
-      <div  class=banner ng-cloak>
-           <label  ><i class=material-icons >account_balance_wallet</i>Total pago: {{getTotalPagoTurnosPeluquero(turnos) | currency}}</label>
-           <div class="separator"></div>
-           <label  ><i class=material-icons >date_range</i>Turnos: {{sinPagar ? turnos.length : cantidadTurnosPeluquero}}</label>
-      </div>
   </div>
   <div class=loading ><img widh=25 height=25 src="/imgs/loading.gif"></div>  
   <div class=ver-mas ng-cloak ng-hide = "(turnos.length >= cantidadTurnosPeluquero) || sinPagar">

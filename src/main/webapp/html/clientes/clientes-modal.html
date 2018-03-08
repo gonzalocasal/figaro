@@ -14,14 +14,12 @@
           <option value="{{ciudad.nombre}}" ng-repeat="ciudad in ciudades">{{ciudad.nombre}}</option>
         </select>
       </div>
+      
       <div class=form-field><label>CALLE:</label><input type="text"      maxlength="25" pattern="([A-z0-9À-ž\s]){1,25}" ng-model="ngCliente.dirCalle"></div>
       <div class=form-field><label>N&Uacute;MERO:</label><input type="number"   ng-model="ngCliente.dirNumeroCalle" min="0"  maxlength="5"></div>
       <div class=form-field><label>PISO:</label><input type="number"     ng-model="ngCliente.dirPiso"  ></div>
       <div class=form-field><label>DPTO:</label><input type="text"       ng-model="ngCliente.dirDpto"></div>
       <div class=form-field><label>NOTAS:</label><input type="text" ng-model="ngCliente.notas"></div>
-      <div class=form-field ng-if="ngCliente.id != null">
-        <a class=link ng-href="/turnos/cliente/{{ngCliente.id}}">VER TURNOS</a>
-      </div>
 
       <div class=buttons>
         <button class="button cancel"  type="button" ng-click="discardClient()">CANCELAR</button>

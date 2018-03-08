@@ -153,8 +153,6 @@
 		</property>
 	</bean>
 	
-	
-	
 		
 	
 	<!-- PELUQUEROS !-->
@@ -176,6 +174,11 @@
 		<property name="repository">
 			<ref bean="PeluquerosRepository" />
 		</property>
+		<property name="turnosRepository">
+			<ref bean="TurnosRepository" />
+		</property>
+		
+		
 	</bean>
 
 	<bean id="PeluquerosRepository"	class="com.figaro.repository.PeluquerosRepository">
@@ -211,6 +214,8 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
+	
+	
 	
 	
 	

@@ -1,5 +1,6 @@
 package com.figaro.repository;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -57,6 +58,10 @@ public class TurnosRepository extends AbstractRepository{
 	public Integer getCantidadTurnosPeluquero(int peluqueroId) {
 		Long cantidad = (Long) getCurrentSession().createQuery( "SELECT COUNT (*) FROM Turno AS t WHERE t.peluquero.id = :peluqueroId").setParameter("peluqueroId", peluqueroId).uniqueResult();
 		return Integer.valueOf(cantidad.intValue());
+	}
+	
+	public BigDecimal getTotalPagosTurnosPeluquero(int peluqueroId) {
+		return (BigDecimal) getCurrentSession().createQuery( "SELECT SUM (t.montoPago) FROM Turno AS t WHERE t.peluquero.id = :peluqueroId").setParameter("peluqueroId", peluqueroId).uniqueResult();
 	}
 		
 	public List<TurnoDTO> searchTurno (Date desdeParam) {

@@ -74,10 +74,11 @@ app.controller('peluquerosController', function ($scope, $http) {
 
     //GET CANTIDAD TURNOS PELUQUEROS 
     $scope.getCantidadTurnos = function(){
-        url = '/rest/turnos/peluquero/'+ $scope.peluqueroId+'/cantidad';
+        url = '/rest/peluqueros/'+ $scope.peluqueroId+'/totales';
         $http.get(url,{params: {index: $scope.index}})
         .then(function successCallback(response) {
-            $scope.cantidadTurnosPeluquero = response.data;
+            $scope.totalCantidadTurnos = response.data.turnos;
+            $scope.totalPago = response.data.pago;
         });
     }   
 
@@ -99,21 +100,23 @@ app.controller('peluquerosController', function ($scope, $http) {
            window.location.replace( "/turnos/peluquero/"+$scope.peluqueroSelected.id+"/sinpagar");
     };
   
-   //REDIRIGIR A HISTORIAL DE PELUQUERO
-    $scope.irHistorial = function() {
+    //REDIRIGIR A HISTORIAL DE PELUQUERO
+    $scope.irTurnos = function() {
         if(typeof $scope.peluqueroSelected === "undefined")
             alert('Seleccione un peluquero');
         else
            window.location.replace( "/turnos/peluquero/"+$scope.peluqueroSelected.id);
     };
    
-    //OBTENER PAGO A PELUQUERO POR TURNO
-    $scope.getTotalPagoTurnosPeluquero = function (turnos) {
-        var total = 0;
-        for(var i = 0; i < turnos.length; i++)
-            total += turnos[i].montoPago
-        return total;
-    };
+   
+    //ACTUALIZAR SELECCION
+    $scope.actualizarSeleccion = function(position, peluqueros) {
+      angular.forEach(peluqueros, function(peluquero, index) {
+      (position != index) ? peluquero.checked = false : $scope.peluqueroSelected = peluquero;
+      });
+    }
+
+
 
     //OBTENER LISTA DE PELUQUEROS
     $scope.getAll = function() {
@@ -128,7 +131,7 @@ app.controller('peluquerosController', function ($scope, $http) {
         $scope.message='';
         $scope.allChecked = false;
         $scope.checkAllTrabajos();
-        ($scope.isModalOpen == true) ? $('#modal-peluqueros').addClass("modal-on-top") : openModal("modal-peluqueros");
+        openModal("modal-peluqueros");
         $('#modal-peluqueros-focus').focus();
     }
 
@@ -185,16 +188,7 @@ app.controller('peluquerosController', function ($scope, $http) {
     };
 
 
-    //ACTUALIZAR SELECCION
-    $scope.actualizarSeleccion = function(position, peluqueros) {
-      angular.forEach(peluqueros, function(peluquero, index) {
-        if (position != index) 
-          peluquero.checked = false;
-        else
-          $scope.peluqueroSelected = peluquero;
-      });
-    }
-
+   
 
     //ASIGNAR TRABAJOS SELECCIONADOS A PELUQUEROS
     $scope.actualizarTrabajos = function() {

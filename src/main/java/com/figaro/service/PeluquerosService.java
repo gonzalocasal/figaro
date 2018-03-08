@@ -1,13 +1,16 @@
 package com.figaro.service;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
+import com.figaro.dto.TotalesPeluqueroDTO;
 import com.figaro.model.Peluquero;
 import com.figaro.repository.PeluquerosRepository;
+import com.figaro.repository.TurnosRepository;
 
 public class PeluquerosService {
 	
@@ -15,6 +18,7 @@ public class PeluquerosService {
 
 	private PeluquerosRepository repository;
 	
+	private TurnosRepository turnosRepository;
 	
 	public Peluquero getPeluquero(int peluqueroId) {
 		LOGGER.debug("Obteniendo el peluquero con ID: " + peluqueroId);
@@ -42,18 +46,22 @@ public class PeluquerosService {
 		
 	}
 	
+	public TotalesPeluqueroDTO getTotalesPeluquero(int peluqueroId) {
+		LOGGER.info("Obteniendo los totals del peluquero con ID: " +  peluqueroId);
+		Integer turnos = turnosRepository.getCantidadTurnosPeluquero(peluqueroId);
+		BigDecimal pago = turnosRepository.getTotalPagosTurnosPeluquero(peluqueroId);
+		return new TotalesPeluqueroDTO(turnos, pago);
+	}
+
+	
 	public void deletePeluquero(Integer idPeluquero) {
+		LOGGER.info("Eliminando el Peluquero con ID" + idPeluquero);
 		repository.deletePeluquero(idPeluquero);
 	}
 	
 	public List<Peluquero> getPeluqueros() {
-		LOGGER.debug("Obteniendo todos los peluqueros");
+		LOGGER.info("Obteniendo todos los peluqueros");
 		return repository.getPeluqueros();
-	}
-	
-	
-	public void setRepository(PeluquerosRepository repository) {
-		this.repository = repository;
 	}
 
 	public List<Peluquero> getPeluquerosHabilitados() {
@@ -61,10 +69,13 @@ public class PeluquerosService {
 		return peluqueros.stream().filter(p -> p.isHabilitado()).collect(Collectors.toList());
 	}
 
-	
+	public void setTurnosRepository(TurnosRepository turnosRepository) {
+		this.turnosRepository = turnosRepository;
+	}
 
-
-
+	public void setRepository(PeluquerosRepository repository) {
+		this.repository = repository;
+	}
 	
 
 }

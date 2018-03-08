@@ -9,7 +9,11 @@
   <div ng-controller=turnosController  >
   <div ng-if="turnos.length > 0" id=content class="content fade-in">
     <div class=banner ng-cloak>
-        <label  class="banner-title" >Cliente: {{cliente}}</label>
+        <label  class="banner-title" ><i class="material-icons">person</i>Cliente: {{cliente}}</label>
+        <div class="separator"></div>
+        <label  ><i class=material-icons >date_range</i>Turnos: {{turnos.length}}</label>
+        <div class="separator"></div>
+        <label ng-controller=turnosController  ><i class=material-icons  >account_balance_wallet</i>Total cobros: {{getTotalDiario(turnos) | currency}}</label>
     </div>
     <table ng-cloak id=table class="main-table banner">
         <thead>
@@ -30,13 +34,7 @@
           <td><input ng-model="turno.cobrado"   ng-click="setCobrado(turno)" type="checkbox" ></td>
         </tr>
         </tbody>
-      </table>
-      <div ng-cloak class=banner>
-          <label ng-controller=turnosController  ><i class=material-icons  >account_balance_wallet</i>Total: {{getTotalDiario(turnos) | currency}}</label>
-          <div class="separator"></div>
-           <label  ><i class=material-icons >date_range</i>Turnos: {{turnos.length}}</label>
-      </div>
-  
+      </table>  
   </div>
   <#include "/html/turnos/cobrar.html">
   <#include "/html/turnos/deshacer-cobrado-pagado.html">

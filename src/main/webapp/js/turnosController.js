@@ -23,7 +23,6 @@ app.controller('turnosController', function ($scope, $http) {
         $scope.trabajosPeluquero = [];
         $scope.trabajosSeleccionados = [];
         $scope.isNuevoTurno = true;
-        $scope.modalOpen = true;
         openModal("modal-turnos");
     };
 
@@ -65,9 +64,7 @@ app.controller('turnosController', function ($scope, $http) {
                 if(!isInListaTrabajos(trabajo))
                 $scope.trabajosPeluquero.push(trabajo);
         });  
-        $scope.modalOpen = true;
         openModal("modal-turnos");
-
         });
     };
 
@@ -226,7 +223,6 @@ app.controller('turnosController', function ($scope, $http) {
     //CONFIRMA ELIMINTAR TURNO
     $scope.confirmDelete = function(id) {
         $scope.idTarget = id;
-        $scope.modalOpen = true;
         openModal("modal-confirmarDelete");
         
     };
@@ -234,7 +230,6 @@ app.controller('turnosController', function ($scope, $http) {
     //CANCELAR ELIMINAR
     $scope.discardConfirm = function(event){
         $scope.ngMovimiento = {};
-         $scope.modalOpen = false;
         closeModal("modal-confirmarDelete");
     };
 
@@ -298,7 +293,6 @@ app.controller('turnosController', function ($scope, $http) {
     //POP UP COBRADO
     $scope.setCobrado = function (turno) {
         $scope.turnoTarget = turno;
-        $scope.modalOpen = true;
         if(turno.cobrado)
             openModal("modal-cobrar");
         else
@@ -308,7 +302,6 @@ app.controller('turnosController', function ($scope, $http) {
     //CANCELAR COBRO
     $scope.discardCobro = function(turno){
         turno.cobrado = false;
-        $scope.modalOpen = false;
         closeModal("modal-cobrar");
         $scope.initMovimiento();
     };
@@ -316,13 +309,11 @@ app.controller('turnosController', function ($scope, $http) {
    //CANCELAR DESHACER COBRO
     $scope.discardCancelarCobro = function(turno){
         turno.cobrado = true;
-        $scope.modalOpen = false;
         closeModal("modal-cancelar-cobro");
     };
     
     //CONFIRMAR DESHACER COBRO
     $scope.toggleCobro = function (turno) {
-        $scope.modalOpen = false;
         $http.put('/rest/turnos/'+turno.id+'/cobrado/cancelar');
         closeModal("modal-cancelar-cobro");      
     }
@@ -341,14 +332,12 @@ app.controller('turnosController', function ($scope, $http) {
    //CANCELAR DESHACER PAGO
     $scope.discardCancelarPago = function(turno){
         turno.pagado = true;
-        $scope.modalOpen = false;
         closeModal("modal-cancelar-pago");
     };
 
     //CONFIRMAR PAGO
     $scope.togglePago = function (turno) {
         closeModal("modal-cancelar-pago");
-        $scope.modalOpen = false;
         $http.put('/rest/turnos/'+turno.id+'/pagar');
     }
 
@@ -385,7 +374,6 @@ app.controller('turnosController', function ($scope, $http) {
         $scope.queryTrabajo ='';
         $scope.message='';
         $scope.update=false;
-        $scope.modalOpen = false;
         closeModal("modal-turnos");
     };
 
@@ -393,9 +381,9 @@ app.controller('turnosController', function ($scope, $http) {
     document.addEventListener('keyup', function(e) {
         if (e.keyCode == 27) 
             $scope.discardTurno();
-        if ((e.keyCode == 39 || e.keyCode == 38) && !$scope.focus && !$scope.modalOpen)
+        if ((e.keyCode == 39 || e.keyCode == 38) && !$scope.focus && !$(".modal-on")[0])
             $scope.getTurnosDiaSiguiente();
-        if ((e.keyCode == 37 || e.keyCode == 40) && !$scope.focus && !$scope.modalOpen)
+        if ((e.keyCode == 37 || e.keyCode == 40) && !$scope.focus && !$(".modal-on")[0])
             $scope.getTurnosDiaAnterior();
     });
     

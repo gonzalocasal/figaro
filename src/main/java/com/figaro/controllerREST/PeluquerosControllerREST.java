@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.figaro.dto.TotalesPeluqueroDTO;
 import com.figaro.model.Peluquero;
 import com.figaro.service.PeluquerosService;
 
@@ -60,5 +61,10 @@ public class PeluquerosControllerREST {
 		service.habilitarPeluquero(idPeluquero);
 		return new ResponseEntity<Peluquero>(HttpStatus.OK);
 	}
+	
+	@GetMapping("/peluqueros/{peluqueroId}/totales")
+    public ResponseEntity <TotalesPeluqueroDTO> getCantidadTurnosPeluquero( @PathVariable int peluqueroId) {
+		return new ResponseEntity<TotalesPeluqueroDTO>(service.getTotalesPeluquero(peluqueroId), HttpStatus.OK);
+    }
 	
 }

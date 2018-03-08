@@ -59,10 +59,6 @@ public class TurnosControllerREST {
 		return new ResponseEntity<List<TurnoDTO>>(service.getTurnosPeluqueroSinPagar(peluqueroId), HttpStatus.OK);
     }
 	
-	@GetMapping("turnos/peluquero/{peluqueroId}/cantidad")
-    public ResponseEntity <Integer> getCantidadTurnosPeluquero( @PathVariable int peluqueroId) {
-		return new ResponseEntity<Integer>(service.getCantidadTurnosPeluquero(peluqueroId), HttpStatus.OK);
-    }
 	
 	@PutMapping("turnos/actualizar/{turnoId}")
     public ResponseEntity<Turno> updateTurno(@RequestBody Turno turno) {

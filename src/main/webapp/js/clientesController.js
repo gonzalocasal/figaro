@@ -38,15 +38,24 @@ app.controller('clientesController', function ($scope, $http) {
     $scope.newClient = function() {
         $scope.ngCliente={};
         $scope.message='';
-        ($scope.isModalOpen == true) ? $('#modal-clientes').addClass("modal-on-top") : openModal("modal-clientes");
+        (document.getElementById("modal-turnos")) ? $('#modal-clientes').addClass("modal-on-top") : openModal("modal-clientes");
         $('#modal-clientes-focus').focus();
     }
 
+
+        //DESCARTAR FORMULARIO
+    $scope.discardClient = function(event){
+        $scope.update = null;
+        $scope.ngCliente = {};
+        (document.getElementById("modal-turnos")) ? $('#modal-clientes').removeClass("modal-on-top") : closeModal("modal-clientes");
+    };
+
+
     //CLICK FILA CLIENTE
-    $scope.detailClient = function(event){
+    $scope.detailClient = function(idCliente){
         $scope.message='';
         $scope.update = true;
-        $scope.clienteID = event.currentTarget.getAttribute("data-id");
+        $scope.clienteID = idCliente;
         $http.get('/rest/clientes/'+$scope.clienteID).then(function (response) {
             $scope.ngCliente = response.data;
             openModal("modal-clientes");
@@ -76,6 +85,22 @@ app.controller('clientesController', function ($scope, $http) {
         }
     };
 
+    //ACTUALIZAR SELECCION
+    $scope.actualizarSeleccion = function(position, clientes) {
+      angular.forEach(clientes, function(cliente, index) {
+      (position != index) ? cliente.checked = false : $scope.clienteSelected = cliente;
+      });
+    }
+
+    //REDIRIGIR A HISTORIAL DE CLIENTE
+    $scope.irTurnos = function() {
+        if(typeof $scope.clienteSelected === "undefined")
+            alert('Seleccione un cliente');
+        else
+           window.location.replace( "/turnos/cliente/"+$scope.clienteSelected.id);
+    };
+   
+
     //BUSCAR
     $scope.searchCliente = function() {
         loading();
@@ -84,13 +109,6 @@ app.controller('clientesController', function ($scope, $http) {
             $scope.clientes = response.data; 
             loadComplete();
         });  
-    };
-
-    //DESCARTAR FORMULARIO
-    $scope.discardClient = function(event){
-        $scope.update = null;
-        $scope.ngCliente = {};
-        ($scope.clientesScreen == null) ? $('#modal-clientes').removeClass("modal-on-top") : closeModal("modal-clientes");
     };
 
     //OBTENER LISTA DE CIUDADES
