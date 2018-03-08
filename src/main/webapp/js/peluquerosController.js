@@ -89,7 +89,7 @@ app.controller('peluquerosController', function ($scope, $http) {
         if(typeof $scope.peluqueroSelected === "undefined")
             alert('Seleccione un peluquero');
         else
-           window.location.replace( "/turnos/peluquero/"+$scope.peluqueroSelected.id+"/sinpagar");
+            window.location.href = "/turnos/peluquero/"+$scope.peluqueroSelected.id+"/sinpagar"
     };
   
     //REDIRIGIR A HISTORIAL DE PELUQUERO
@@ -97,7 +97,8 @@ app.controller('peluquerosController', function ($scope, $http) {
         if(typeof $scope.peluqueroSelected === "undefined")
             alert('Seleccione un peluquero');
         else
-           window.location.replace( "/turnos/peluquero/"+$scope.peluqueroSelected.id);
+           window.location.href = "/turnos/peluquero/"+$scope.peluqueroSelected.id
+
     };
    
    
