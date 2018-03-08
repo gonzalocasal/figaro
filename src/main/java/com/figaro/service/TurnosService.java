@@ -168,14 +168,21 @@ public class TurnosService {
 	private boolean horarioOcupado(Turno nuevoTurno, Turno turno) {
 		return horarioInicioOcupado(nuevoTurno, turno) || 
 			   horarioFinOcupado(nuevoTurno, turno) || 
-			   mismoHorario(nuevoTurno, turno);
+			   mismoHorario(nuevoTurno, turno) || 
+			   dentroDeLaFranja(nuevoTurno, turno);
 	}
 	
+	private boolean dentroDeLaFranja(Turno nuevoTurno, Turno turno) {
+		Date inicio = turno.getDesde();
+		Date fin    = turno.getHasta();
+		return  (nuevoTurno.getDesde().before(inicio) && nuevoTurno.getHasta().after(fin));
+	}
+
 	private boolean horarioInicioOcupado(Turno nuevoTurno, Turno turno) {
 		Date inicio = turno.getDesde();
 		Date fin    = turno.getHasta();
 		return  (nuevoTurno.getDesde().equals(inicio) || nuevoTurno.getDesde().after(inicio))  && 
-				(nuevoTurno.getDesde().before(fin)) ;
+				(nuevoTurno.getDesde().before(fin));
 	}
 	
 	
@@ -183,7 +190,7 @@ public class TurnosService {
 		Date inicio = turno.getDesde();
 		Date fin    = turno.getHasta();
 		return  ( nuevoTurno.getHasta().equals(fin) || nuevoTurno.getHasta().before(fin)) &&
-				 nuevoTurno.getHasta().after(inicio) ;
+				 nuevoTurno.getHasta().after(inicio);
 	}
 
 	private boolean mismoHorario(Turno nuevoTurno, Turno turno) {
