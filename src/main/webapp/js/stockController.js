@@ -61,7 +61,7 @@ app.controller('stockController', function ($scope, $http) {
             $http.post('/rest/stock/alta', $scope.ngProducto)
             .then(function successCallback(response) {
                 $scope.productos.push(response.data);
-                discardProducto();
+                $scope.discardProducto();
                 $scope.ngProducto={};
             }, function errorCallback(response){
                 $scope.message=response.data.message;
@@ -71,7 +71,7 @@ app.controller('stockController', function ($scope, $http) {
             $http.put('/rest/stock/actualizar/'+ $scope.productoId, $scope.ngProducto)
             .then(function successCallback(response) {
                     $scope.getAll();
-                    discardProducto();
+                    $scope.discardProducto();
                     $scope.ngProducto={};
                 }, function errorCallback(response){
                 $scope.message=response.data.message;
