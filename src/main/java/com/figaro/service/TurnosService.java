@@ -3,6 +3,8 @@ package com.figaro.service;
 import static com.figaro.util.Constants.CATEGORIA_PELUQUERO;
 import static com.figaro.util.Constants.CATEGORIA_TURNOS;
 import static com.figaro.util.Constants.TIPO_PAGO_CONTADO;
+import static com.figaro.util.Constants.MSG_TURNO_OCUPADO_CLIENTE;
+import static com.figaro.util.Constants.MSG_TURNO_OCUPADO_PELUQUERO;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -151,7 +153,7 @@ public class TurnosService {
 		
 		for(Turno turno : turnosDelDia) 
 			if( (mismoPeluquero(nuevoTurno, turno) || mismoCliente(nuevoTurno, turno)) && horarioOcupado(nuevoTurno, turno))
-			throw new TurnoOcupadoException(nuevoTurno);
+			throw new TurnoOcupadoException( (mismoPeluquero(nuevoTurno, turno) ? MSG_TURNO_OCUPADO_PELUQUERO : MSG_TURNO_OCUPADO_CLIENTE ));
 	}
 
 	
@@ -166,25 +168,34 @@ public class TurnosService {
 	private boolean horarioOcupado(Turno nuevoTurno, Turno turno) {
 		return horarioInicioOcupado(nuevoTurno, turno) || 
 			   horarioFinOcupado(nuevoTurno, turno) || 
-			   mismoHorario(nuevoTurno, turno);
+			   mismoHorario(nuevoTurno, turno) || 
+			   dentroDeLaFranja(nuevoTurno, turno);
 	}
 	
-	private boolean horarioInicioOcupado(Turno nuevoTurno, Turno turno) {
-		return (turno.getDesde().after(nuevoTurno.getDesde()) &&
-			   turno.getDesde().before(nuevoTurno.getHasta()) ||
-			   turno.getDesde().compareTo(nuevoTurno.getDesde()) == 0);
+	private boolean dentroDeLaFranja(Turno nuevoTurno, Turno turno) {
+		Date inicio = turno.getDesde();
+		Date fin    = turno.getHasta();
+		return  (nuevoTurno.getDesde().before(inicio) && nuevoTurno.getHasta().after(fin));
 	}
+
+	private boolean horarioInicioOcupado(Turno nuevoTurno, Turno turno) {
+		Date inicio = turno.getDesde();
+		Date fin    = turno.getHasta();
+		return  (nuevoTurno.getDesde().equals(inicio) || nuevoTurno.getDesde().after(inicio))  && 
+				(nuevoTurno.getDesde().before(fin));
+	}
+	
 	
 	private boolean horarioFinOcupado(Turno nuevoTurno, Turno turno) {
-		return (turno.getHasta().after(nuevoTurno.getDesde()) && 
-			   turno.getHasta().before(nuevoTurno.getHasta()) ||
-			   turno.getHasta().compareTo(nuevoTurno.getHasta()) == 0);
-				
+		Date inicio = turno.getDesde();
+		Date fin    = turno.getHasta();
+		return  ( nuevoTurno.getHasta().equals(fin) || nuevoTurno.getHasta().before(fin)) &&
+				 nuevoTurno.getHasta().after(inicio);
 	}
 
 	private boolean mismoHorario(Turno nuevoTurno, Turno turno) {
-		return (turno.getDesde().compareTo(nuevoTurno.getDesde()) == 0) && 
-			   (turno.getHasta().compareTo(nuevoTurno.getHasta()) == 0);
+		return turno.getDesde().equals(nuevoTurno.getDesde()) && 
+			   turno.getHasta().equals(nuevoTurno.getHasta());
 	}
 	
 	private boolean horarioInvalido(Turno nuevoTurno) {

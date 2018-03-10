@@ -16,7 +16,8 @@ public class Constants{
 	public static final String TIPO_PAGO_CONTADO ="contado";
 	
 	public static final String MSG_DUPLICADO = "Ya existe un elemento con estos datos";
-	public static final String MSG_TURNO_DUPLICADO = "Turno ocupado para ese cliente o peluquero";
+	public static final String MSG_TURNO_OCUPADO_CLIENTE   = "Ya hay un turno en el horario seleccionado para ese cliente";
+	public static final String MSG_TURNO_OCUPADO_PELUQUERO = "Ya hay un turno en el horario seleccionado para ese peluquero";
 	public static final String MSG_HORARIO_INVALIDO = "El horario seleccionado es invalido";
     public static final String MSG_DESCUENTO_INVALIDO = "El descuento no puede ser mayor al monto total";
 

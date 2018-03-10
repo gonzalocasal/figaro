@@ -28,7 +28,7 @@ public class ProductosService {
 	}	
 		
 	public void validateProducto(Producto producto) {
-		LOGGER.debug("Validando el Producto: " + producto.toString());	
+		LOGGER.info("Validando el Producto: " + producto.toString());	
 		Boolean existeProducto = repository.existeProducto(producto.getNombre(), producto.getDescripcion());
 		if (existeProducto) {
 			throw new DatoDuplicadoException(MSG_DUPLICADO);
@@ -36,7 +36,6 @@ public class ProductosService {
 	}
 	
 	public Producto updateProducto(Producto producto) {
-		validateProducto(producto);
 		Producto updated = getProducto(producto.getId());
 		LOGGER.info("Actualizando el Producto: " + producto.toString());
 		updated.update(producto);
