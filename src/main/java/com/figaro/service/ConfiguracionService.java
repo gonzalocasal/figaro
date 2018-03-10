@@ -1,3 +1,4 @@
+
 package com.figaro.service;
 
 
@@ -16,7 +17,6 @@ public class ConfiguracionService {
 	final static Logger LOGGER = Logger.getLogger(ConfiguracionService.class);
 
 	private ConfiguracionRepository repository;
-	
 	
 	private Preferences prefs;
 
@@ -42,12 +42,6 @@ public class ConfiguracionService {
 		return repository.getCiudades();
 	}
 
-	
-	
-	
-	
-	
-	
 	
 	//SERVICIOS
 	public Integer saveServicio(Servicio servicio) {
@@ -115,8 +109,5 @@ public class ConfiguracionService {
 	public void setPrefs(Preferences prefs) {
 		this.prefs = prefs;
 	}
-
-
-
 
 }
