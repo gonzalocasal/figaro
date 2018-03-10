@@ -7,8 +7,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.query.Query;
 
-import com.figaro.model.Item;
 import com.figaro.model.Movimiento;
+import com.figaro.model.Trabajo;
+import com.figaro.model.Turno;
 import com.figaro.model.Venta;
 import com.figaro.service.MovimientosService;
 
@@ -53,20 +54,29 @@ public class MovimientosRepository extends AbstractRepository{
 	    query.setParameter(3, category);
 	    return query.getResultList();
 	}	
-	
-	public Item getItemId(Integer id) {		
 		
-		String querySql = "from Item t WHERE (t.id = ?1)";	
-		Query<Item> query = getCurrentSession().createQuery(querySql);
+	public Venta getVentaId(Integer id) {		
+		
+		String querySql = "from Venta t WHERE (t.id = ?1)";	
+		Query<Venta> query = getCurrentSession().createQuery(querySql);
 	    query.setParameter(1, id);	  
 	    return query.getSingleResult();
 		
 	}
 	
-	public Venta getVentaId(Integer id) {		
+	public Turno getTurnoId(Integer id) {		
 		
-		String querySql = "from Venta t WHERE (t.id = ?1)";	
-		Query<Venta> query = getCurrentSession().createQuery(querySql);
+		String querySql = "from Turno t WHERE (t.id = ?1)";	
+		Query<Turno> query = getCurrentSession().createQuery(querySql);
+	    query.setParameter(1, id);	  
+	    return query.getSingleResult();
+		
+	}
+	
+	public Trabajo getTrabajoId(Integer id) {		
+		
+		String querySql = "from Trabajo t WHERE (t.id = ?1)";	
+		Query<Trabajo> query = getCurrentSession().createQuery(querySql);
 	    query.setParameter(1, id);	  
 	    return query.getSingleResult();
 		

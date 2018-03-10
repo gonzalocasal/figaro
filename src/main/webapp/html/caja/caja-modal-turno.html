@@ -1,0 +1,55 @@
+<div id=modal-caja-turno class="modal fade-in">
+    <div class=modal-content id=ct>
+      <form>    
+      
+
+       <div class=form-field><label>DETALLE:</label> </div>
+
+      <div class=banner ng-cloak>
+        <label class=banner-label ><i class=material-icons >person</i> Cliente: {{ngMovimientoTurno.cliente.nombre}} {{ngMovimientoTurno.cliente.apellido}}</label>
+       
+      </div>
+
+      <div class=banner ng-cloak>
+        <label class=banner-label ><i class=material-icons >content_cut</i> Peluquero: {{ngMovimientoTurno.peluquero.nombre}} {{ngMovimientoTurno.peluquero.apellido}}</label>
+      </div>
+
+      <div class=banner ng-cloak>        
+        <label class=banner-label ><i class=material-icons >today</i> Horario: {{ngMovimientoTurno.desde}} - {{ngMovimientoTurno.hasta}}</label>
+      </div>
+
+
+       <table ng-cloak ng-if="movimientos.length > 0" id=table class=main-table>
+      
+    <thead>
+      <tr>          
+          <th>DETALLE</th>
+          <th>MONTO</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr ng-cloak id={{movimiento.id}} data-id={{movimiento.id}} class=data-row ng-repeat="movimiento in ngMovimientoSetTrabajos">
+    
+        <td data-id={{movimiento.id}}>{{movimiento.servicio.descripcion}}</td>
+        <td data-id={{movimiento.id}}>{{movimiento.servicio.precio}}</td>
+    
+      </tr>
+    </tbody>
+  </table>
+
+      <div class=banner ng-cloak>        
+        <label class=banner-label ><i class=material-icons >favorite_border</i> Descuento: {{ngMovimiento.descuento}}</label>
+      </div>
+
+     <div class=banner ng-cloak>
+      <label class=banner-label ><i class=material-icons >account_balance_wallet</i> Total: <font ng-cloak ng-class=green>{{ calculaTotalTurno() | currency }}</font></label>  
+  
+  </div>
+       <div class=buttons>
+          <button class="button accept" type="button" ng-click="discardMovimientoTurno()">ACEPTAR</button>
+        </div>
+  
+      </form>
+    </div>
+</div>

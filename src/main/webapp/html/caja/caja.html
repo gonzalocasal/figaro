@@ -80,28 +80,72 @@
         <td data-id={{movimiento.id}} data-ng-click="detailMovimiento($event)" ng-if="(movimiento.categoria != 'Turnos' && movimiento.categoria != 'Peluqueros' && movimiento.categoria != 'Ventas') && movimiento.tipoPago != 'contado'"><i class=material-icons>credit_card</i>{{mostrarDescuento(movimiento)}}</td>
         <td data-id={{movimiento.id}} ng-if="(movimiento.categoria == 'Turnos' || movimiento.categoria == 'Peluqueros' || movimiento.categoria == 'Ventas') && movimiento.tipoPago != 'contado'"><i class=material-icons >credit_card</i>{{mostrarDescuento(movimiento)}}</td>
 
-        <td data-id={{movimiento.id}} data-ng-click="detailMovimiento($event)" ng-if="movimiento.categoria != 'Turnos' && movimiento.categoria != 'Peluqueros' && movimiento.categoria != 'Ventas'">{{movimiento.detalle}}</td>
-        <td data-id={{movimiento.id}} ng-if="movimiento.categoria == 'Turnos' || movimiento.categoria == 'Peluqueros'">{{movimiento.detalle}}</td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimiento($event)" ng-if="movimiento.categoria != 'Turnos' && movimiento.categoria != 'Peluqueros' && movimiento.categoria != 'Ventas'">{{movimiento.detalle}}</td>        
+        <td class=link data-id={{movimiento.id}} data-ng-click="detailMovimientoPeluquero($event)" ng-if="movimiento.categoria == 'Peluqueros'">Ver Detalle</td>
         <td class=link data-id={{movimiento.id}} data-ng-click="detailMovimientoVenta($event)" ng-if="movimiento.categoria == 'Ventas'">Ver Detalle</td>
+        <td class=link data-id={{movimiento.id}} data-ng-click="detailMovimientoTurno($event)" ng-if="movimiento.categoria == 'Turnos'">Ver Detalle</td>
                   
         <td class="tachotd" id={{movimiento.id}} data-id={{movimiento.id}} data-ng-click="confirmDelete(movimiento.id)" ng-if="movimiento.categoria != 'Turnos' && movimiento.categoria != 'Peluqueros' && movimiento.categoria != 'Ventas'"><label><i class="material-icons tachoi" >clear</i></label></td>
         <td class="tachotd" ng-if="movimiento.categoria == 'Turnos' || movimiento.categoria == 'Peluqueros' || movimiento.categoria == 'Ventas'"></td>
       </tr>
     </tbody>
   </table>
-  <div class=banner ng-cloak ng-if="movimientos.length > 0">
-      <label class=banner-label ><i class=material-icons >account_balance_wallet</i> Total: <font ng-cloak ng-class='{green : calculaTotal() >= 0, red: calculaTotal() < 0}'>{{ calculaTotal() | currency }}</font></label>
-      
-      <div class="separator"></div>
-      <label class=banner-label >Egreso: <font ng-cloak ng-class='{red: calculaTotalNegativo() <= 0}'>{{ calculaTotalNegativo() | currency }}</font></label>
-      <div class="separator"></div>
-      <label class=banner-label >Ingreso: <font ng-cloak ng-class='{green : calculaTotalPositivo() >= 0}'>{{ calculaTotalPositivo() | currency }}</font></label>
+  <div  class="card card_totales" ng-cloak ng-if="movimientos.length > 0">
 
-      <label class=banner-label-right ><i class=material-icons >account_balance_wallet</i> Total Tarjeta: <font ng-cloak ng-class='{green : calculaTotalTarjeta() >= 0, red: calculaTotalTarjeta() < 0}'>{{ calculaTotalTarjeta() | currency }}</font></label>
-      
-      <label class=banner-label-right ><i class=material-icons >account_balance_wallet</i> Total Efectivo: <font ng-cloak ng-class='{green : calculaTotalEfectivo() >= 0, red: calculaTotalEfectivo() < 0}'>{{ calculaTotalEfectivo() | currency }}</font></label>
-  </div>
+    <div class="add-card-caja" ng-hide = "IsHiddenMenos"><label class="banner-button-desplegable add" ng-click="ShowMenos()"><i class="material-icons" >remove</i></label> </div>
 
+    <div class="add-card-caja" ng-hide = "IsHiddenMas"><label class="banner-button-desplegable add" ng-click="ShowMas()"><i class="material-icons" >add</i></label> </div>
+
+    <table id=table ng-hide = "IsHiddenMas">
+
+    <tbody>
+
+    <tr>    
+        <td>Total: <font ng-cloak ng-class='{green : calculaTotal() >= 0, red: calculaTotal() < 0}'><strong>{{ calculaTotal() | currency }}</strong></font></td>
+        <td>Ingreso: <font ng-cloak ng-class='{green : calculaTotalPositivo() >= 0}'>{{ calculaTotalPositivo() | currency }}</font></td>
+        <td>Egreso: <font ng-cloak ng-class='{red: calculaTotalNegativo() <= 0}'>{{ calculaTotalNegativo() | currency }}</font></td>
+        
+    </tr>
+ 
+    </tbody>
+    </table>
+
+<table id=table ng-hide = "IsHiddenMenos">
+
+    <thead>
+      <tr class="tr_card_caja">          
+          <th></th>
+          <th>EFECTIVO</th>
+          <th>TARJETA</th>
+          <th>GENERAL</th>          
+      </tr>
+    </thead>
+
+    <tbody>
+
+    <tr>   
+        <td>Ingreso</td>        
+        <td ><font ng-cloak ng-class='{green : calculaPositivoEfectivo() >= 0}'>{{ calculaPositivoEfectivo() | currency }}</font></td>
+        <td><font ng-cloak ng-class='{green : calculaPositivoTarjeta() >= 0}'>{{ calculaPositivoTarjeta() | currency }}</font></td>
+        <td><font ng-cloak ng-class='{green : calculaTotalPositivo() >= 0}'>{{ calculaTotalPositivo() | currency }}</font></td>        
+    </tr>
+    <tr> 
+        <td>Egreso</td>
+        <td><font ng-cloak ng-class='{red: calculaNegativoEfectivo() <= 0}'>{{ calculaNegativoEfectivo() | currency }}</font></td> 
+        <td><font ng-cloak ng-class='{red: calculaNegativoTarjeta() <= 0}'>{{ calculaNegativoTarjeta() | currency }}</font></td>
+        <td><font ng-cloak ng-class='{red: calculaTotalNegativo() <= 0}'>{{ calculaTotalNegativo() | currency }}</font></td>
+    </tr>
+
+    <tr>  
+        <td>Total</td>
+        <td><font ng-cloak ng-class='{green : calculaTotalEfectivo() >= 0, red: calculaTotalEfectivo() < 0}'>{{ calculaTotalEfectivo() | currency }}</font></td>
+        <td><font ng-cloak ng-class='{green : calculaTotalTarjeta() >= 0, red: calculaTotalTarjeta() < 0}'>{{ calculaTotalTarjeta() | currency }}</font></td>
+        <td><font ng-cloak ng-class='{green : calculaTotal() >= 0, red: calculaTotal() < 0}'><strong>{{ calculaTotal() | currency }}</strong></font></td>
+    </tr>
+     </tbody>
+  </table>
+
+</div>
 </div>
   <div ng-cloak ng-if="movimientos.length < 1" class="message fade-in">
     <div class="message-content">No hay movimientos para este d&iacute;a.</div>
@@ -112,6 +156,8 @@
 <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
 <#include "/html/caja/caja-modal.html">
 <#include "/html/caja/caja-modal-venta.html">
+<#include "/html/caja/caja-modal-turno.html">
+<#include "/html/caja/caja-modal-peluquero.html">
 <#include "/html/common/javascript.html">
 <#include "/html/common/confirm.html">
 <script src="js/movimientosController.js" ></script>

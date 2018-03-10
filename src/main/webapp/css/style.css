@@ -110,6 +110,15 @@ body{
     margin-right: 30px;
 }
 
+.banner-label-balance{
+    margin-top: 12px;
+    margin-right: 5px;
+    padding-bottom: 10px;
+}
+
+.banner-total{
+    margin-top: 30px;
+}
  .confirm-message{
    width: 100%
 }
@@ -158,6 +167,20 @@ body{
     vertical-align: bottom;
     display: inline-block;
 }
+
+.tr_card_caja {
+    text-align: left;
+}
+
+.add-card-caja{
+    float: right;
+    width: 20px;
+    display: block;
+    height: 20px;
+    margin-top: -16px;
+    margin-right: -5px;
+}
+
 
 .loading, .loading-turnos{
     display: none;
@@ -373,6 +396,15 @@ li a:hover {
 #cv {
     width: 600px;
 }
+
+#ct {
+    width: 350px;
+}
+
+#cp {
+    width: 400px;
+}
+
 
 .modal-double{
     width: 700px;
@@ -617,6 +649,12 @@ li a:hover {
     padding: 5px;
 }
 
+.banner-button-desplegable  {
+    cursor: pointer;
+    margin: 5px;
+    padding: 5px;
+}
+
 .banner-button:hover  {
     box-shadow: 0 1px 1px rgba(0, 0, 0, .6);
 }
@@ -683,6 +721,12 @@ tr:hover i{
 .cuotas-oculto{
     display: block;
 } 
+
+.card_totales{
+    width: 350px;
+    padding: 20px
+}
+
 
 .material-icons.rojo { color: rgba(249, 0, 0, .7); }
 .material-icons.verde { color: rgba(0, 249, 0, .5); }
