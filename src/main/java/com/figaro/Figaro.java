@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ImportResource;
 @EnableAutoConfiguration(exclude={HibernateJpaAutoConfiguration.class})
 public class Figaro {
 	
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		SpringApplication.run(Figaro.class, args);
 	}
 

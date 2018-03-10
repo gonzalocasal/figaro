@@ -36,54 +36,54 @@ public class TurnosControllerREST {
 	
 	@PostMapping("turnos/alta")
     public ResponseEntity<Turno> newTurno(@RequestBody Turno turno) {
-		return new ResponseEntity<Turno>(service.saveTurno(turno), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.saveTurno(turno), HttpStatus.CREATED);
 	}
 	
 	@GetMapping("turnos/{turnoId}")
     public ResponseEntity<Turno> getTurno( @PathVariable int turnoId) {
-		return new ResponseEntity<Turno>(service.getTurno(turnoId), HttpStatus.OK);
+		return new ResponseEntity<>(service.getTurno(turnoId), HttpStatus.OK);
     }
 	
 	@GetMapping("turnos/cliente/{clienteId}")
     public ResponseEntity<List<TurnoDTO>> getTurnosCliente( @PathVariable int clienteId) {
-		return new ResponseEntity<List<TurnoDTO>>(service.getTurnosCliente(clienteId), HttpStatus.OK);
+		return new ResponseEntity<>(service.getTurnosCliente(clienteId), HttpStatus.OK);
     }
 	
 	@GetMapping("turnos/peluquero/{peluqueroId}")
     public ResponseEntity<List<TurnoDTO>> getTurnosPeluquero( @PathVariable int peluqueroId, @RequestParam int index) {
-		return new ResponseEntity<List<TurnoDTO>>(service.getTurnosPeluquero(peluqueroId, index), HttpStatus.OK);
+		return new ResponseEntity<>(service.getTurnosPeluquero(peluqueroId, index), HttpStatus.OK);
     }
 	
 	@GetMapping("turnos/peluquero/{peluqueroId}/sinpagar")
     public ResponseEntity<List<TurnoDTO>> getTurnosPeluqueroSinPagar( @PathVariable int peluqueroId) {
-		return new ResponseEntity<List<TurnoDTO>>(service.getTurnosPeluqueroSinPagar(peluqueroId), HttpStatus.OK);
+		return new ResponseEntity<>(service.getTurnosPeluqueroSinPagar(peluqueroId), HttpStatus.OK);
     }
 	
 	
 	@PutMapping("turnos/actualizar/{turnoId}")
     public ResponseEntity<Turno> updateTurno(@RequestBody Turno turno) {
 		Turno updated = service.updateTurno(turno);
-		return new ResponseEntity<Turno>(updated, HttpStatus.OK);
+		return new ResponseEntity<>(updated, HttpStatus.OK);
 	}
 	
 	@PutMapping("turnos/{turnoId}/cobrado")
     public ResponseEntity<Turno> setCobrado( @PathVariable int turnoId, @RequestBody Movimiento movimiento) {
-		return new ResponseEntity<Turno>(service.setCobrado(turnoId,movimiento), HttpStatus.OK);
+		return new ResponseEntity<>(service.setCobrado(turnoId,movimiento), HttpStatus.OK);
 	}
 	
 	@PutMapping("turnos/{turnoId}/cobrado/cancelar")
     public ResponseEntity<Turno> cancelCobro( @PathVariable int turnoId) {
-		return new ResponseEntity<Turno>(service.cancelCobro(turnoId), HttpStatus.OK);
+		return new ResponseEntity<>(service.cancelCobro(turnoId), HttpStatus.OK);
 	}
 	
 	@PutMapping("turnos/{turnoId}/pagar")
     public ResponseEntity<Turno> pago( @PathVariable int turnoId) {
-		return new ResponseEntity<Turno>(service.pagar(turnoId), HttpStatus.OK);
+		return new ResponseEntity<>(service.pagar(turnoId), HttpStatus.OK);
 	}
 	
 	@GetMapping("turnos")
     public ResponseEntity<List<TurnoDTO>> getTurnosDelDia(@RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date fecha) {
-		return new ResponseEntity<List<TurnoDTO>>(service.getTurnosDelDia(fecha), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.getTurnosDelDia(fecha), HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("turnos/eliminar/{turnoId}")

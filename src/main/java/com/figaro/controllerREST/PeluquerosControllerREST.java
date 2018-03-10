@@ -30,41 +30,41 @@ public class PeluquerosControllerREST {
 	
 	@GetMapping("/peluqueros")
     public ResponseEntity<List<Peluquero>> getPeluqueros() {
-		return new ResponseEntity<List<Peluquero>>(service.getPeluqueros(), HttpStatus.OK);
+		return new ResponseEntity<>(service.getPeluqueros(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/peluqueros/habilitados")
     public ResponseEntity<List<Peluquero>> getPeluquerosHabilitados() {
-		return new ResponseEntity<List<Peluquero>>(service.getPeluquerosHabilitados(), HttpStatus.OK);
+		return new ResponseEntity<>(service.getPeluquerosHabilitados(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/peluqueros/{peluqueroId}")
     public ResponseEntity<Peluquero> getPeluquero(@PathVariable int peluqueroId) {
-		return new ResponseEntity<Peluquero>(service.getPeluquero(peluqueroId), HttpStatus.OK);
+		return new ResponseEntity<>(service.getPeluquero(peluqueroId), HttpStatus.OK);
 	}
 	
 	@PostMapping("/peluqueros/alta")
     public ResponseEntity<Peluquero> addPeluquero(@RequestBody Peluquero peluquero) {
 		Integer newId = service.savePeluquero(peluquero);
 		peluquero.setId(newId);
-		return new ResponseEntity<Peluquero>(peluquero, HttpStatus.CREATED);
+		return new ResponseEntity<>(peluquero, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/peluqueros/actualizar/{peluqueroId}")
     public ResponseEntity<Peluquero> updateCliente(@RequestBody Peluquero peluquero) {
 		Peluquero updated = service.updatePeluquero(peluquero);
-		return new ResponseEntity<Peluquero>(updated, HttpStatus.OK);
+		return new ResponseEntity<>(updated, HttpStatus.OK);
 	}
 	
 	@PatchMapping("/peluqueros/{idPeluquero}/habilitar")
     public ResponseEntity<Peluquero> habilitarPeluquero(@PathVariable Integer idPeluquero) {
 		service.habilitarPeluquero(idPeluquero);
-		return new ResponseEntity<Peluquero>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@GetMapping("/peluqueros/{peluqueroId}/totales")
     public ResponseEntity <TotalesPeluqueroDTO> getCantidadTurnosPeluquero( @PathVariable int peluqueroId) {
-		return new ResponseEntity<TotalesPeluqueroDTO>(service.getTotalesPeluquero(peluqueroId), HttpStatus.OK);
+		return new ResponseEntity<>(service.getTotalesPeluquero(peluqueroId), HttpStatus.OK);
     }
 	
 }

@@ -32,7 +32,7 @@ public class EstadisticasService {
 	
 	public Map<String, Integer> buscarClienteCiudad(){
 		List<Cliente> allClientes = clientesService.getAllClientes();
-		Map<String, Integer> mapClientes = new HashMap<String, Integer>();
+		Map<String, Integer> mapClientes = new HashMap<>();
 		for (Cliente cliente : allClientes) {
 			String ciudad = cliente.getDirCiudad();
 			if (null == ciudad)
@@ -45,15 +45,12 @@ public class EstadisticasService {
 				mapClientes.put(ciudad, cantidadHabitantes);
 			}
 		}
-
-		
-		
 		return mapClientes;
 	}
 	
 	public Map<String, Integer> buscarClienteSexo(){
 		List<Cliente> allClientes = clientesService.getAllClientes();
-		Map<String, Integer> mapClientes = new HashMap<String, Integer>();
+		Map<String, Integer> mapClientes = new HashMap<>();
 		for (Cliente cliente : allClientes) {
 			String sexo = cliente.getSexo();
 			Integer cantidadHabitantes = mapClientes.get(sexo);
@@ -70,7 +67,7 @@ public class EstadisticasService {
 	public Map<String, Integer> buscarProductoMasVendido(Date from, Date to) {
 		
 		List<Venta> searchVenta = repository.getAllDate(from, to);
-		Map<String, Integer> mapVenta = new HashMap<String, Integer>();
+		Map<String, Integer> mapVenta = new HashMap<>();
 		for (Venta venta : searchVenta) {
 			List<Item> searchItem = venta.getItems();
 			for (Item item : searchItem) {
@@ -92,17 +89,15 @@ public class EstadisticasService {
 		String category = "";
 		
 		List<Movimiento> searchMovimientos = movimientosService.searchMovimientos(from, to, category);
-		Map<String, BigDecimal> mapMovimientos = new HashMap<String, BigDecimal>();
+		Map<String, BigDecimal> mapMovimientos = new HashMap<>();
 		BigDecimal suma = new BigDecimal(0);
 		for (Movimiento movimiento : searchMovimientos) {
 			String categoria = movimiento.getCategoria();
 			BigDecimal cantidadVentas = mapMovimientos.get(categoria);			 			
-			if (cantidadVentas == null) {
+			if (cantidadVentas == null) 
 				mapMovimientos.put(categoria, new BigDecimal(1));
-				suma = new BigDecimal(0);
-			}else {
+			else 
 				suma = mapMovimientos.get(categoria);
-			}
 			BigDecimal precio = movimiento.getPrecio();
 			if (movimiento.getIsGasto()) {
 				suma = suma.subtract(precio);
@@ -117,18 +112,17 @@ public class EstadisticasService {
 	public Map<String, BigDecimal> buscarTurnosPorPeluqueroIngreso(Date from, Date to) {
 		
 		List<Turno> searchTurnos = repository.searchBetween (from,to);
-		Map<String, BigDecimal> mapTurnos = new HashMap<String, BigDecimal>();
+		Map<String, BigDecimal> mapTurnos = new HashMap<>();
 		BigDecimal suma = new BigDecimal(0);
 		for (Turno turnos : searchTurnos) {
 			Peluquero peluquero = turnos.getPeluquero();
 			String nombreApellido = peluquero.getNombre() + ' ' + peluquero.getApellido();			
 			BigDecimal cantidadTurnos = mapTurnos.get(nombreApellido);			 			
-			if (cantidadTurnos == null) {
+			if (cantidadTurnos == null) 
 				mapTurnos.put(nombreApellido, new BigDecimal(1));
-				suma = new BigDecimal(0);
-			}else {
+			else 
 				suma = mapTurnos.get(nombreApellido);
-			}			
+						
 			BigDecimal precio = turnos.calculatePrecio();	
 			
 			suma = suma.add(precio);						
@@ -140,7 +134,7 @@ public class EstadisticasService {
 	public Map<String, Integer> buscarTurnosPorPeluqueroCant(Date from, Date to) {
 		
 		List<Turno> searchTurnos = repository.searchBetween (from,to);
-		Map<String, Integer> mapTurnos = new HashMap<String, Integer>();		
+		Map<String, Integer> mapTurnos = new HashMap<>();		
 		for (Turno turnos : searchTurnos) {
 			Peluquero peluquero = turnos.getPeluquero();
 			String nombreApellido = peluquero.getNombre() + ' ' + peluquero.getApellido();			
@@ -158,7 +152,7 @@ public class EstadisticasService {
 	public TreeMap<String, Integer> buscarTurnoMasSolicitado(Date from, Date to) {
 		
 		List<Turno> searchTurnos = repository.searchBetween (from,to);
-		Map<String, Integer> mapTurnos = new HashMap<String, Integer>();		
+		Map<String, Integer> mapTurnos = new HashMap<>();		
 		
 		String[] horarios = {"08:00","08:15","08:30","08:45","09:00","09:15","09:30","09:45","10:00","10:15","10:30","10:45","11:00","11:15","11:30","11:45","12:00","12:15","12:30","12:45","13:00","13:15","13:30","13:45","14:00","14:15","14:30","14:45","15:00","15:15","15:30","15:45","16:00","16:15","16:30","16:45","17:00","17:15","17:30","17:45","18:00","18:15","18:30","18:45","19:00","19:15","19:30","19:45","20:00","20:15","20:30","20:45","21:00"};		
 		for (String horario : horarios) {				

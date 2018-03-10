@@ -29,33 +29,33 @@ public class ProveedoresControllerREST {
 	
 	@GetMapping("proveedores")
     public ResponseEntity<List<Proveedor>> getAllProveedores() {
-        return new ResponseEntity<List<Proveedor>>(service.getAllProveedores(), HttpStatus.OK);
+        return new ResponseEntity<>(service.getAllProveedores(), HttpStatus.OK);
     }
 	
 	@GetMapping("proveedores/{proveedorId}")
     public ResponseEntity<Proveedor> geProveedor( @PathVariable int proveedorId) {
-		return new ResponseEntity<Proveedor>(service.getProveedor(proveedorId), HttpStatus.OK);
+		return new ResponseEntity<>(service.getProveedor(proveedorId), HttpStatus.OK);
     }
 	
 	@PostMapping("proveedores/alta")
     public ResponseEntity<Proveedor> newProveedor(@RequestBody Proveedor proveedor) {
-		return new ResponseEntity<Proveedor>(service.saveProveedor(proveedor), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.saveProveedor(proveedor), HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("proveedores/eliminar/{proveedorId}")
     public ResponseEntity<Proveedor> deleteProveedor( @PathVariable int proveedorId) {
-		return new ResponseEntity<Proveedor>(service.deleteProveedor(proveedorId), HttpStatus.OK);
+		return new ResponseEntity<>(service.deleteProveedor(proveedorId), HttpStatus.OK);
     }
 	
 	@PutMapping("proveedores/actualizar/{proveedorId}")
     public ResponseEntity<Proveedor> updateProveedor(@RequestBody Proveedor proveedor) {
 		Proveedor updated = service.updateProveedor(proveedor);
-		return new ResponseEntity<Proveedor>(updated, HttpStatus.OK);
+		return new ResponseEntity<>(updated, HttpStatus.OK);
 	}
 
 	@GetMapping("proveedores/buscar")
     public ResponseEntity<List<Proveedor>> searchProveedores(@RequestParam String search) {
-		return new ResponseEntity<List<Proveedor>>(service.buscar(search), HttpStatus.OK);
+		return new ResponseEntity<>(service.buscar(search), HttpStatus.OK);
     }
 	
 	public ProveedoresService getService() {

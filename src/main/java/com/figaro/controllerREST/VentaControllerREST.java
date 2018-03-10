@@ -43,17 +43,17 @@ public class VentaControllerREST {
 	
 	@PostMapping("/alta")
     public ResponseEntity<Venta> newVenta(@RequestBody VentaDTO dto) {
-		return new ResponseEntity<Venta>(service.saveVenta(dto), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.saveVenta(dto), HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/eliminar/{ventaId}")
     public ResponseEntity<Venta> deleteVenta(@PathVariable int ventaId) {
-		return new ResponseEntity<Venta>(service.deleteVenta(ventaId), HttpStatus.OK);
+		return new ResponseEntity<>(service.deleteVenta(ventaId), HttpStatus.OK);
 	}
 	
 	@GetMapping("/historial-venta/buscar")
     public ResponseEntity<List<Venta>> getAllVenta(@RequestParam  @DateTimeFormat(pattern=DATE_FORMAT) Date from, @RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date to) {
-        return new ResponseEntity<List<Venta>> (service.searchVentas(from,to),HttpStatus.CREATED);
+        return new ResponseEntity<> (service.searchVentas(from,to),HttpStatus.CREATED);
     }
 	
 	public VentaService getVenta() {

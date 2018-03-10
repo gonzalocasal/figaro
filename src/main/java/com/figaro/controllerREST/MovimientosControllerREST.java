@@ -44,18 +44,18 @@ public class MovimientosControllerREST {
 	
 	@PostMapping("movimientos/alta")
     public ResponseEntity<Movimiento> newMovimiento(@RequestBody Movimiento movimiento) {
-		return new ResponseEntity<Movimiento>(service.saveMovimiento(movimiento), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.saveMovimiento(movimiento), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("movimientos/actualizar/{movimientoID}")
     public ResponseEntity<Movimiento> updateMovimiento(@RequestBody Movimiento movimiento) {
 		Movimiento updated = service.updateMovimiento(movimiento);
-		return new ResponseEntity<Movimiento>(updated, HttpStatus.OK);
+		return new ResponseEntity<>(updated, HttpStatus.OK);
 	}
 	
 	@GetMapping("movimientos/buscar")
     public ResponseEntity<List<Movimiento>> getAllMovimiento(@RequestParam  @DateTimeFormat(pattern=DATE_FORMAT) Date from, @RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date to, @RequestParam String category ) {
-        return new ResponseEntity<List<Movimiento>> (service.searchMovimientos(from,to,category),HttpStatus.CREATED);
+        return new ResponseEntity<> (service.searchMovimientos(from,to,category),HttpStatus.CREATED);
     }
 	
 	@DeleteMapping("movimientos/eliminar/{movimientoID}")	
@@ -65,17 +65,17 @@ public class MovimientosControllerREST {
 	
 	@GetMapping("movimientos/listaDeItems")
     public ResponseEntity<List<Item>> getItemId(@RequestParam Integer id) throws ParseException {		
-        return new ResponseEntity<List<Item>>(service.getItemId(id), HttpStatus.OK);
+        return new ResponseEntity<>(service.getItemId(id), HttpStatus.OK);
     }
 	
 	@GetMapping("movimientos/turno")
     public ResponseEntity<Turno> getTurnoId(@RequestParam Integer id) throws ParseException {		
-        return new ResponseEntity<Turno>(service.getTurnoId(id), HttpStatus.OK);
+        return new ResponseEntity<>(service.getTurnoId(id), HttpStatus.OK);
     }	
 	
 	@GetMapping("movimientos/setDeTrabajos")
     public ResponseEntity<Set<Trabajo>> getListTurnoId(@RequestParam Integer id) throws ParseException {		
-        return new ResponseEntity<Set<Trabajo>>(service.getListTurnoId(id), HttpStatus.OK);
+        return new ResponseEntity<>(service.getListTurnoId(id), HttpStatus.OK);
     }
 	
 	public MovimientosService getService() {

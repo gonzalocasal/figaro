@@ -45,29 +45,29 @@ public class StockControllerREST {
 	
 	@PostMapping("/alta")
     public ResponseEntity<Producto> newProducto(@RequestBody Producto producto) {
-		return new ResponseEntity<Producto>(service.saveProducto(producto), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.saveProducto(producto), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/actualizar/{productoId}")
     public ResponseEntity<Producto> updateProducto(@RequestBody Producto producto) {
 		Producto updated = service.updateProducto(producto);
-		return new ResponseEntity<Producto>(updated, HttpStatus.OK);
+		return new ResponseEntity<>(updated, HttpStatus.OK);
 	}
 	
 	@PatchMapping("/editar/{productoId}")
     public ResponseEntity<Producto> editProducto(@PathVariable int productoId, @RequestParam int cantidad) {
 		Producto updated = service.updateCantidad(productoId, cantidad);
-		return new ResponseEntity<Producto>(updated, HttpStatus.OK);
+		return new ResponseEntity<>(updated, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/eliminar/{productoId}")
     public ResponseEntity<Producto> deleteProducto(@PathVariable int productoId) {
-		return new ResponseEntity<Producto>(service.deleteProducto(productoId), HttpStatus.OK);
+		return new ResponseEntity<>(service.deleteProducto(productoId), HttpStatus.OK);
 	}
 	
 	@GetMapping("/buscar")
     public ResponseEntity<List<Producto>> getAllProductos(@RequestParam String search) {
-        return new ResponseEntity<List<Producto>>(service.buscar(search), HttpStatus.OK);
+        return new ResponseEntity<>(service.buscar(search), HttpStatus.OK);
     }
 		
 	public ProductosService getService() {

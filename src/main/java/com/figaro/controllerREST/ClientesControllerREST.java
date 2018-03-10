@@ -27,28 +27,28 @@ public class ClientesControllerREST {
 	
 	@GetMapping("clientes")
     public ResponseEntity<List<Cliente>> getAllClientes() {
-        return new ResponseEntity<List<Cliente>>(service.getAllClientes(), HttpStatus.OK);
+        return new ResponseEntity<>(service.getAllClientes(), HttpStatus.OK);
     }
 	
 	@GetMapping("clientes/{clienteID}")
     public ResponseEntity<Cliente> getCliente( @PathVariable int clienteID) {
-		return new ResponseEntity<Cliente>(service.getCliente(clienteID), HttpStatus.OK);
+		return new ResponseEntity<>(service.getCliente(clienteID), HttpStatus.OK);
     }
 	
 	@PostMapping("clientes/alta")
     public ResponseEntity<Cliente> newCliente(@RequestBody Cliente cliente) {
-		return new ResponseEntity<Cliente>(service.saveCliente(cliente), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.saveCliente(cliente), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("clientes/actualizar/{clienteID}")
     public ResponseEntity<Cliente> updateCliente(@RequestBody Cliente cliente) {
 		Cliente updated = service.updateCliente(cliente);
-		return new ResponseEntity<Cliente>(updated, HttpStatus.OK);
+		return new ResponseEntity<>(updated, HttpStatus.OK);
 	}
 
 	@GetMapping("clientes/buscar")
     public ResponseEntity<List<Cliente>> searchClientes(@RequestParam String search) {
-		return new ResponseEntity<List<Cliente>>(service.buscar(search), HttpStatus.OK);
+		return new ResponseEntity<>(service.buscar(search), HttpStatus.OK);
     }
 	
 	public ClientesService getService() {

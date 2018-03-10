@@ -16,10 +16,12 @@ import com.figaro.service.MovimientosService;
 @SuppressWarnings({ "unchecked" })
 public class MovimientosRepository extends AbstractRepository{
 	
-	final static Logger LOGGER = Logger.getLogger(MovimientosService.class);
+	
 
 	private static String QUERY_GET_MOVIMIENTOS = "FROM Movimiento m WHERE (m.fecha BETWEEN ?1 AND ?2)";
 	private static String QUERY_CATEGORIA = " AND (m.categoria = ?3)";
+	
+	final static Logger LOGGER = Logger.getLogger(MovimientosService.class);
 	
 	public int saveMovimiento (Movimiento movimiento) {
 		return (int) getCurrentSession().save(movimiento); 
@@ -30,7 +32,7 @@ public class MovimientosRepository extends AbstractRepository{
 	}
 	
 	public Movimiento getMovimiento(int id){
-		return (Movimiento) getCurrentSession().get(Movimiento.class, id);
+		return getCurrentSession().get(Movimiento.class, id);
 	}
 	
 	public void deleteMovimiento(Movimiento movimiento) {
