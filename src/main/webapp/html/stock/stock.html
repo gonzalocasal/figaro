@@ -6,7 +6,7 @@
 </head>
 <body ng-app=figaro ng-controller=stockController data-ng-init="init()" >
   <#include "/html/common/menu.html">
-  <div id=content class=content>
+  <div ng-cloak id=content class="content fade-in">
     <div class="banner">
         <label class="banner-button add boton-stock" ng-click="newProducto()"><i class=material-icons>playlist_add</i>Nuevo</label>
         <div class="separator"></div>
@@ -19,7 +19,7 @@
     
     </div>
     
-    <table id=table class=main-table>
+    <table id=table class=main-table ng-cloak >
       <thead>
         <tr>
             <th>NOMBRE</th>
@@ -31,7 +31,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr class=data-row ng-repeat="producto in productos" ng-class='{red : producto.cantidadMinima > producto.cantidad}'>
+        <tr class="data-row fade-in" ng-repeat="producto in productos" ng-class='{red : producto.cantidadMinima > producto.cantidad}'>
           <td id={{producto.id}} data-id={{producto.nombre}} data-ng-click="detailProducto($event)">{{producto.nombre}}</td>
           <td id={{producto.id}} data-id={{producto.descrip}} data-ng-click="detailProducto($event)">{{producto.descripcion}}</td>
           <td class=numericotr id={{producto.id}} data-id={{producto.id}}>
@@ -42,7 +42,8 @@
         </tr>
       </tbody>
     </table>
-  </div>  
+  </div>
+  <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
 
   <#include "stock-modal.html">
   <#include "/html/common/confirm.html">

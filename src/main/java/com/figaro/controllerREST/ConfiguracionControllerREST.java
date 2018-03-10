@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,76 +29,76 @@ public class ConfiguracionControllerREST {
 	@Qualifier("ConfiguracionServiceTransactional")
 	private ConfiguracionService service;
 	
-	@RequestMapping(value = "/ciudades",method=RequestMethod.GET)
+	@GetMapping("/ciudades")
     public ResponseEntity<List<Ciudad>> getCiudades() {
-		return new ResponseEntity<List<Ciudad>>(service.getCiudades(), HttpStatus.OK);
+		return new ResponseEntity<>(service.getCiudades(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/ciudades/alta",method=RequestMethod.POST)
+	@PostMapping("/ciudades/alta")
     public ResponseEntity<Ciudad> newCiudad(@RequestBody Ciudad ciudad) {
 		Integer newID = service.saveCiudad(ciudad);
 		ciudad.setId(newID);
-		return new ResponseEntity<Ciudad>(ciudad, HttpStatus.CREATED);
+		return new ResponseEntity<>(ciudad, HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/ciudades/baja/{idCiudad}",method=RequestMethod.DELETE)
+	@DeleteMapping("/ciudades/baja/{idCiudad}")
     public ResponseEntity<Ciudad> deleteCiudad(@PathVariable Integer idCiudad) {
 		service.deleteCiudad(idCiudad);
-		return new ResponseEntity<Ciudad>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/servicios",method=RequestMethod.GET)
+	@GetMapping("/servicios")
     public ResponseEntity<List<Servicio>> getTrabajos() {
-		return new ResponseEntity<List<Servicio>>(service.getServicio(), HttpStatus.OK);
+		return new ResponseEntity<>(service.getServicio(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/servicios/alta",method=RequestMethod.POST)
+	@PostMapping("/servicios/alta")
     public ResponseEntity<Servicio> addTrabajo(@RequestBody Servicio trabajo) {
 		Integer newID = service.saveServicio(trabajo);
 		trabajo.setId(newID);
-		return new ResponseEntity<Servicio>(trabajo, HttpStatus.CREATED);
+		return new ResponseEntity<>(trabajo, HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/servicios/baja/{idServicio}",method=RequestMethod.DELETE)
+	@DeleteMapping("/servicios/baja/{idServicio}")
     public ResponseEntity<Servicio> deleteServicio(@PathVariable Integer idServicio) {
 		service.deleteServicio(idServicio);
-		return new ResponseEntity<Servicio>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/servicios/actualizar/{idServicio}",method=RequestMethod.PUT)
+	@PutMapping("/servicios/actualizar/{idServicio}")
     public ResponseEntity<Servicio> updateServicio(@RequestBody Servicio servicio) {
 		Servicio updated = service.updateServicio(servicio);
-		return new ResponseEntity<Servicio>(updated ,HttpStatus.OK);
+		return new ResponseEntity<>(updated ,HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/servicios/{idServicio}",method=RequestMethod.GET)
+	@GetMapping("/servicios/{idServicio}")
     public ResponseEntity<Servicio> getServicio(@PathVariable Integer idServicio) {
 		Servicio trabajo = service.getServicio(idServicio);
-		return new ResponseEntity<Servicio>(trabajo ,HttpStatus.OK);
+		return new ResponseEntity<>(trabajo ,HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/servicios/buscar",method=RequestMethod.GET)
+	@GetMapping("/servicios/buscar")
     public ResponseEntity<List<Servicio>> searchServicio(@RequestParam String search) {
         return new ResponseEntity<List<Servicio>>(service.buscarTrabajos(search), HttpStatus.OK);
     }
 	
 	
-	@RequestMapping(value = "/categorias",method=RequestMethod.GET)
+	@GetMapping("/categorias")
     public ResponseEntity<List<Categoria>> getCategorias() {
 		return new ResponseEntity<List<Categoria>>(service.getCategorias(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/categorias/alta",method=RequestMethod.POST)
+	@PostMapping("/categorias/alta")
     public ResponseEntity<Categoria> addCategoria(@RequestBody Categoria categoria) {
 		Integer newID = service.save(categoria);
 		categoria.setId(newID);
-		return new ResponseEntity<Categoria>(categoria, HttpStatus.CREATED);
+		return new ResponseEntity<>(categoria, HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/categorias/baja/{idCategoria}",method=RequestMethod.DELETE)
+	@DeleteMapping("/categorias/baja/{idCategoria}")
     public ResponseEntity<Categoria> deleteCategoria(@PathVariable Integer idCategoria) {
 		service.deleteCategoria(idCategoria);
-		return new ResponseEntity<Categoria>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 }

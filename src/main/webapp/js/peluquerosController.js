@@ -5,6 +5,7 @@ app.controller('peluquerosController', function ($scope, $http) {
         $scope.activePeluqueros = true;
         $scope.loaded = false;
         $scope.ngPeluquero = {"trabajos" :[]};
+        loading();
         $scope.getAll();
         $scope.getAllCiudades();
         $scope.getAllTrabajos();
@@ -48,7 +49,7 @@ app.controller('peluquerosController', function ($scope, $http) {
             Array.prototype.push.apply($scope.turnos, turnos);
             if ($scope.turnos.length > 0){
                 $scope.peluquero = ($scope.turnos[0].peluquero.nombre +' '+ $scope.turnos[0].peluquero.apellido) 
-                $scope.getTotalTurnosPeluquero($scope.turnos);
+                
             }
         });
     }    
@@ -65,7 +66,7 @@ app.controller('peluquerosController', function ($scope, $http) {
             Array.prototype.push.apply($scope.turnos, turnos);
             if ( $scope.turnos.length > 0){
                 $scope.peluquero = ($scope.turnos[0].peluquero.nombre +' '+ $scope.turnos[0].peluquero.apellido) 
-                $scope.getTotalTurnosPeluquero($scope.turnos);
+               
             }
         });
     }
@@ -73,56 +74,48 @@ app.controller('peluquerosController', function ($scope, $http) {
 
     //GET CANTIDAD TURNOS PELUQUEROS 
     $scope.getCantidadTurnos = function(){
-        url = '/rest/turnos/peluquero/'+ $scope.peluqueroId+'/cantidad';
+        url = '/rest/peluqueros/'+ $scope.peluqueroId+'/totales';
         $http.get(url,{params: {index: $scope.index}})
         .then(function successCallback(response) {
-            $scope.cantidadTurnosPeluquero = response.data;
+            $scope.totalCantidadTurnos = response.data.turnos;
+            $scope.totalPago = response.data.pago;
         });
     }   
 
 
-    //OBTENER TOTAL TURNOS PELUQUERO
-    $scope.getTotalTurnosPeluquero = function(turnos) {
-        var total = 0;
-        for(var i = 0; i < turnos.length; i++)
-        for(var j = 0; j < turnos[i].trabajos.length; j++)
-            total += turnos[i].trabajos[j].servicio.precio;
-    return total;
+
+    //REDIRIGIR A LOS TURNOS SIN PAGAR
+    $scope.irSinPagar = function() {
+        if(typeof $scope.peluqueroSelected === "undefined")
+            alert('Seleccione un peluquero');
+        else
+            window.location.href = "/turnos/peluquero/"+$scope.peluqueroSelected.id+"/sinpagar"
     };
-
-
-    //OBTENER TOTAL DE TURNO
-    $scope.getTotalTurno = function(trabajos) {
-        var total = 0;
-        for(var i = 0; i < trabajos.length; i++)
-            total += trabajos[i].servicio.precio;
-    return total;
-    };
-
   
-    //OBTENER PAGO A PELUQUERO POR TURNO
-    $scope.getPago = function(trabajos) {
-        var total = 0;
-        for(var i = 0; i < trabajos.length; i++)
-            total += (trabajos[i].servicio.precio * trabajos[i].comision) /100 ;
-        return total;
-    };
+    //REDIRIGIR A HISTORIAL DE PELUQUERO
+    $scope.irTurnos = function() {
+        if(typeof $scope.peluqueroSelected === "undefined")
+            alert('Seleccione un peluquero');
+        else
+           window.location.href = "/turnos/peluquero/"+$scope.peluqueroSelected.id
 
-    //OBTENER PAGO A PELUQUERO POR TURNO
-    $scope.getTotalPagoTurnosPeluquero = function (turnos) {
-        var total = 0;
-        for(var i = 0; i < turnos.length; i++)
-            total += $scope.getPago(turnos[i].trabajos)
-        return total;
     };
+   
+   
+    //ACTUALIZAR SELECCION
+    $scope.actualizarSeleccion = function(position, peluqueros) {
+      angular.forEach(peluqueros, function(peluquero, index) {
+      (position != index) ? peluquero.checked = false : $scope.peluqueroSelected = peluquero;
+      });
+    }
 
-    
 
 
     //OBTENER LISTA DE PELUQUEROS
     $scope.getAll = function() {
         $http.get("/rest/peluqueros/habilitados").then(function (response) {
             $scope.peluqueros = response.data;
+            loadComplete();
         });
     };
 
@@ -131,7 +124,7 @@ app.controller('peluquerosController', function ($scope, $http) {
         $scope.message='';
         $scope.allChecked = false;
         $scope.checkAllTrabajos();
-        ($scope.isModalOpen == true) ? $('#modal-peluqueros').addClass("modal-on-top") : openModal("modal-peluqueros");
+        openModal("modal-peluqueros");
         $('#modal-peluqueros-focus').focus();
     }
 
@@ -187,6 +180,9 @@ app.controller('peluquerosController', function ($scope, $http) {
     return found;
     };
 
+
+   
+
     //ASIGNAR TRABAJOS SELECCIONADOS A PELUQUEROS
     $scope.actualizarTrabajos = function() {
         $scope.ngPeluquero.trabajos = [];
@@ -210,7 +206,7 @@ app.controller('peluquerosController', function ($scope, $http) {
     //DESCARTAR FORMULARIO
     $scope.discardPeluquero = function(event){
         $scope.update = null;
-        $scope.ngPeluquero = {"servicios" :[]};
+        $scope.ngf = {"servicios" :[]};
         closeModal("modal-peluqueros");
     };
 

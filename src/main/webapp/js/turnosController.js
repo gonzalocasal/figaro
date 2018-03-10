@@ -26,20 +26,17 @@ app.controller('turnosController', function ($scope, $http) {
         openModal("modal-turnos");
     };
 
-    //CLICK FILA TURNO
-    $scope.detailTurno = function(event){
-        $scope.update=true;
-        $scope.isNuevoTurno = false;
-        $scope.turnoId = event.currentTarget.getAttribute("data-id");
-    
-        $scope.ngTurno = null;
-        var i = 0;
-        while($scope.ngTurno == null){
-            if ($scope.turnoId == $scope.turnos[i].id) 
-                $scope.ngTurno= angular.copy($scope.turnos[i]);
-            else i++;
-        }
 
+
+
+    //OBTENER TURNO
+    $scope.getTurno = function(turnoId) {
+     
+        $http.get('/rest/turnos/'+turnoId)
+        .then(function successCallback(response) {
+            $scope.ngTurno = response.data;
+            
+        
         $scope.startHour = $scope.ngTurno.desde.split(' ')[1];
         $scope.endHour = $scope.ngTurno.hasta.split(' ')[1];
         
@@ -68,6 +65,16 @@ app.controller('turnosController', function ($scope, $http) {
                 $scope.trabajosPeluquero.push(trabajo);
         });  
         openModal("modal-turnos");
+        });
+    };
+
+
+    //CLICK FILA TURNO
+    $scope.detailTurno = function(event){
+        $scope.update=true;
+        $scope.isNuevoTurno = false;
+        $scope.turnoId = event.currentTarget.getAttribute("data-id");
+        $scope.getTurno($scope.turnoId);
     };
 
 
@@ -121,18 +128,21 @@ app.controller('turnosController', function ($scope, $http) {
 
     //OBTENER TURNOS
     $scope.getTurnos = function() {
-        loading();
+        loadingTurnos();
         if ($scope.ngDateTurno== null)
              $scope.getTurnosHoy();
         $http.get('/rest/turnos',{params:{fecha: getStringDate($scope.ngDateTurno)}})
         .then(function successCallback(response) {
-            loadComplete();
             $scope.turnos = response.data;
             $scope.getTotalDiario($scope.turnos);
+            loadTurnosComplete();
         });
     };
 
 
+
+
+ 
     //OBTENER TURNOS DIA ANTERIOR
     $scope.getTurnosDiaAnterior = function() {
         var date = new Date($scope.ngDateTurno.getTime());
@@ -168,9 +178,7 @@ app.controller('turnosController', function ($scope, $http) {
     $scope.getTotalDiario = function(turnos) {
         var total = 0;
         for(var i = 0; i < turnos.length; i++)
-        for(var j = 0; j < turnos[i].trabajos.length; j++)
-            total += turnos[i].trabajos[j].servicio.precio;
-        $scope.totalDiario = total;
+            total += turnos[i].montoCobro;
     return total;
     };
 
@@ -182,12 +190,11 @@ app.controller('turnosController', function ($scope, $http) {
         return total;
     };
 
-    //OBTENER TOTAL PAGOS
-    $scope.getTotalPago = function(turnos) {
+    //OBTENER TOTAL PAGO A PELUQUERO PENDIENTE
+    $scope.calcularTotalPagoPeluquero = function (turnos) {
         var total = 0;
         for(var i = 0; i < turnos.length; i++)
-        for(var j = 0; j < turnos[i].trabajos.length; j++)
-            total += (turnos[i].trabajos[j].servicio.precio * turnos[i].trabajos[j].comision) /100 ;
+            total += turnos[i].montoPago
         return total;
     };
 
@@ -373,9 +380,9 @@ app.controller('turnosController', function ($scope, $http) {
     document.addEventListener('keyup', function(e) {
         if (e.keyCode == 27) 
             $scope.discardTurno();
-        if ((e.keyCode == 39 || e.keyCode == 38) && !$scope.focus)
+        if ((e.keyCode == 39 || e.keyCode == 38) && !$scope.focus && !$(".modal-on")[0])
             $scope.getTurnosDiaSiguiente();
-        if ((e.keyCode == 37 || e.keyCode == 40) && !$scope.focus)
+        if ((e.keyCode == 37 || e.keyCode == 40) && !$scope.focus && !$(".modal-on")[0])
             $scope.getTurnosDiaAnterior();
     });
     

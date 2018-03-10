@@ -6,12 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.figaro.dto.TotalesPeluqueroDTO;
 import com.figaro.model.Peluquero;
 import com.figaro.service.PeluquerosService;
 
@@ -24,44 +28,43 @@ public class PeluquerosControllerREST {
 	private PeluquerosService service;
 	
 	
-	@RequestMapping(value = "/peluqueros",method=RequestMethod.GET)
+	@GetMapping("/peluqueros")
     public ResponseEntity<List<Peluquero>> getPeluqueros() {
-		return new ResponseEntity<List<Peluquero>>(service.getPeluqueros(), HttpStatus.OK);
+		return new ResponseEntity<>(service.getPeluqueros(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/peluqueros/habilitados",method=RequestMethod.GET)
+	@GetMapping("/peluqueros/habilitados")
     public ResponseEntity<List<Peluquero>> getPeluquerosHabilitados() {
-		return new ResponseEntity<List<Peluquero>>(service.getPeluquerosHabilitados(), HttpStatus.OK);
+		return new ResponseEntity<>(service.getPeluquerosHabilitados(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/peluqueros/{peluqueroId}",method=RequestMethod.GET)
+	@GetMapping("/peluqueros/{peluqueroId}")
     public ResponseEntity<Peluquero> getPeluquero(@PathVariable int peluqueroId) {
-		return new ResponseEntity<Peluquero>(service.getPeluquero(peluqueroId), HttpStatus.OK);
+		return new ResponseEntity<>(service.getPeluquero(peluqueroId), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/peluqueros/alta",method=RequestMethod.POST)
+	@PostMapping("/peluqueros/alta")
     public ResponseEntity<Peluquero> addPeluquero(@RequestBody Peluquero peluquero) {
 		Integer newId = service.savePeluquero(peluquero);
 		peluquero.setId(newId);
-		return new ResponseEntity<Peluquero>(peluquero, HttpStatus.CREATED);
+		return new ResponseEntity<>(peluquero, HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/peluqueros/actualizar/{peluqueroId}",method=RequestMethod.PUT)
+	@PutMapping("/peluqueros/actualizar/{peluqueroId}")
     public ResponseEntity<Peluquero> updateCliente(@RequestBody Peluquero peluquero) {
 		Peluquero updated = service.updatePeluquero(peluquero);
-		return new ResponseEntity<Peluquero>(updated, HttpStatus.OK);
+		return new ResponseEntity<>(updated, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/peluqueros/baja/{idPeluquero}",method=RequestMethod.DELETE)
-    public ResponseEntity<Peluquero> deletePeluquero(@PathVariable Integer idPeluquero) {
-		service.deletePeluquero(idPeluquero);
-		return new ResponseEntity<Peluquero>(HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/peluqueros/{idPeluquero}/habilitar",method=RequestMethod.PATCH)
+	@PatchMapping("/peluqueros/{idPeluquero}/habilitar")
     public ResponseEntity<Peluquero> habilitarPeluquero(@PathVariable Integer idPeluquero) {
 		service.habilitarPeluquero(idPeluquero);
-		return new ResponseEntity<Peluquero>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@GetMapping("/peluqueros/{peluqueroId}/totales")
+    public ResponseEntity <TotalesPeluqueroDTO> getCantidadTurnosPeluquero( @PathVariable int peluqueroId) {
+		return new ResponseEntity<>(service.getTotalesPeluquero(peluqueroId), HttpStatus.OK);
+    }
 	
 }

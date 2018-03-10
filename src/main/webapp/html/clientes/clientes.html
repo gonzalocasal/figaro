@@ -6,16 +6,23 @@
 </head>
 <body ng-app=figaro ng-controller=clientesController data-ng-init="init()" >
   <#include "/html/common/menu.html">
-  <div id=content class=content>
+  <div id=content class="content fade-in" ng-cloak>
     <div class="banner">
+        
         <label class="banner-button add" ng-click="newClient()"><i class=material-icons  >person_add</i> Nuevo</label>
         <div class="separator"></div>
+        
+
+        <label class="banner-button add" ng-click="irTurnos()" ><i class="material-icons" >date_range</i> Turnos</label>   
+        <div class="separator"></div>
+
         <i class="material-icons search-input-icon ">search</i>
         <input class=input-banner type="text" placeholder="Buscar..." ng-model="search" ng-keyup="searchCliente()">
     </div>
     <table id=table class=main-table>
       <thead>
         <tr>
+            <th></th>
             <th>NOMBRE</th>
             <th>APELLIDO</th>
             <th>EMAIL</th>
@@ -25,17 +32,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr id={{cliente.id}} data-id={{cliente.id}} class=data-row ng-repeat="cliente in clientes" data-ng-click="detailClient($event)" ng-cloak>
-          <td>{{cliente.nombre}}</td>
-          <td>{{cliente.apellido}}</td>
-          <td>{{cliente.email}}</td>
-          <td>{{cliente.telefono}}</td>
-          <td>{{cliente.ultimaVisita | date}}</td>
-          <td>{{cliente.notas}}</td>
+        <tr id={{cliente.id}} data-id={{cliente.id}} class="data-row fade-in" ng-repeat="cliente in clientes"  >
+          <td><input ng-model="cliente.checked" ng-click="actualizarSeleccion($index, clientes)" type="checkbox" /></td>
+          <td ng-click="detailClient(cliente.id)">{{cliente.nombre}}</td>
+          <td ng-click="detailClient(cliente.id)">{{cliente.apellido}}</td>
+          <td ng-click="detailClient(cliente.id)">{{cliente.email}}</td>
+          <td ng-click="detailClient(cliente.id)">{{cliente.telefono}}</td>
+          <td ng-click="detailClient(cliente.id)">{{cliente.ultimaVisita | date}}</td>
+          <td ng-click="detailClient(cliente.id)">{{cliente.notas}}</td>
         </tr>
       </tbody>
     </table>
   </div>
+  <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
   <#include "/html/clientes/clientes-modal.html">
   <#include "/html/common/javascript.html">
   <script src="js/clientesController.js" ></script>

@@ -87,10 +87,11 @@ function logout(){
 };
 
 
-function loadComplete(){
+function loadComplete(loaded){
 	$('.loading').hide();
 	$('.page-loading').hide();
 	$('.ver-mas').show();
+	loaded = true;
 }
 
 
@@ -98,5 +99,14 @@ function loading(){
 	$('.loading').show();
 	$('.ver-mas').hide();
 }
+
+function loadingTurnos(){
+	$('.loading-turnos').show();
+}
+
+function loadTurnosComplete(){
+	$('.loading-turnos').hide();
+}
+
 
 var app = angular.module('figaro', []);

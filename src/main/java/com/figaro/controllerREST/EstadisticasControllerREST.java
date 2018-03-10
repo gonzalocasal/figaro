@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,39 +27,39 @@ public class EstadisticasControllerREST {
 	@Qualifier("EstadisticasServiceTransactional")
 	private EstadisticasService service;
 	
-	@RequestMapping(value = "estadisticas/clientesCiudad",method=RequestMethod.GET,produces="application/json")
+	@GetMapping("estadisticas/clientesCiudad")
     public ResponseEntity<Map<String, Integer>> buscarClienteCiudad() {
-        return new ResponseEntity<Map<String, Integer>>(service.buscarClienteCiudad(), HttpStatus.OK);
+        return new ResponseEntity<>(service.buscarClienteCiudad(), HttpStatus.OK);
     }
 	
-	@RequestMapping(value = "estadisticas/clientesSexo",method=RequestMethod.GET,produces="application/json")
+	@GetMapping("estadisticas/clientesSexo")
     public ResponseEntity<Map<String, Integer>> buscarClienteSexo() {
-        return new ResponseEntity<Map<String, Integer>>(service.buscarClienteSexo(), HttpStatus.OK);
+        return new ResponseEntity<>(service.buscarClienteSexo(), HttpStatus.OK);
     }
 	
-	@RequestMapping(value = "estadisticas/productoMasVendido",method=RequestMethod.GET,produces="application/json")
+	@GetMapping("estadisticas/productoMasVendido")
     public ResponseEntity<Map<String, Integer>> buscarProductoMasVendido(@RequestParam  @DateTimeFormat(pattern=DATE_FORMAT) Date from, @RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date to) {		
-        return new ResponseEntity<Map<String, Integer>>(service.buscarProductoMasVendido(from,to), HttpStatus.OK);
+        return new ResponseEntity<>(service.buscarProductoMasVendido(from,to), HttpStatus.OK);
     }
 	
-	@RequestMapping(value = "estadisticas/totalesDeCaja",method=RequestMethod.GET,produces="application/json")
+	@GetMapping("estadisticas/totalesDeCaja")
     public ResponseEntity<Map<String, BigDecimal>> buscarTotalesDeCaja(@RequestParam  @DateTimeFormat(pattern=DATE_FORMAT) Date from, @RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date to)  {		
-        return new ResponseEntity<Map<String, BigDecimal>>(service.buscarTotalesDeCaja(from,to), HttpStatus.OK);
+        return new ResponseEntity<>(service.buscarTotalesDeCaja(from,to), HttpStatus.OK);
     }
 		
-	@RequestMapping(value = "estadisticas/turnosPorPeluqueroCant",method=RequestMethod.GET,produces="application/json")
+	@GetMapping("estadisticas/turnosPorPeluqueroCant")
     public ResponseEntity<Map<String, Integer>> buscarTurnosPorPeluqueroCant(@RequestParam  @DateTimeFormat(pattern=DATE_FORMAT) Date from, @RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date to) {		
-        return new ResponseEntity<Map<String, Integer>>(service.buscarTurnosPorPeluqueroCant(from,to), HttpStatus.OK);
+        return new ResponseEntity<>(service.buscarTurnosPorPeluqueroCant(from,to), HttpStatus.OK);
     }
 	
-	@RequestMapping(value = "estadisticas/turnosPorPeluqueroIngreso",method=RequestMethod.GET,produces="application/json")
+	@GetMapping("estadisticas/turnosPorPeluqueroIngreso")
     public ResponseEntity<Map<String, BigDecimal>> buscarTurnosPorPeluqueroIngreso(@RequestParam  @DateTimeFormat(pattern=DATE_FORMAT) Date from, @RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date to) {		
-        return new ResponseEntity<Map<String, BigDecimal>>(service.buscarTurnosPorPeluqueroIngreso(from,to), HttpStatus.OK);
+        return new ResponseEntity<>(service.buscarTurnosPorPeluqueroIngreso(from,to), HttpStatus.OK);
     }
 		
-	@RequestMapping(value = "estadisticas/turnosMasSolicitado",method=RequestMethod.GET,produces="application/json")
+	@GetMapping("estadisticas/turnosMasSolicitado")
     public ResponseEntity<TreeMap<String, Integer>> buscarTurnoMasSolicitado(@RequestParam  @DateTimeFormat(pattern=DATE_FORMAT) Date from, @RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date to) {		
-        return new ResponseEntity<TreeMap<String, Integer>>(service.buscarTurnoMasSolicitado(from,to), HttpStatus.OK);
+        return new ResponseEntity<>(service.buscarTurnoMasSolicitado(from,to), HttpStatus.OK);
     }
 
 	public EstadisticasService getService() {

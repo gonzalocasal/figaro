@@ -6,8 +6,7 @@
 </head>
 <body ng-app=figaro ng-controller=turnosController  data-ng-init="init()" >
   <#include "/html/common/menu.html">
-
-  <div id=content class=content>
+  <div id=content class="content fade-in">
     <div class=banner>
         <label class="banner-button add" ng-click="newTurno()" ><i class=material-icons>addtoday</i> Nuevo</label>
         <div class="separator"></div>
@@ -19,7 +18,7 @@
     </div>
   
     <table  ng-cloak ng-if="turnos.length > 0" id=table class=main-table>
-    <thead>
+      <thead>
       <tr>
           <th>HORARIO</th>
           <th>CLIENTE</th>
@@ -29,33 +28,29 @@
           <th>COBRADO</th>
           <th></th>
       </tr>
-    </thead>
-    <tbody>
-    <tr  ng-cloak class=data-row ng-repeat="turno in turnos  track by turno.id"  >
+      </thead>
+      <tbody>
+      <tr  ng-cloak class="data-row fade-in" ng-repeat="turno in turnos  track by turno.id"  >
       <td data-id={{turno.id}} data-ng-click="detailTurno($event)">{{turno.desde.split(' ')[1]}} - {{turno.hasta.split(' ')[1]}}</td>
       <td data-id={{turno.id}} ><a class=link ng-href="/turnos/cliente/{{turno.cliente.id}}">{{turno.cliente.nombre}} {{turno.cliente.apellido}} </a></td>
-      <td data-id={{turno.id}} data-ng-click="detailTurno($event)"><span ng-repeat="trabajo in turno.trabajos"> {{trabajo.servicio.descripcion}} </span></td>
-      <td data-id={{turno.id}} data-ng-click="detailTurno($event)">{{getTotalTurno(turno.trabajos) | currency}}</td>
+      <td data-id={{turno.id}} data-ng-click="detailTurno($event)">{{turno.descripcionTrabajos}}</td>
+      <td data-id={{turno.id}} data-ng-click="detailTurno($event)">{{turno.montoCobro | currency}}</td>
       <td data-id={{turno.id}} ><a class=link ng-href="/turnos/peluquero/{{turno.peluquero.id}}">{{turno.peluquero.nombre}} {{turno.peluquero.apellido}}</a></td>
       <td><input ng-model="turno.cobrado" ng-click="setCobrado(turno)" type="checkbox"></td>
-      <td data-id={{turno.id}} data-ng-click="confirmDelete(turno.id)" class="tachotd" ><i class="material-icons tachoi">clear</i></td>
-    </tr>
-    </tbody>
+      <td data-id={{turno.id}} data-ng-click="confirmDelete(turno.id)" class="tachotd" ><i class="material-icons tachoi">clear</i></td></tr>
+      </tbody>
     </table>
     <div ng-cloak ng-if="turnos.length > 0" class=banner>
         <label ><i class=material-icons >account_balance_wallet</i> Total: {{getTotalDiario(turnos) | currency}}</label>
     </div>
-    <div class=loading>
-      <img widh=25 height=25 src="/imgs/loading.gif">
-    </div>
 
   </div>
+
   <#include "/html/turnos/turnos-modal.html">
-  
-  <div ng-cloak ng-if="turnos.length < 1" class="message">
+  <div ng-cloak ng-if="turnos.length < 1" class="message fade-in">
     <div class="message-content">No hay turnos para este d&iacute;a.</div>
   </div>
-
+  <div class=loading-turnos><img widh=25 height=25 src="/imgs/loading.gif"></div>
   <div data-ng-init="init()" ng-controller=clientesController >
   <#include "/html/clientes/clientes-modal.html">
   </div>

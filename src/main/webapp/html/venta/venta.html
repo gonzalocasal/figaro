@@ -6,7 +6,7 @@
   </head>
   <body ng-app=figaro ng-controller=ventaController >
     <#include "/html/common/menu.html">
-    <div id=content class=content>
+    <div id=content class="content fade-in">
       <br>
       <div>
        
@@ -19,7 +19,7 @@
       </div>
 <!--Inicio Seleccion de producto -->
       <div class="card venta">
-        <form ng-submit="sumarCarrito(ngProductoVenta, aVender)">
+        <form ng-submit="sumarCarrito(ngProductoVenta, aVender)" ng-cloak >
             
           <div class=card-title><i class="material-icons">add_shopping_cart</i><label>Productos</label></div>
           <div class=form-field title=""><label>Seleccionar producto: </label>
@@ -47,7 +47,7 @@
 <!-- Fin seleccionar producto -->
       
 <!--Inicio Carrito -->
-      <div class="card venta">
+      <div class="card venta" ng-cloak >
         <form ng-submit="setTipoPago()">
           <div class=card-title><i class="material-icons">local_grocery_store</i><label>Carrito</label></div>
           <table id=tableCarrito>

@@ -10,6 +10,7 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	
+<<<<<<< HEAD
 	
 	<context:property-placeholder location="application.properties" />
 
@@ -35,13 +36,16 @@
 	</bean>
 	
  -->
+=======
+
+>>>>>>> dev
     
     <!-- POOL DE CONEXIONES -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass"><value>${jdbc.driverClassName}</value></property>
-		<property name="jdbcUrl"><value>${jdbc.url}</value></property>
 		<property name="user"><value>${jdbc.username}</value></property>
 		<property name="password"><value>${jdbc.password}</value></property>
+		<property name="jdbcUrl"><value>${jdbc.url}</value></property>
 	</bean>
  	
 
@@ -58,10 +62,10 @@
   				<value>hibernate/ciudad.hbm.xml</value>
   				<value>hibernate/movimiento.hbm.xml</value>
   				<value>hibernate/persona.hbm.xml</value>
+  				<value>hibernate/proveedor.hbm.xml</value>
   				<value>hibernate/producto.hbm.xml</value>
 				<value>hibernate/trabajo.hbm.xml</value>
 				<value>hibernate/servicio.hbm.xml</value>
-				  				
   				<value>hibernate/turno.hbm.xml</value>
 				<value>hibernate/venta.hbm.xml</value>
 				<value>hibernate/item.hbm.xml</value>
@@ -177,8 +181,7 @@
 		</property>
 	</bean>
 	
-	
-	
+		
 	
 	<!-- PELUQUEROS !-->
 	<bean id="PeluquerosServiceTransactional" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
@@ -199,6 +202,11 @@
 		<property name="repository">
 			<ref bean="PeluquerosRepository" />
 		</property>
+		<property name="turnosRepository">
+			<ref bean="TurnosRepository" />
+		</property>
+		
+		
 	</bean>
 
 	<bean id="PeluquerosRepository"	class="com.figaro.repository.PeluquerosRepository">
@@ -206,6 +214,36 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
+	
+	
+	<!-- PROVEEDORES !-->
+	<bean id="ProveedoresServiceTransactional" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="ProveedoresService" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="ProveedoresService" class="com.figaro.service.ProveedoresService">
+		<property name="repository">
+			<ref bean="ProveedoresRepository" />
+		</property>
+	</bean>
+
+	<bean id="ProveedoresRepository"	class="com.figaro.repository.ProveedoresRepository">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	
 	
 	
 	

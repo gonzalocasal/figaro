@@ -6,7 +6,7 @@
   </head>
   <body ng-app=figaro ng-controller=ventaController >
     <#include "/html/common/menu.html">
-    <div id=content class=content>
+    <div id=content class="content fade-in">
 
 <!-- Barra de filtros -->
      
@@ -45,7 +45,7 @@
 <!-- Fin Barra de filtros -->
 
       <div class="historial-venta" ng-repeat="venta in ngVentas | filter:{fecha: verFechaFiltro} ">
-        <table  class=main-table  class=data-row>
+        <table   ng-cloak class=main-table  class=data-row>
           <thead bgcolor="">
             <tr>
               <th colspan="5">Fecha: {{venta.fecha | date}}</th>
@@ -61,7 +61,7 @@
             </tr>
           </tfoot>
           <tbody class="prueba">
-            <tr ng-cloak class=data-row  ng-repeat="item in venta.items" >
+            <tr ng-cloak class="data-row fade-in"  ng-repeat="item in venta.items" >
               <td class="colum-nombre-with">{{item.nombreProducto}}</td>
               <td>{{item.descripcionProducto}}</td>
               <td>{{item.precioUnitario | currency}}</td>
@@ -73,11 +73,10 @@
         </table>
       </div>
     </div>
-
-    <div ng-cloak ng-if="ngVentas.length < 1" class="message">
+    <div ng-cloak ng-if="ngVentas.length < 1 && loaded" class="message fade-in">
       <div class="message-content">No se han realizado ventas</div>
     </div>
-
+    <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
     <#include "/html/common/confirm.html">
     <#include "/html/common/javascript.html">
     <script src="../js/ventaController.js" ></script>    

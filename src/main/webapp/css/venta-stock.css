@@ -13,11 +13,6 @@
     width:100%
 }
 
-.link {
-    color: #292961;
-    font-weight: 800;
-    text-decoration: none;
-}
 
 
 /* CARD */
@@ -65,6 +60,9 @@
     padding: 20px
 }
 
+.venta table{
+    max-width: 450px;
+}
 
 /* BOTONES */
 .boton-stock{

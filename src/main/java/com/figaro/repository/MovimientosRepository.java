@@ -7,18 +7,21 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.query.Query;
 
-import com.figaro.model.Item;
 import com.figaro.model.Movimiento;
+import com.figaro.model.Trabajo;
+import com.figaro.model.Turno;
 import com.figaro.model.Venta;
 import com.figaro.service.MovimientosService;
 
 @SuppressWarnings({ "unchecked" })
 public class MovimientosRepository extends AbstractRepository{
 	
-	final static Logger LOGGER = Logger.getLogger(MovimientosService.class);
+	
 
 	private static String QUERY_GET_MOVIMIENTOS = "FROM Movimiento m WHERE (m.fecha BETWEEN ?1 AND ?2)";
 	private static String QUERY_CATEGORIA = " AND (m.categoria = ?3)";
+	
+	final static Logger LOGGER = Logger.getLogger(MovimientosService.class);
 	
 	public int saveMovimiento (Movimiento movimiento) {
 		return (int) getCurrentSession().save(movimiento); 
@@ -29,7 +32,7 @@ public class MovimientosRepository extends AbstractRepository{
 	}
 	
 	public Movimiento getMovimiento(int id){
-		return (Movimiento) getCurrentSession().get(Movimiento.class, id);
+		return getCurrentSession().get(Movimiento.class, id);
 	}
 	
 	public void deleteMovimiento(Movimiento movimiento) {
@@ -53,20 +56,29 @@ public class MovimientosRepository extends AbstractRepository{
 	    query.setParameter(3, category);
 	    return query.getResultList();
 	}	
-	
-	public Item getItemId(Integer id) {		
 		
-		String querySql = "from Item t WHERE (t.id = ?1)";	
-		Query<Item> query = getCurrentSession().createQuery(querySql);
+	public Venta getVentaId(Integer id) {		
+		
+		String querySql = "from Venta t WHERE (t.id = ?1)";	
+		Query<Venta> query = getCurrentSession().createQuery(querySql);
 	    query.setParameter(1, id);	  
 	    return query.getSingleResult();
 		
 	}
 	
-	public Venta getVentaId(Integer id) {		
+	public Turno getTurnoId(Integer id) {		
 		
-		String querySql = "from Venta t WHERE (t.id = ?1)";	
-		Query<Venta> query = getCurrentSession().createQuery(querySql);
+		String querySql = "from Turno t WHERE (t.id = ?1)";	
+		Query<Turno> query = getCurrentSession().createQuery(querySql);
+	    query.setParameter(1, id);	  
+	    return query.getSingleResult();
+		
+	}
+	
+	public Trabajo getTrabajoId(Integer id) {		
+		
+		String querySql = "from Trabajo t WHERE (t.id = ?1)";	
+		Query<Trabajo> query = getCurrentSession().createQuery(querySql);
 	    query.setParameter(1, id);	  
 	    return query.getSingleResult();
 		

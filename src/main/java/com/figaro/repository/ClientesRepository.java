@@ -17,7 +17,7 @@ public class ClientesRepository extends AbstractRepository{
 	}
 	
 	public Cliente getCliente(int id){
-		return (Cliente) getCurrentSession().get(Cliente.class, id);
+		return getCurrentSession().get(Cliente.class, id);
 	}
 
 	@SuppressWarnings("unchecked")

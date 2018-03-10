@@ -6,15 +6,14 @@
 </head>
 <body ng-app=figaro ng-controller=peluquerosController  data-ng-init="initTurnosPeluquero()" >
   <#include "/html/common/menu.html">
-  <div ng-controller=turnosController>
-
-  <div class=page-loading>
-        <img widh=50 height=50 src="/imgs/loading.gif">
-  </div>  
-    
-  <div ng-cloak ng-if="turnos.length > 0" id=content class=content>
+  <div ng-controller=turnosController> 
+  <div ng-cloak ng-if="turnos.length > 0" id=content class="content fade-in">
     <div ng-cloak class=banner>
-        <label class="banner-title">Peluquero: {{peluquero}}</label>
+        <label class="banner-title"><i class="material-icons">person</i>Peluquero: {{peluquero}}</label>
+        <div class="separator"></div>
+        <label  ><i class=material-icons >date_range</i>Turnos: {{sinPagar ? turnos.length : totalCantidadTurnos}}</label>
+        <div class="separator"></div>
+        <label  ><i class=material-icons >payment</i>Total pago: {{sinPagar ? calcularTotalPagoPeluquero(turnos) : totalPago | currency}}</label>
     </div>
     <table  ng-cloak id=table class="main-table banner">
         <thead>
@@ -30,36 +29,29 @@
           </tr>
         </thead>
         <tbody >
-        <tr  class=data-row ng-repeat="turno in turnos  track by turno.id">
+        <tr  class="data-row fade-in" ng-repeat="turno in turnos  track by turno.id">
           <td id={{turno.id}} data-id={{turno.id}}>{{turno.desde.split(' ')[0] | date}} - {{turno.desde.split(' ')[1]}} hs</td>
           <td data-id={{turno.id}} ><a class=link ng-href="/turnos/cliente/{{turno.cliente.id}}"> {{turno.cliente.nombre}} {{turno.cliente.apellido}}</a></td>
-          <td id={{turno.id}} data-id={{turno.id}}><span ng-repeat="trabajo in turno.trabajos"> {{trabajo.servicio.descripcion}} </span></td>
-          <td id={{turno.id}} data-id={{turno.id}}>{{getTotalTurno(turno.trabajos) | currency}}</td>
-          <td id={{turno.id}} data-id={{turno.id}}  >{{ (getPago(turno.trabajos)*100) / getTotalTurno(turno.trabajos) | number:0 }}%</td>
-          <td id={{turno.id}} data-id={{turno.id}}  >{{getPago(turno.trabajos) | currency}}</td>
-          <td><input ng-model="turno.cobrado"   ng-click="setCobrado(turno)" type="checkbox" ></td>
-          <td><input ng-model="turno.pagado"    ng-click="setPagado(turno)"  type="checkbox"></td>
+          <td data-id={{turno.id}} >{{turno.descripcionTrabajos}}</td>
+          <td data-id={{turno.id}} >{{turno.montoCobro | currency}}</td>
+          <td data-id={{turno.id}} >{{ (turno.montoPago *100) /turno.montoCobro | number:0 }}%</td>
+          <td data-id={{turno.id}} >{{turno.montoPago | currency}}</td>
+          <td data-id={{turno.id}} ><input ng-model="turno.cobrado"   ng-click="setCobrado(turno)" type="checkbox" ></td>
+          <td data-id={{turno.id}} ><input ng-model="turno.pagado"    ng-click="setPagado(turno)"  type="checkbox"></td>
         </tr>
         </tbody>
-      </table>
-      <div  class=banner ng-cloak>
-           <label  ><i class=material-icons >account_balance_wallet</i>Total pago: {{getTotalPagoTurnosPeluquero(turnos) | currency}}</label>
-           <div class="separator"></div>
-           <label  ><i class=material-icons >date_range</i>Turnos: {{sinPagar ? turnos.length : cantidadTurnosPeluquero}}</label>
-      </div>
-      <div class=ver-mas ng-hide = "(turnos.length >= cantidadTurnosPeluquero) || sinPagar">
-        <label  ng-click=verMas() > Ver m&aacute;s</label>
-      </div>
-      <div class=loading>
-          <img widh=25 height=25 src="/imgs/loading.gif">
-      </div>  
+    </table>
   </div>
- 
+  <div class=loading ><img widh=25 height=25 src="/imgs/loading.gif"></div>  
+  <div class=ver-mas ng-cloak ng-hide = "(turnos.length >= cantidadTurnosPeluquero) || sinPagar">
+        <label  ng-click=verMas() > Ver m&aacute;s</label>
+  </div>
+     
   <#include "/html/turnos/cobrar.html">
   <#include "/html/turnos/deshacer-cobrado-pagado.html">
 </div>
 
-  <div  ng-if="turnos.length < 1 && loaded" class="message ng-cloak">
+  <div  ng-if="turnos.length < 1 && loaded" ng-cloak class="message fade-in">
     <div class="message-content">{{emptyMessage}}</div>
   </div>
 

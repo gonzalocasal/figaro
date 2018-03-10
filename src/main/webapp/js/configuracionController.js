@@ -2,6 +2,7 @@ app.controller('configuracionController', function ($scope, $http) {
 
     //INIT CONFIGURACION
     $scope.init = function(){
+        loading();
         $scope.activeConfiguracion = true;
         $scope.getAllServicios();
         $scope.getAllCiudades();
@@ -45,6 +46,7 @@ app.controller('configuracionController', function ($scope, $http) {
     $scope.getAllCiudades = function() {
         $http.get("/rest/configuracion/ciudades").then(function (response) {
             $scope.ciudades = response.data;
+            loadComplete();
         });
     };
 

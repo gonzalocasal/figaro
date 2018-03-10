@@ -2,7 +2,7 @@ app.controller('movimientosController', function ($scope, $http) {
  	 
  
 	//OBTENER LISTA DE MOVIMIENTOS
-	    $scope.getAll = function() {	    	
+	    $scope.getAll = function() {    	
 	    	$scope.searchMovimiento();
 	    };
 
@@ -44,7 +44,7 @@ app.controller('movimientosController', function ($scope, $http) {
 	            });                    
 	            
 		    });
-	    };
+	    };	  
 
 	    $scope.calculaTotalVenta = function(){
 	        var total = 0;
@@ -57,7 +57,82 @@ app.controller('movimientosController', function ($scope, $http) {
 	    $scope.discardMovimientoVenta = function(event){
 	        $scope.ngMovimiento = {};
 	        closeModal("modal-caja-venta");
+	    };  
+
+	    //CLICK DETALLE TURNO
+	    $scope.detailMovimientoTurno = function(event){
+	        $scope.message='';
+	        $scope.isNuevoMovimiento = false
+	        $scope.movimientoID = event.currentTarget.getAttribute("data-id");
+	        $http.get('/rest/movimientos/'+$scope.movimientoID).then(function (response) {
+	            $scope.ngMovimiento = response.data;
+	            $scope.ngMovimiento.fecha = new Date($scope.ngMovimiento.fecha);
+	            $scope.ngDetalle = $scope.ngMovimiento.detalle;
+	            $http.get("/rest/movimientos/turno",{params: { id: $scope.ngDetalle}}).then(function (response) {
+	            	$scope.ngMovimientoTurno = response.data;
+	            	$http.get("/rest/movimientos/setDeTrabajos",{params: { id: $scope.ngDetalle}}).then(function (response) {
+	            		$scope.ngMovimientoSetTrabajos = response.data;	            	
+	            	});
+	               	openModal("modal-caja-turno");
+	            });                    
+	            
+		    });
 	    };
+
+	    $scope.calculaTotalTurno = function(){
+	        var total = 0;
+	        angular.forEach($scope.ngMovimientoSetTrabajos, function(ngMovimientoSetTrabajos){	          
+	        	total = total + (ngMovimientoSetTrabajos.servicio.precio);
+	        })
+	        return total - $scope.ngMovimiento.descuento;
+	    }
+	    
+	    $scope.discardMovimientoTurno = function(event){
+	        $scope.ngMovimiento = {};
+	        closeModal("modal-caja-turno");
+	    };
+
+	    
+	    //CLICK DETALLE PELUQUERO
+	    $scope.detailMovimientoPeluquero = function(event){
+	        $scope.message='';
+	        $scope.isNuevoMovimiento = false
+	        $scope.movimientoID = event.currentTarget.getAttribute("data-id");
+	        $http.get('/rest/movimientos/'+$scope.movimientoID).then(function (response) {
+	            $scope.ngMovimiento = response.data;
+	            $scope.ngMovimiento.fecha = new Date($scope.ngMovimiento.fecha);
+	            $scope.ngDetalle = $scope.ngMovimiento.detalle;
+	            $http.get("/rest/movimientos/turno",{params: { id: $scope.ngDetalle}}).then(function (response) {
+	            	$scope.ngMovimientoTurno = response.data;
+	            	$http.get("/rest/movimientos/setDeTrabajos",{params: { id: $scope.ngDetalle}}).then(function (response) {
+	            		$scope.ngMovimientoSetTrabajos = response.data;	            	
+	            	});
+	               	openModal("modal-caja-peluquero");
+	            });                    
+	            
+		    });
+	    };
+
+	    $scope.calculaComisionPeluquero = function(event){	   
+	    	var precio = event.servicio.precio;
+	    	var comi = event.comision * 0.01;
+	    	var total = precio * comi;   
+	        return total;
+	    }
+
+	    $scope.calculaTotalPeluquero = function(){
+	        var total = 0;
+	        angular.forEach($scope.ngMovimientoSetTrabajos, function(ngMovimientoSetTrabajos){
+	        	total = total + $scope.calculaComisionPeluquero(ngMovimientoSetTrabajos);
+	        })
+	        return total;
+	    }
+	    
+	    $scope.discardMovimientoPeluquero = function(event){
+	        $scope.ngMovimiento = {};
+	        closeModal("modal-caja-peluquero");
+	    };
+
 
 	    //CLICK ACEPTAR FORMULARIO
 	    $scope.sendMovimiento = function() {	    	        
@@ -94,6 +169,8 @@ app.controller('movimientosController', function ($scope, $http) {
 	        if (e.keyCode == 27) {
 	            $scope.discardMovimiento();
 	            $scope.discardMovimientoVenta();
+	            $scope.discardMovimientoTurno();
+	            $scope.discardMovimientoPeluquero();
 	        }
 	    });
 
@@ -173,6 +250,31 @@ app.controller('movimientosController', function ($scope, $http) {
 	    }
 
 	    //CALCULAR EL TOTAL DE CAJA
+	    $scope.calculaNegativoEfectivo = function(){
+	        var total = 0;
+	        angular.forEach($scope.movimientos, function(ngMovimiento){	          
+	       	  if (ngMovimiento.tipoPago == 'contado'){
+	          	if (ngMovimiento.isGasto == true){
+	        		total = total - (ngMovimiento.precio);
+	          	} 	 
+	          }         
+	        })
+	        return total;
+	    }
+
+	    $scope.calculaPositivoEfectivo = function(){
+	        var total = 0;
+	        angular.forEach($scope.movimientos, function(ngMovimiento){	          
+	       	  if (ngMovimiento.tipoPago == 'contado'){
+	          	if (ngMovimiento.isGasto != true){
+	        		total = total + (ngMovimiento.precio);
+	          	} 	 
+	          }         
+	        })
+	        return total;
+	    }
+
+	    //CALCULAR EL TOTAL DE CAJA
 	    $scope.calculaTotalTarjeta = function(){
 	        var total = 0;
 	        angular.forEach($scope.movimientos, function(ngMovimiento){
@@ -183,6 +285,30 @@ app.controller('movimientosController', function ($scope, $http) {
 	        	  	total = total + (ngMovimiento.precio);
 	          	}	     
 	          }     
+	        })
+	        return total;
+	    }
+
+	    $scope.calculaNegativoTarjeta = function(){
+	        var total = 0;
+	        angular.forEach($scope.movimientos, function(ngMovimiento){	          
+	       	  if (ngMovimiento.tipoPago != 'contado'){
+	          	if (ngMovimiento.isGasto == true){
+	        		total = total - (ngMovimiento.precio);
+	          	} 	 
+	          }         
+	        })
+	        return total;
+	    }
+
+	    $scope.calculaPositivoTarjeta = function(){
+	        var total = 0;
+	        angular.forEach($scope.movimientos, function(ngMovimiento){	          
+	       	  if (ngMovimiento.tipoPago != 'contado'){
+	          	if (ngMovimiento.isGasto != true){
+	        		total = total + (ngMovimiento.precio);
+	          	} 	 
+	          }         
 	        })
 	        return total;
 	    }
@@ -260,11 +386,13 @@ app.controller('movimientosController', function ($scope, $http) {
 	    }
 	    
 	  //FILTRO TOTAL
-	    $scope.searchMovimiento = function() {	
+	    $scope.searchMovimiento = function() {
+	    	loading();
 	    	$http.get('/rest/movimientos/buscar',{params: { from: $scope.busqueda.fechaInicio, to: $scope.busqueda.fechaFin, category: $scope.busqueda.categoria }})		        
 		        .then(function successCallback(response) {	  	        	
 		            $scope.movimientos = response.data;
-		            $scope.formatTipoPago();         
+		            $scope.formatTipoPago();
+		            loadComplete();
 		        })
 	    }
 	    	 
@@ -313,9 +441,22 @@ app.controller('movimientosController', function ($scope, $http) {
 	        }
         }
 
+        $scope.ShowMas = function () {
+        	$scope.IsHiddenMenos = false;
+        	$scope.IsHiddenMas = true;
+            $scope.IsHiddenMas = $scope.IsHiddenMas ? true : false;  
+        }        
 
+        $scope.ShowMenos = function () {
+        	$scope.IsHiddenMenos = true;
+        	$scope.IsHiddenMas = false;
+            $scope.IsHiddenMenos = $scope.IsHiddenMenos ? true : false;  
+        }    
+        
        
 	    //INIT
+        $scope.IsHiddenMenos = true;
+        $scope.IsHiddenMas = false;	    
 	    $scope.activeCaja = true;
 	    $scope.search = '';
 	    $scope.busqueda = {};

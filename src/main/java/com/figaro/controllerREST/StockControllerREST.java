@@ -6,63 +6,68 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.figaro.model.Producto;
 import com.figaro.service.ProductosService;
 
 @RestController
-@RequestMapping(value = "/rest/stock")
+@RequestMapping("/rest/stock")
 public class StockControllerREST {
 	
 	@Autowired
 	@Qualifier("ProductosServiceTransactional")
 	private ProductosService service;
 	
-	@RequestMapping(value = "/todos",method=RequestMethod.GET,produces="application/json")
+	@GetMapping("/todos")
     public List<Producto> getAllProductos() {
         return service.getAllProductos();
     }
 	
-	@RequestMapping(value = "/faltante",method=RequestMethod.GET,produces="application/json")
+	@GetMapping("/faltante")
     public List<Producto> getProductosFaltantes() {
         return service.buscarFaltante();	
 	}
 	
-	@RequestMapping(value = "/{productoId}",method=RequestMethod.GET,produces="application/json")
+	@GetMapping("/{productoId}")
     public Producto getProducto(@PathVariable int productoId) {
         return service.getProducto(productoId);
     }
 	
-	@RequestMapping(value = "/alta",method=RequestMethod.POST)
+	@PostMapping("/alta")
     public ResponseEntity<Producto> newProducto(@RequestBody Producto producto) {
-		return new ResponseEntity<Producto>(service.saveProducto(producto), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.saveProducto(producto), HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/actualizar/{productoId}",method=RequestMethod.PUT)
+	@PutMapping("/actualizar/{productoId}")
     public ResponseEntity<Producto> updateProducto(@RequestBody Producto producto) {
 		Producto updated = service.updateProducto(producto);
-		return new ResponseEntity<Producto>(updated, HttpStatus.OK);
+		return new ResponseEntity<>(updated, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/editar/{productoId}",method=RequestMethod.PATCH)
+	@PatchMapping("/editar/{productoId}")
     public ResponseEntity<Producto> editProducto(@PathVariable int productoId, @RequestParam int cantidad) {
 		Producto updated = service.updateCantidad(productoId, cantidad);
-		return new ResponseEntity<Producto>(updated, HttpStatus.OK);
+		return new ResponseEntity<>(updated, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/eliminar/{productoId}",method=RequestMethod.DELETE)
+	@DeleteMapping("/eliminar/{productoId}")
     public ResponseEntity<Producto> deleteProducto(@PathVariable int productoId) {
-		return new ResponseEntity<Producto>(service.deleteProducto(productoId), HttpStatus.OK);
+		return new ResponseEntity<>(service.deleteProducto(productoId), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/buscar",method=RequestMethod.GET,produces="application/json")
+	@GetMapping("/buscar")
     public ResponseEntity<List<Producto>> getAllProductos(@RequestParam String search) {
-        return new ResponseEntity<List<Producto>>(service.buscar(search), HttpStatus.OK);
+        return new ResponseEntity<>(service.buscar(search), HttpStatus.OK);
     }
 		
 	public ProductosService getService() {
