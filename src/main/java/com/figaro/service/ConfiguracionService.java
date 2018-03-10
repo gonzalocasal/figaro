@@ -1,7 +1,9 @@
+
 package com.figaro.service;
 
 
 import java.util.List;
+import java.util.prefs.Preferences;
 
 import org.apache.log4j.Logger;
 
@@ -16,9 +18,17 @@ public class ConfiguracionService {
 
 	private ConfiguracionRepository repository;
 	
+	private Preferences prefs;
+
+	public ConfiguracionService() {
+		this.prefs = Preferences.userNodeForPackage(this.getClass());
+	}
+	
+	
 	//CIUDADES
 	public Integer saveCiudad(Ciudad ciudad) {
 		LOGGER.info("Guardando la ciudad: "+ ciudad.getNombre());
+		prefs.put("CIUDAD", ciudad.getNombre());
 		return repository.saveCiudad(ciudad);
 	}	
 	
@@ -27,10 +37,12 @@ public class ConfiguracionService {
 	}
 	
 	public List<Ciudad> getCiudades() {
-		LOGGER.debug("Obteniendo todas las ciudades");
+		LOGGER.info("Obteniendo todas las ciudades");
+		LOGGER.info(prefs.get("CIUDAD", "fruta"));
 		return repository.getCiudades();
 	}
 
+	
 	//SERVICIOS
 	public Integer saveServicio(Servicio servicio) {
 		LOGGER.info("Guardando el servicio: "+ servicio.getDescripcion() +" "+ servicio.getPrecio());
@@ -90,7 +102,12 @@ public class ConfiguracionService {
 		this.repository = repository;
 	}
 
+	public Preferences getPrefs() {
+		return prefs;
+	}
 
-
+	public void setPrefs(Preferences prefs) {
+		this.prefs = prefs;
+	}
 
 }
