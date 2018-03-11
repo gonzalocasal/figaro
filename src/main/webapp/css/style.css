@@ -594,6 +594,12 @@ li a:hover {
     padding: 20px
 }
 
+.horario{
+    width: 350px;
+    padding: 20px
+}
+
+
 .card label{
     width: auto;
 }

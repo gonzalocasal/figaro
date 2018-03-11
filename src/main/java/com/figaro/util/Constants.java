@@ -1,4 +1,4 @@
-package com.figaro.util;
+	package com.figaro.util;
 
 public class Constants{
 
@@ -14,6 +14,23 @@ public class Constants{
 	public static final String TIPO_PAGO_DEBITO  ="debito";
 	public static final String TIPO_PAGO_CREDITO ="credito";
 	public static final String TIPO_PAGO_CONTADO ="contado";
+	
+	public static final int    HORARIO_INTERVALO = 15;
+	public static final String HORARIO_FORMATO = "HH:mm";
+	public static final String HORARIO_DESDE_MAÑANA_DEFAULT = "08:00";
+	public static final String HORARIO_HASTA_MAÑANA_DEFAULT = "12:00";
+	public static final String HORARIO_DESDE_TARDE_DEFAULT = "16:00";
+	public static final String HORARIO_HASTA_TARDE_DEFAULT = "21:00";	
+	
+	public static final String HORARIO_DESDE_MAÑANA = "DESDE_MAÑANA";
+	public static final String HORARIO_HASTA_MAÑANA = "HASTA-MAÑANA";
+	public static final String HORARIO_DESDE_TARDE = "DESDE-TARDE";
+	public static final String HORARIO_HASTA_TARDE = "HASTA-TARDE";
+	
+	public static final String HORARIO_CORRIDO = "CORRIDO";
+	public static final String HORARIO_RANGO_USUARIO = "RANGO-USUARIO";	
+	public static final String HORARIO_RANGO_DEFAULT = "08:00 08:15 08:30 08:45 09:00 09:15 09:30 09:45 10:00 10:15 10:30 10:45 11:00 11:15 11:30 11:45 12:00 12:15 12:30 12:45 13:00 13:15 13:30 13:45 14:00 14:15 14:30 14:45 15:00 15:15 15:30 15:45 16:00 16:15 16:30 16:45 17:00 17:15 17:30 17:45 18:00 18:15 18:30 18:45 19:00 19:15 19:30 19:45 20:00 20:15 20:30 20:45 21:00";
+	
 	
 	public static final String MSG_DUPLICADO = "Ya existe un elemento con estos datos";
 	public static final String MSG_TURNO_OCUPADO_CLIENTE   = "Ya hay un turno en el horario seleccionado para ese cliente";

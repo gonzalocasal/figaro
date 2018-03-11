@@ -8,6 +8,7 @@ app.controller('configuracionController', function ($scope, $http) {
         $scope.getAllCiudades();
         $scope.getAllCategorias();
         $scope.getAllPeluqueros();
+        $scope.getHorario();
         $scope.ngCiudad={};
         $scope.ngServicio={};
         $scope.ngCategoria={};
@@ -49,6 +50,30 @@ app.controller('configuracionController', function ($scope, $http) {
             loadComplete();
         });
     };
+
+
+    //OBTENER HORARIO
+    $scope.getHorario = function() {
+        $http.get("/rest/configuracion/horario").then(function (response) {
+            $scope.horario = response.data;
+            loadComplete();
+        });
+    };
+
+
+    //AGREGAR CATEGORIA
+    $scope.updateHorario = function() {
+        $http.put('/rest/configuracion/horario', $scope.horario)
+            .then(function successCallback(response) {
+                $scope.horario = response.data;
+                $scope.messageHorario='';
+                loadComplete();
+              }, function errorCallback(response) {
+                 $scope.messageHorario=response.data.message;
+            });
+    };
+
+
 
     //AGREGAR SERVICIO
     $scope.addServicio = function() {
