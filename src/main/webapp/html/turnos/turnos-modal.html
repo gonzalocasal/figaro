@@ -10,7 +10,7 @@
         </div>
 
         <div class=form-field><label>FECHA: </label><input type="date" ng-model="ngDateTurno" required></input></div>
-        <div class=form-field ng-controller=configuracionController ng-init="getHorario()" >
+        <div class=form-field>
         <label>DESDE:</label>
           <select  class=time-input ng-model="startHour" ng-options="item for item in horario.rangoUsuario" required>
             <option value=""></option>

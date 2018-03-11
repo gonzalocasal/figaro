@@ -357,6 +357,14 @@ app.controller('turnosController', function ($scope, $http) {
         });
     };
 
+    //OBTENER HORARIO
+    $scope.getHorario = function() {
+        $http.get("/rest/configuracion/horario").then(function (response) {
+            $scope.horario = response.data;
+            loadComplete();
+        });
+    };
+
     //DESCARTAR FORMULARIO
     $scope.discardTurno = function(event){
         if ($scope.peluquero !=null && !$scope.peluquero.habilitado){
