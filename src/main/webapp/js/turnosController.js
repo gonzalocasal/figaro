@@ -7,6 +7,7 @@ app.controller('turnosController', function ($scope, $http) {
         $scope.getAllPeluqueros();
         $scope.ngDateTurno = stringToDate(getToday());
         $scope.getTurnos();
+        $scope.getHorario();
         $scope.activeTurnos = true;
         $scope.queryCliente ='';
         $scope.trabajosSeleccionados=[];
