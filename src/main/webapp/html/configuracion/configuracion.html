@@ -58,6 +58,64 @@
       <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
     </div>
 
+
+
+
+    <div class="card horario"> 
+      <form ng-submit="addCiudad()">
+      
+        <div class=card-title><i class="material-icons">query_builder </i><label class=card-title> HORARIO</label></div>
+        <table id=table >
+          <tbody>
+          <tr ng-cloak  class="data-row fade-in" ><td>
+          <input type="checkbox" ng-change="updateHorario()"  value="horario.corrido"  ng-model=horario.corrido> Corrido
+          </td></tr>
+
+          
+
+          <tr ng-cloak  class="data-row fade-in" ><td>
+            <label>Desde:</label>
+            <select  class=time-input   ng-change="updateHorario()"   ng-model=horario.desde ng-options="item for item in horario.rango" required>
+              <option value=""></option>
+            </select></td>
+            
+            <td>
+            <label>Hasta:</label>
+            <select class=time-input   ng-change="updateHorario()"    ng-model=horario.hasta  ng-options="item for item in horario.rango" required>
+              <option value=""></option>
+            </select>
+            </td>
+          </tr>
+
+
+          <tr ng-cloak  class="data-row fade-in" ng-if=!horario.corrido ><td>Y</td>
+
+          <tr ng-cloak  class="data-row fade-in" ng-if=!horario.corrido ><td>
+            <label>Desde:</label>
+            <select  class=time-input   ng-change="updateHorario()"   ng-model=horario.desdeTarde ng-options="item for item in horario.rango" required>
+              <option value=""></option>
+            </select></td>
+            
+            <td>
+            <label>Hasta:</label>
+            <select class=time-input    ng-change="updateHorario()"   ng-model=horario.hastaTarde  ng-options="item for item in horario.rango" required>
+              <option value=""></option>
+            </select>
+            </td>
+          </tr>
+
+          </tbody>
+        </table>
+        <label  ng-cloak class=form-message>{{messageHorario}}</label>
+        <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
+
+
+      </form>
+    </div>
+
+
+
+
     <div class="card ciudades"> 
       <form ng-submit="addCiudad()">
         <div class=card-title><i class="material-icons">place </i><label class=card-title> CIUDADES</label></div>

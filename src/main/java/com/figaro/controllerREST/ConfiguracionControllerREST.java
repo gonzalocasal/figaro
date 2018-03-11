@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.figaro.model.Categoria;
 import com.figaro.model.Ciudad;
+import com.figaro.model.Horario;
 import com.figaro.model.Servicio;
 import com.figaro.service.ConfiguracionService;
 
@@ -79,13 +80,12 @@ public class ConfiguracionControllerREST {
 	
 	@GetMapping("/servicios/buscar")
     public ResponseEntity<List<Servicio>> searchServicio(@RequestParam String search) {
-        return new ResponseEntity<List<Servicio>>(service.buscarTrabajos(search), HttpStatus.OK);
+        return new ResponseEntity<>(service.buscarTrabajos(search), HttpStatus.OK);
     }
-	
 	
 	@GetMapping("/categorias")
     public ResponseEntity<List<Categoria>> getCategorias() {
-		return new ResponseEntity<List<Categoria>>(service.getCategorias(), HttpStatus.OK);
+		return new ResponseEntity<>(service.getCategorias(), HttpStatus.OK);
 	}
 	
 	@PostMapping("/categorias/alta")
@@ -100,5 +100,16 @@ public class ConfiguracionControllerREST {
 		service.deleteCategoria(idCategoria);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@GetMapping("/horario")
+    public ResponseEntity<Horario> getHorario() {
+		return new ResponseEntity<>(service.getHorario(), HttpStatus.OK);
+	}
+	
+	@PutMapping("/horario")
+    public ResponseEntity<Horario> updateHorario(@RequestBody Horario nuevoHorario) {
+		return new ResponseEntity<>(service.updateHorario(nuevoHorario), HttpStatus.OK);
+	}
+	
 	
 }
