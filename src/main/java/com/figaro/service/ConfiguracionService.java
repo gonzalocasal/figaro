@@ -1,14 +1,9 @@
 
 package com.figaro.service;
 
-import static com.figaro.util.Constants.HORARIO_CORRIDO;
-import static com.figaro.util.Constants.HORARIO_DESDE_MAÑANA;
-import static com.figaro.util.Constants.HORARIO_DESDE_TARDE;
 import static com.figaro.util.Constants.HORARIO_FORMATO;
-import static com.figaro.util.Constants.HORARIO_HASTA_MAÑANA;
-import static com.figaro.util.Constants.HORARIO_HASTA_TARDE;
 import static com.figaro.util.Constants.HORARIO_INTERVALO;
-import static com.figaro.util.Constants.HORARIO_RANGO_USUARIO;
+import static com.figaro.util.Constants.HORARIO_RANGO_DEFAULT;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -110,53 +105,33 @@ public class ConfiguracionService {
 	
 	//HORARIO
 	public Horario getHorario() {
-		return new Horario(preferencias);
+		Horario horario = repository.getHorario();
+		List<String> rangoUsuario = generateRangoUsuario(horario);
+		horario.setRango(Arrays.asList(HORARIO_RANGO_DEFAULT.split(" ")));
+		horario.setRangoUsuario(rangoUsuario);
+		return horario;
 	}
 	
 	public Horario updateHorario(Horario nuevoHorario) {
 		validateHorario(nuevoHorario);
-		preferencias.putBoolean(HORARIO_CORRIDO, nuevoHorario.getCorrido());
-		preferencias.put(HORARIO_DESDE_MAÑANA, nuevoHorario.getDesde());
-		preferencias.put(HORARIO_HASTA_MAÑANA, nuevoHorario.getHasta());
-		preferencias.put(HORARIO_DESDE_TARDE, nuevoHorario.getDesdeTarde());
-		preferencias.put(HORARIO_HASTA_TARDE, nuevoHorario.getHastaTarde());
-		
+		List<String> rangoUsuario = generateRangoUsuario(nuevoHorario);
+		nuevoHorario.setRangoUsuario(rangoUsuario);
+		repository.updateHorario(nuevoHorario);
+		return nuevoHorario;
+	}
+
+	private List<String> generateRangoUsuario(Horario nuevoHorario) {
 		List<String> rangoUsuario = new ArrayList<>();
 		if(nuevoHorario.getCorrido())
-			rangoUsuario.addAll(generateRango(nuevoHorario.getDesde(), nuevoHorario.getHasta()));
+			rangoUsuario.addAll(calculateRangoUsuario(nuevoHorario.getDesde(), nuevoHorario.getHasta()));
 		else {
-			rangoUsuario.addAll(generateRango(nuevoHorario.getDesde(), nuevoHorario.getHasta()));
-			rangoUsuario.addAll(generateRango(nuevoHorario.getDesdeTarde(), nuevoHorario.getHastaTarde()));
+			rangoUsuario.addAll(calculateRangoUsuario(nuevoHorario.getDesde(), nuevoHorario.getHasta()));
+			rangoUsuario.addAll(calculateRangoUsuario(nuevoHorario.getDesdeTarde(), nuevoHorario.getHastaTarde()));
 		}
-		preferencias.put(HORARIO_RANGO_USUARIO, String.join(" ", rangoUsuario));
-		return new Horario(preferencias);
-
+		return rangoUsuario;
 	}
 
-	private void validateHorario(Horario nuevoHorario) {
-		Date desdeDate = parseTime(nuevoHorario.getDesde());
-		Date hastaDate = parseTime(nuevoHorario.getHasta());
-		Date desdeTardeDate = parseTime(nuevoHorario.getDesdeTarde());
-		Date hastaTardeDate = parseTime(nuevoHorario.getHastaTarde());
-		Set<Date> dates = new HashSet<>(Arrays.asList(desdeDate, hastaDate,desdeTardeDate,hastaTardeDate));
-		
-		if (dates.size()<4)
-			throw new HorarioInvalidoException ("");
-		
-		if (hastaDate.before(desdeDate) || hastaTardeDate.before(desdeTardeDate) )
-			throw new HorarioInvalidoException ("");
-	
-		if (desdeDate.after(desdeTardeDate) || desdeDate.after(hastaTardeDate)  || hastaDate.after(desdeTardeDate) || hastaDate.after(hastaTardeDate)) 
-			throw new HorarioInvalidoException ("");
-	}
-
-	
-	
-	
-	
-	
-	
-	private List<String>  generateRango (String desde, String hasta) {
+	private List<String>  calculateRangoUsuario (String desde, String hasta) {
 		DateFormat sdf = new SimpleDateFormat(HORARIO_FORMATO);
 		List<String> rango = new ArrayList<>();
 		Date desdeDate = parseTime(desde);
@@ -178,6 +153,24 @@ public class ConfiguracionService {
 			timeParsed = sdf.parse(time);
 		} catch (ParseException e) { LOGGER.info("Se produjo un error al generar el rango de horarios"); }
 		return timeParsed;
+	}
+	
+	
+	private void validateHorario(Horario nuevoHorario) {
+		Date desdeDate = parseTime(nuevoHorario.getDesde());
+		Date hastaDate = parseTime(nuevoHorario.getHasta());
+		Date desdeTardeDate = parseTime(nuevoHorario.getDesdeTarde());
+		Date hastaTardeDate = parseTime(nuevoHorario.getHastaTarde());
+		Set<Date> dates = new HashSet<>(Arrays.asList(desdeDate, hastaDate,desdeTardeDate,hastaTardeDate));
+		
+		if (dates.size()<4)
+			throw new HorarioInvalidoException ("");
+		
+		if (hastaDate.before(desdeDate) || hastaTardeDate.before(desdeTardeDate) )
+			throw new HorarioInvalidoException ("");
+	
+		if (desdeDate.after(desdeTardeDate) || desdeDate.after(hastaTardeDate)  || hastaDate.after(desdeTardeDate) || hastaDate.after(hastaTardeDate)) 
+			throw new HorarioInvalidoException ("");
 	}
 	
 	public ConfiguracionRepository getRepository() {

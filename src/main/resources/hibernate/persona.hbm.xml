@@ -29,7 +29,6 @@
          		<key><column name="ID_PERSONA" not-null="true" /></key>
          		<one-to-many entity-name="Trabajo"/>
     	     </set>
-      				
 		</union-subclass>
 		
 		

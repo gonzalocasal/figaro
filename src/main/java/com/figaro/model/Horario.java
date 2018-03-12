@@ -1,15 +1,19 @@
 package com.figaro.model;
 
-import static com.figaro.util.Constants.*;
+import static com.figaro.util.Constants.HORARIO_DESDE_MAÑANA_DEFAULT;
+import static com.figaro.util.Constants.HORARIO_DESDE_TARDE_DEFAULT;
+import static com.figaro.util.Constants.HORARIO_HASTA_MAÑANA_DEFAULT;
+import static com.figaro.util.Constants.HORARIO_HASTA_TARDE_DEFAULT;
+import static com.figaro.util.Constants.HORARIO_RANGO_DEFAULT;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.prefs.Preferences;
 
 
 
 public class Horario {
 	
+	private Integer id;
 	private Boolean corrido;
 	private String desde;
 	private String hasta;
@@ -17,17 +21,15 @@ public class Horario {
 	private String hastaTarde;
 	private List<String> rango;
 	private List<String> rangoUsuario;
-
-	public Horario() {}
 	
-	public Horario(Preferences preferencias) {
-		this.corrido =  preferencias.getBoolean(HORARIO_CORRIDO, false);
-		this.desde = preferencias.get(HORARIO_DESDE_MAÑANA, HORARIO_DESDE_MAÑANA_DEFAULT);
-		this.hasta =  preferencias.get(HORARIO_HASTA_MAÑANA, HORARIO_HASTA_MAÑANA_DEFAULT)  ;
-		this.desdeTarde = preferencias.get(HORARIO_DESDE_TARDE  , HORARIO_DESDE_TARDE_DEFAULT);
-		this.hastaTarde = preferencias.get( HORARIO_HASTA_TARDE   , HORARIO_HASTA_TARDE_DEFAULT);
+	
+	public void initialize() {
+		this.corrido =   false;
+		this.desde = 	  HORARIO_DESDE_MAÑANA_DEFAULT;
+		this.hasta =  	  HORARIO_HASTA_MAÑANA_DEFAULT;
+		this.desdeTarde = HORARIO_DESDE_TARDE_DEFAULT;
+		this.hastaTarde = HORARIO_HASTA_TARDE_DEFAULT;
 		this.rango = Arrays.asList(HORARIO_RANGO_DEFAULT.split(" "));
-		this.rangoUsuario = Arrays.asList(preferencias.get(HORARIO_RANGO_USUARIO , HORARIO_RANGO_DEFAULT).split(" "));		
 	}
 
 	public Boolean getCorrido() {
@@ -72,4 +74,15 @@ public class Horario {
 	public void setRangoUsuario(List<String> rangoUsuario) {
 		this.rangoUsuario = rangoUsuario;
 	}
+
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+
+	
+
 }

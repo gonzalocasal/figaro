@@ -7,6 +7,7 @@ import org.hibernate.query.Query;
 
 import com.figaro.model.Categoria;
 import com.figaro.model.Ciudad;
+import com.figaro.model.Horario;
 import com.figaro.model.Movimiento;
 import com.figaro.model.Servicio;
 
@@ -43,8 +44,6 @@ public class ConfiguracionRepository extends AbstractRepository {
 		Query<Movimiento> query = getCurrentSession().createNativeQuery("delete from TRABAJO_PELUQUERO WHERE ID_SERVICIO = ?1");
 	    query.setParameter(1, idServicio);
 	    query.executeUpdate();
-	    
-
 	}
 	
 	public List<Servicio> getServicios() {
@@ -76,5 +75,38 @@ public class ConfiguracionRepository extends AbstractRepository {
 		getCurrentSession().delete(categoria);
 	}
 
+	
+	//HORARIO
+	public Integer saveHorario(Horario horario) {
+		return (Integer) getCurrentSession().save(horario);
+	}
 
+	public void updateHorario(Horario horario) {
+		horario.setId(1);
+		getCurrentSession().update(horario);
+	}
+	
+	public Horario getHorario() {
+		Horario horario = getCurrentSession().get(Horario.class, Integer.valueOf(1));	
+		if(null==horario) {
+			horario = new Horario();
+			horario.initialize();
+			saveHorario(horario);
+		}
+		return horario;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
