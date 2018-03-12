@@ -161,16 +161,19 @@ public class ConfiguracionService {
 		Date hastaDate = parseTime(nuevoHorario.getHasta());
 		Date desdeTardeDate = parseTime(nuevoHorario.getDesdeTarde());
 		Date hastaTardeDate = parseTime(nuevoHorario.getHastaTarde());
-		Set<Date> dates = new HashSet<>(Arrays.asList(desdeDate, hastaDate,desdeTardeDate,hastaTardeDate));
-		
-		if (dates.size()<4)
-			throw new HorarioInvalidoException ("");
-		
-		if (hastaDate.before(desdeDate) || hastaTardeDate.before(desdeTardeDate) )
-			throw new HorarioInvalidoException ("");
 	
-		if (desdeDate.after(desdeTardeDate) || desdeDate.after(hastaTardeDate)  || hastaDate.after(desdeTardeDate) || hastaDate.after(hastaTardeDate)) 
-			throw new HorarioInvalidoException ("");
+		if(nuevoHorario.getCorrido()) {
+			if (hastaDate.before(desdeDate) || desdeDate.equals(hastaDate) )
+				throw new HorarioInvalidoException ("");
+		}else {
+			Set<Date> dates = new HashSet<>(Arrays.asList(desdeDate, hastaDate,desdeTardeDate,hastaTardeDate));
+			if (dates.size()<4)
+				throw new HorarioInvalidoException ("");
+			if (hastaDate.before(desdeDate) || hastaTardeDate.before(desdeTardeDate) )
+				throw new HorarioInvalidoException ("");
+			if (desdeDate.after(desdeTardeDate) || desdeDate.after(hastaTardeDate)  || hastaDate.after(desdeTardeDate) || hastaDate.after(hastaTardeDate)) 
+				throw new HorarioInvalidoException ("");
+		}
 	}
 	
 	public ConfiguracionRepository getRepository() {
