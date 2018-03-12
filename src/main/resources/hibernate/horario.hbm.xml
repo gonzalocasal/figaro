@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.figaro.model.Horario" table="HORARIO" >
+		<id name="id" column="ID_HORARIO" type="integer" >
+            <generator class="native" />
+        </id>
+        <property name="corrido" 	column="CORRIDO"    type="boolean"/>
+	 	<property name="desde"      column="DESDE" type="string"/>
+	 	<property name="hasta"      column="HASTA" type="string"/>
+	 	<property name="desdeTarde" column="DESDE_TARDE" type="string"/>
+	 	<property name="hastaTarde" column="HASTA_TARDE" type="string"/>
+	</class>
+		
+</hibernate-mapping>
