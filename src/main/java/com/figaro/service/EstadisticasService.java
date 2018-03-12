@@ -127,7 +127,7 @@ public class EstadisticasService {
 			else 
 				suma = mapTurnos.get(nombreApellido);
 						
-			BigDecimal precio = turnos.calculatePrecio();	
+			BigDecimal precio = turnos.getMontoCobro();	
 			
 			suma = suma.add(precio);						
 			mapTurnos.put(nombreApellido, suma);
