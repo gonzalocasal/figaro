@@ -17,15 +17,10 @@ public class Constants{
 	
 	public static final int    HORARIO_INTERVALO = 15;
 	public static final String HORARIO_FORMATO = "HH:mm";
-	public static final String HORARIO_DESDE_MAÑANA_DEFAULT = "08:00";
-	public static final String HORARIO_HASTA_MAÑANA_DEFAULT = "12:00";
+	public static final String HORARIO_DESDE_DEFAULT = "08:00";
+	public static final String HORARIO_HASTA_DEFAULT = "12:00";
 	public static final String HORARIO_DESDE_TARDE_DEFAULT = "16:00";
 	public static final String HORARIO_HASTA_TARDE_DEFAULT = "21:00";	
-	
-	public static final String HORARIO_DESDE_MAÑANA = "DESDE_MAÑANA";
-	public static final String HORARIO_HASTA_MAÑANA = "HASTA-MAÑANA";
-	public static final String HORARIO_DESDE_TARDE = "DESDE-TARDE";
-	public static final String HORARIO_HASTA_TARDE = "HASTA-TARDE";
 	
 	public static final String HORARIO_CORRIDO = "CORRIDO";
 	public static final String HORARIO_RANGO_USUARIO = "RANGO-USUARIO";	
