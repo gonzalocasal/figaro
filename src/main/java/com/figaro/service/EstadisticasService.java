@@ -94,8 +94,10 @@ public class EstadisticasService {
 		for (Movimiento movimiento : searchMovimientos) {
 			String categoria = movimiento.getCategoria();
 			BigDecimal cantidadVentas = mapMovimientos.get(categoria);			 			
-			if (cantidadVentas == null) 
+			if (cantidadVentas == null) {
 				mapMovimientos.put(categoria, new BigDecimal(1));
+				suma = new BigDecimal(0);
+			}
 			else 
 				suma = mapMovimientos.get(categoria);
 			BigDecimal precio = movimiento.getPrecio();
@@ -118,8 +120,10 @@ public class EstadisticasService {
 			Peluquero peluquero = turnos.getPeluquero();
 			String nombreApellido = peluquero.getNombre() + ' ' + peluquero.getApellido();			
 			BigDecimal cantidadTurnos = mapTurnos.get(nombreApellido);			 			
-			if (cantidadTurnos == null) 
+			if (cantidadTurnos == null) {
 				mapTurnos.put(nombreApellido, new BigDecimal(1));
+				suma = new BigDecimal(0);
+			}
 			else 
 				suma = mapTurnos.get(nombreApellido);
 						

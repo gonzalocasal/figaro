@@ -1,8 +1,8 @@
 package com.figaro.model;
 
-import static com.figaro.util.Constants.HORARIO_DESDE_MAÑANA_DEFAULT;
+import static com.figaro.util.Constants.HORARIO_DESDE_DEFAULT;
 import static com.figaro.util.Constants.HORARIO_DESDE_TARDE_DEFAULT;
-import static com.figaro.util.Constants.HORARIO_HASTA_MAÑANA_DEFAULT;
+import static com.figaro.util.Constants.HORARIO_HASTA_DEFAULT;
 import static com.figaro.util.Constants.HORARIO_HASTA_TARDE_DEFAULT;
 import static com.figaro.util.Constants.HORARIO_RANGO_DEFAULT;
 
@@ -25,8 +25,8 @@ public class Horario {
 	
 	public void initialize() {
 		this.corrido =   false;
-		this.desde = 	  HORARIO_DESDE_MAÑANA_DEFAULT;
-		this.hasta =  	  HORARIO_HASTA_MAÑANA_DEFAULT;
+		this.desde = 	  HORARIO_DESDE_DEFAULT;
+		this.hasta =  	  HORARIO_HASTA_DEFAULT;
 		this.desdeTarde = HORARIO_DESDE_TARDE_DEFAULT;
 		this.hastaTarde = HORARIO_HASTA_TARDE_DEFAULT;
 		this.rango = Arrays.asList(HORARIO_RANGO_DEFAULT.split(" "));
