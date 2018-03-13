@@ -1,5 +1,8 @@
 package com.figaro.service;
 
+import static com.figaro.util.Constants.HORARIO_RANGO_DEFAULT;
+import static com.figaro.util.Constants.SIN_CIUDAD;
+
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,8 +22,6 @@ import com.figaro.model.Venta;
 import com.figaro.repository.EstadisticasRepository;
 
 public class EstadisticasService {
-	
-	private static final String SIN_CIUDAD = "Sin Ciudad";
 
 	final static Logger LOGGER = Logger.getLogger(EstadisticasService.class);
 	
@@ -35,15 +36,8 @@ public class EstadisticasService {
 		Map<String, Integer> mapClientes = new HashMap<>();
 		for (Cliente cliente : allClientes) {
 			String ciudad = cliente.getDirCiudad();
-			if (null == ciudad)
-				ciudad = SIN_CIUDAD;
 			Integer cantidadHabitantes = mapClientes.get(ciudad);
-			if (cantidadHabitantes == null) {
-				mapClientes.put(ciudad, 1);
-			} else {
-				cantidadHabitantes ++;
-				mapClientes.put(ciudad, cantidadHabitantes);
-			}
+			mapClientes.put((null == ciudad) ? SIN_CIUDAD : ciudad , (null == cantidadHabitantes) ? 1 : cantidadHabitantes + 1);
 		}
 		return mapClientes;
 	}
@@ -53,19 +47,13 @@ public class EstadisticasService {
 		Map<String, Integer> mapClientes = new HashMap<>();
 		for (Cliente cliente : allClientes) {
 			String sexo = cliente.getSexo();
-			Integer cantidadHabitantes = mapClientes.get(sexo);
-			if (cantidadHabitantes == null) {
-				mapClientes.put(sexo, 1);
-			} else {
-				cantidadHabitantes ++;
-				mapClientes.put(sexo, cantidadHabitantes);
-			}
+			Integer cantidadSexo = mapClientes.get(sexo);
+			mapClientes.put(sexo , (null == cantidadSexo) ? 1 : cantidadSexo + 1);
 		}
 		return mapClientes;
 	}
 	
 	public Map<String, Integer> buscarProductoMasVendido(Date from, Date to) {
-		
 		List<Venta> searchVenta = repository.getAllDate(from, to);
 		Map<String, Integer> mapVenta = new HashMap<>();
 		for (Venta venta : searchVenta) {
@@ -73,63 +61,36 @@ public class EstadisticasService {
 			for (Item item : searchItem) {
 				String producto = item.getNombreProducto() + '(' + item.getDescripcionProducto() + ')';
 				Integer cantidadVentas = mapVenta.get(producto);
-				if (cantidadVentas == null) {
-					mapVenta.put(producto, item.getCantidad());
-				} else {
-					cantidadVentas = cantidadVentas + item.getCantidad();
-					mapVenta.put(producto, cantidadVentas);
-				}
+				mapVenta.put(producto , (null == cantidadVentas) ? item.getCantidad() : cantidadVentas + item.getCantidad());
 			}		
 		}
 		return mapVenta;
 	}
 	
 	public Map<String, BigDecimal> buscarTotalesDeCaja(Date from, Date to) {
-
-		String category = "";
-		
-		List<Movimiento> searchMovimientos = movimientosService.searchMovimientos(from, to, category);
+		List<Movimiento> searchMovimientos = movimientosService.searchMovimientos(from, to, "");
 		Map<String, BigDecimal> mapMovimientos = new HashMap<>();
 		BigDecimal suma = new BigDecimal(0);
 		for (Movimiento movimiento : searchMovimientos) {
 			String categoria = movimiento.getCategoria();
-			BigDecimal cantidadVentas = mapMovimientos.get(categoria);			 			
-			if (cantidadVentas == null) {
-				mapMovimientos.put(categoria, new BigDecimal(1));
-				suma = new BigDecimal(0);
-			}
-			else 
-				suma = mapMovimientos.get(categoria);
-			BigDecimal precio = movimiento.getPrecio();
-			if (movimiento.getIsGasto()) {
-				suma = suma.subtract(precio);
-			} else {
-				suma = suma.add(precio);
-			}			
+			BigDecimal monto = mapMovimientos.get(categoria);			 			
+			suma =  (monto == null) ? new BigDecimal(0) : mapMovimientos.get(categoria);
+			suma =  (movimiento.getIsGasto())? suma.subtract(movimiento.getPrecio()) : suma.add(movimiento.getPrecio());		
 			mapMovimientos.put(categoria, suma);
 		}
 		return mapMovimientos;
 	}
 	
 	public Map<String, BigDecimal> buscarTurnosPorPeluqueroIngreso(Date from, Date to) {
-		
 		List<Turno> searchTurnos = repository.searchBetween (from,to);
 		Map<String, BigDecimal> mapTurnos = new HashMap<>();
 		BigDecimal suma = new BigDecimal(0);
 		for (Turno turnos : searchTurnos) {
 			Peluquero peluquero = turnos.getPeluquero();
 			String nombreApellido = peluquero.getNombre() + ' ' + peluquero.getApellido();			
-			BigDecimal cantidadTurnos = mapTurnos.get(nombreApellido);			 			
-			if (cantidadTurnos == null) {
-				mapTurnos.put(nombreApellido, new BigDecimal(1));
-				suma = new BigDecimal(0);
-			}
-			else 
-				suma = mapTurnos.get(nombreApellido);
-						
-			BigDecimal precio = turnos.getMontoCobro();	
-			
-			suma = suma.add(precio);						
+			BigDecimal montoPeluquero = mapTurnos.get(nombreApellido);			 			
+			suma = (montoPeluquero == null) ? new BigDecimal(0) : mapTurnos.get(nombreApellido);
+			suma = suma.add((turnos.getMontoCobro() == null) ? new BigDecimal(0) : turnos.getMontoCobro() );						
 			mapTurnos.put(nombreApellido, suma);
 		}
 		return mapTurnos;
@@ -158,8 +119,7 @@ public class EstadisticasService {
 		List<Turno> searchTurnos = repository.searchBetween (from,to);
 		Map<String, Integer> mapTurnos = new HashMap<>();		
 		
-		String[] horarios = {"08:00","08:15","08:30","08:45","09:00","09:15","09:30","09:45","10:00","10:15","10:30","10:45","11:00","11:15","11:30","11:45","12:00","12:15","12:30","12:45","13:00","13:15","13:30","13:45","14:00","14:15","14:30","14:45","15:00","15:15","15:30","15:45","16:00","16:15","16:30","16:45","17:00","17:15","17:30","17:45","18:00","18:15","18:30","18:45","19:00","19:15","19:30","19:45","20:00","20:15","20:30","20:45","21:00"};		
-		for (String horario : horarios) {				
+		for (String horario :  HORARIO_RANGO_DEFAULT.split(" ")) {				
 			mapTurnos.put(horario, 0);			
 		}		
 		
