@@ -41,6 +41,12 @@ app.controller('turnosController', function ($scope, $http) {
         $scope.startHour = $scope.ngTurno.desde.split(' ')[1];
         $scope.endHour = $scope.ngTurno.hasta.split(' ')[1];
         
+        //BIND CLIENTE
+        if ("Cliente" == $scope.ngTurno.cliente.nombre && "Desconocido" == $scope.ngTurno.cliente.apellido)
+            $scope.desconocido = true;
+        else
+            $scope.queryCliente = $scope.ngTurno.cliente.nombre+' '+$scope.ngTurno.cliente.apellido;
+
         //BIND PELUQUERO 
         if($scope.ngTurno.peluquero.habilitado){
             for(var i = 0; i < $scope.peluqueros.length; i++)
@@ -201,7 +207,7 @@ app.controller('turnosController', function ($scope, $http) {
 
     //VALIDAR FORMULARIO
     $scope.validateTurno = function() {
-        if (!("cliente" in $scope.ngTurno) || $scope.ngTurno.cliente === null){
+        if ($scope.ngTurno.cliente === null && !$scope.desconocido ){
             $scope.message="Seleccione un cliente.";
             return false
         }
@@ -266,10 +272,14 @@ app.controller('turnosController', function ($scope, $http) {
     //SET CLIENTE
     $scope.setCliente = function (cliente) {
         $scope.ngTurno.cliente = cliente;
-        $scope.queryCliente='';
+        $scope.queryCliente=cliente.nombre+' '+cliente.apellido;
         $scope.clientes=[];
     }
     
+    //SET CLIENTE
+    $scope.setClienteDesconocido = function (cliente) {
+        $scope.ngTurno.cliente = null;
+    }
 
     //INICIALIZAR MOVIMIENTO
     $scope.initMovimiento = function(){
@@ -380,6 +390,7 @@ app.controller('turnosController', function ($scope, $http) {
         $scope.trabajosSeleccionados=[];      
         $scope.queryCliente ='';
         $scope.queryTrabajo ='';
+        $scope.desconocido =false;
         $scope.message='';
         $scope.update=false;
         closeModal("modal-turnos");

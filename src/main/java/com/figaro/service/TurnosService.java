@@ -23,6 +23,8 @@ import com.figaro.repository.TurnosRepository;
 
 public class TurnosService {
 	
+	
+
 	final static Logger LOGGER = Logger.getLogger(TurnosService.class);
 	
 	private ClientesService clientesService;
@@ -154,6 +156,9 @@ public class TurnosService {
 		for(Turno turno : turnosDelDia) 
 			if( (mismoPeluquero(nuevoTurno, turno) || mismoCliente(nuevoTurno, turno)) && horarioOcupado(nuevoTurno, turno))
 			throw new TurnoOcupadoException( (mismoPeluquero(nuevoTurno, turno) ? MSG_TURNO_OCUPADO_PELUQUERO : MSG_TURNO_OCUPADO_CLIENTE ));
+		
+		if (null == nuevoTurno.getCliente())
+			nuevoTurno.setCliente(clientesService.getClienteDesconocido());
 	}
 
 	

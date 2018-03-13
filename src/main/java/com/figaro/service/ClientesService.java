@@ -1,6 +1,7 @@
 package com.figaro.service;
 
 import java.util.List;
+import static com.figaro.util.Constants.*;
 
 import org.apache.log4j.Logger;
 
@@ -38,6 +39,18 @@ public class ClientesService {
 		return repository.getAll();
 	}
 	
+	public Cliente getClienteDesconocido() {
+		List<Cliente> resultadoBusqueda = buscar(NOMBRE_CLIENTE_DESCONOCIDO+" "+APELLIDO_CLIENTE_DESCONOCIDO);
+		Cliente desconocido = new Cliente();
+		if (resultadoBusqueda.isEmpty()) {
+			desconocido.setNombre(NOMBRE_CLIENTE_DESCONOCIDO);
+			desconocido.setApellido(APELLIDO_CLIENTE_DESCONOCIDO);
+			saveCliente(desconocido);
+		}else
+			desconocido = resultadoBusqueda.get(0);
+		return desconocido;
+	}
+	
 	public ClientesRepository getRepository() {
 		return repository;
 	}
@@ -49,5 +62,7 @@ public class ClientesService {
 	public List<Cliente> buscar(String search) {
 		return repository.buscar(search);
 	}
+
+	
 
 }

@@ -47,8 +47,10 @@ public class EstadisticasService {
 		Map<String, Integer> mapClientes = new HashMap<>();
 		for (Cliente cliente : allClientes) {
 			String sexo = cliente.getSexo();
-			Integer cantidadSexo = mapClientes.get(sexo);
-			mapClientes.put(sexo , (null == cantidadSexo) ? 1 : cantidadSexo + 1);
+			if (null!=sexo) {
+				Integer cantidadSexo = mapClientes.get(sexo);
+				mapClientes.put(sexo , (null == cantidadSexo) ? 1 : cantidadSexo + 1);
+			}
 		}
 		return mapClientes;
 	}
@@ -103,12 +105,7 @@ public class EstadisticasService {
 			Peluquero peluquero = turnos.getPeluquero();
 			String nombreApellido = peluquero.getNombre() + ' ' + peluquero.getApellido();			
 			Integer cantidadTurnos = mapTurnos.get(nombreApellido);
-			if (cantidadTurnos == null) {
-				mapTurnos.put(nombreApellido, 1);
-			} else {
-				cantidadTurnos ++;
-				mapTurnos.put(nombreApellido, cantidadTurnos);
-			}
+			mapTurnos.put(nombreApellido, (cantidadTurnos == null) ? 1: cantidadTurnos + 1);
 		}
 		return mapTurnos;
 	}	

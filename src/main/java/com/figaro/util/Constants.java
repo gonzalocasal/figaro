@@ -6,6 +6,9 @@ public class Constants{
 	public static final String DATE_TIME_FORMAT ="yyyy-MM-dd HH:mm";
 	public static final String FRONT_DATE_FORMAT = "dd/MM/yyyy";
 	
+	public static final String NOMBRE_CLIENTE_DESCONOCIDO = "Cliente";
+	public static final String APELLIDO_CLIENTE_DESCONOCIDO = "Desconocido";
+	
 	public static final String SIN_CIUDAD = "Sin Ciudad";
 	
 	public static final String CATEGORIA_TURNOS = "Turnos";

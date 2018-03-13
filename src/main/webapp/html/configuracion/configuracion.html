@@ -8,25 +8,7 @@
 <#include "/html/common/menu.html">
 <div id=content class="content fade-in">
 
-    <div class="card servicios">
-      <form ng-submit="addServicio()">
-        <div class=card-title><i class="material-icons">content_cut</i><label>SERVICIOS</label></div>
-        <input tipe="text" placeholder="Descripci&oacute;n" ng-model="ngServicio.descripcion" maxlength="25" pattern="^[^\s].*([A-zÀ-ž\s]){2,25}" ng-pattern-restrict required>
-        <input type="number" placeholder="Precio" ng-model="ngServicio.precio" step="0.01" required>
-        <button class="button accept" type="submit"></button>
-        <table id=table>
-          <tbody>
-          <tr ng-cloak id={{servicio.id}}  class="data-row fade-in"  ng-repeat="servicio in servicios" >
-          <td data-id={{servicio.id}} ng-click="loadServicio($event)">{{servicio.descripcion}}</td>
-          <td data-id={{servicio.id}} ng-click="loadServicio($event)" class=servicio-precio>{{servicio.precio | currency}}</td>
-          <td class=delete ><i class="material-icons" data-id={{servicio.id}} ng-click="removeServicio($event)">clear</i></td>
-          </tr>
-          </tbody>
-        </table>
-        <label  ng-cloak class=form-message>{{messageServicio}}</label>
-      </form>
-      <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
-    </div>
+  <div class=fila-tarjetas-configuracion>
 
       <div class="card peluqueros"> 
         <div class=card-title><i class="material-icons">group </i><label class=card-title> PELUQUEROS HABILITADOS</label></div>
@@ -41,25 +23,6 @@
         <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
     </div>
 
-    <div class="card categorias">
-      <form ng-submit="addCategoria()">
-        <div class=card-title><i class="material-icons">label</i><label class=card-title>CATEGOR&Iacute;AS</label></div>
-        <input type="text" placeholder="Nombre" ng-model="ngCategoria.nombre" maxlength="25" pattern="^[^\s].*([A-zÀ-ž\s]){2,25}" ng-pattern-restrict required>
-        <table id=table>
-          <tbody>
-          <tr ng-cloak id={{categoria.id}} class="data-row fade-in" ng-repeat="categoria in categorias" >
-          <td>{{categoria.nombre}}</td>
-          <td class=delete ><i class="material-icons" data-id={{categoria.id}} ng-click="removeCategoria($event)">clear</i></td>
-          </tr>
-          </tbody>
-        </table>
-        <label  ng-cloak class=form-message>{{messageCategoria}}</label>
-      </form>
-      <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
-    </div>
-
-
-
 
     <div class="card horario"> 
       <form ng-submit="addCiudad()">
@@ -70,8 +33,6 @@
           <tr ng-cloak  class="data-row fade-in" ><td>
           <input type="checkbox" ng-change="updateHorario()"  value="horario.corrido"  ng-model=horario.corrido> Corrido
           </td></tr>
-
-          
 
           <tr ng-cloak  class="data-row fade-in" ><td>
             <label>Desde:</label>
@@ -86,7 +47,6 @@
             </select>
             </td>
           </tr>
-
 
           <tr ng-cloak  class="data-row fade-in" ng-if=!horario.corrido ><td>Y</td>
 
@@ -132,6 +92,54 @@
       </form>
       <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
     </div>
+
+
+
+  </div>
+
+  
+
+    <div class="card servicios">
+      <form ng-submit="addServicio()">
+        <div class=card-title><i class="material-icons">content_cut</i><label>SERVICIOS</label></div>
+        <input tipe="text" placeholder="Descripci&oacute;n" ng-model="ngServicio.descripcion" maxlength="25" pattern="^[^\s].*([A-zÀ-ž\s]){2,25}" ng-pattern-restrict required>
+        <input type="number" placeholder="Precio" ng-model="ngServicio.precio" step="0.01" required>
+        <button class="button accept" type="submit"></button>
+        <table id=table>
+          <tbody>
+          <tr ng-cloak id={{servicio.id}}  class="data-row fade-in"  ng-repeat="servicio in servicios" >
+          <td data-id={{servicio.id}} ng-click="loadServicio($event)">{{servicio.descripcion}}</td>
+          <td data-id={{servicio.id}} ng-click="loadServicio($event)" class=servicio-precio>{{servicio.precio | currency}}</td>
+          <td class=delete ><i class="material-icons" data-id={{servicio.id}} ng-click="removeServicio($event)">clear</i></td>
+          </tr>
+          </tbody>
+        </table>
+        <label  ng-cloak class=form-message>{{messageServicio}}</label>
+      </form>
+      <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
+    </div>
+
+    <div class="card categorias">
+      <form ng-submit="addCategoria()">
+        <div class=card-title><i class="material-icons">label</i><label class=card-title>CATEGOR&Iacute;AS DE CAJA</label></div>
+        <input type="text" placeholder="Nombre" ng-model="ngCategoria.nombre" maxlength="25" pattern="^[^\s].*([A-zÀ-ž\s]){2,25}" ng-pattern-restrict required>
+        <table id=table>
+          <tbody>
+          <tr ng-cloak id={{categoria.id}} class="data-row fade-in" ng-repeat="categoria in categorias" >
+          <td>{{categoria.nombre}}</td>
+          <td class=delete ><i class="material-icons" data-id={{categoria.id}} ng-click="removeCategoria($event)">clear</i></td>
+          </tr>
+          </tbody>
+        </table>
+        <label  ng-cloak class=form-message>{{messageCategoria}}</label>
+      </form>
+      <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
+    </div>
+
+
+
+
+
 </div>
 <#include "/html/common/javascript.html">
 <script src="js/configuracionController.js" ></script>

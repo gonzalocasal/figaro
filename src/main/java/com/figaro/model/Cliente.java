@@ -7,7 +7,9 @@ public class Cliente extends Persona {
 	private Date ultimaVisita;
 	private String notas;
 	
-	
+	public Cliente() {
+	}
+
 	public Date getUltimaVisita() {
 		return ultimaVisita;
 	}
