@@ -4,16 +4,16 @@
   <title>Turnos</title>
   <#include "/html/common/head.html">
 </head>
-<body ng-app=figaro ng-controller=peluquerosController  data-ng-init="initTurnosPeluquero()" >
+<body ng-app=figaro ng-controller=empleadosController  data-ng-init="initTurnosEmpleado()" >
   <#include "/html/common/menu.html">
   <div ng-controller=turnosController> 
   <div ng-cloak ng-if="turnos.length > 0" id=content class="content fade-in">
     <div ng-cloak class=banner>
-        <label class="banner-title"><i class="material-icons">person</i>Peluquero: {{peluquero}}</label>
+        <label class="banner-title"><i class="material-icons">person</i>Empleado: {{empleado}}</label>
         <div class="separator"></div>
         <label  ><i class=material-icons >date_range</i>Turnos: {{sinPagar ? turnos.length : totalCantidadTurnos}}</label>
         <div class="separator"></div>
-        <label  ><i class=material-icons >payment</i>Total pago: {{sinPagar ? calcularTotalPagoPeluquero(turnos) : totalPago | currency}}</label>
+        <label  ><i class=material-icons >payment</i>Total pago: {{sinPagar ? calcularTotalPagoEmpleado(turnos) : totalPago | currency}}</label>
     </div>
     <table  ng-cloak id=table class="main-table banner">
         <thead>
@@ -57,7 +57,7 @@
 
   
   <#include "/html/common/javascript.html">
-  <script src="/js/peluquerosController.js" ></script>
+  <script src="/js/empleadosController.js" ></script>
   <script src="/js/turnosController.js" ></script>
 </body>
 </html>

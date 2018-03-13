@@ -9,7 +9,7 @@ public class Trabajo {
 	private Integer comision;
 	
 	@JsonIgnore
-	private Peluquero peluquero;
+	private Empleado empleado;
 	
 	
 	public Servicio getServicio() {
@@ -30,12 +30,7 @@ public class Trabajo {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Peluquero getPeluquero() {
-		return peluquero;
-	}
-	public void setPeluquero(Peluquero peluquero) {
-		this.peluquero = peluquero;
-	}
+
 	
 	@Override
 	public int hashCode() {
@@ -65,6 +60,12 @@ public class Trabajo {
 		} else if (!servicio.equals(other.servicio))
 			return false;
 		return true;
+	}
+	public Empleado getEmpleado() {
+		return empleado;
+	}
+	public void setEmpleado(Empleado empleado) {
+		this.empleado = empleado;
 	}
 
 	

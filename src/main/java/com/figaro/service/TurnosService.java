@@ -1,10 +1,10 @@
 package com.figaro.service;
 
-import static com.figaro.util.Constants.CATEGORIA_PELUQUERO;
+import static com.figaro.util.Constants.CATEGORIA_EMPLEADOS;
 import static com.figaro.util.Constants.CATEGORIA_TURNOS;
-import static com.figaro.util.Constants.TIPO_PAGO_CONTADO;
 import static com.figaro.util.Constants.MSG_TURNO_OCUPADO_CLIENTE;
-import static com.figaro.util.Constants.MSG_TURNO_OCUPADO_PELUQUERO;
+import static com.figaro.util.Constants.MSG_TURNO_OCUPADO_EMPLEADO;
+import static com.figaro.util.Constants.TIPO_PAGO_CONTADO;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -115,7 +115,7 @@ public class TurnosService {
 	private Movimiento generatePago(Turno turno) {
 		BigDecimal montoTotal = turno.calculatePrecioPago();
 		Movimiento movimiento = new Movimiento();
-		movimiento.setCategoria(CATEGORIA_PELUQUERO);
+		movimiento.setCategoria(CATEGORIA_EMPLEADOS);
 		movimiento.setCuotas(0);
 		movimiento.setFecha(new Date());
 		movimiento.setIsGasto(true);
@@ -145,7 +145,7 @@ public class TurnosService {
 	}
 	
 	private void validateTurno(Turno nuevoTurno) {
-		LOGGER.info("Validando el Turno: " + nuevoTurno.getDesde() +" - " +nuevoTurno.getHasta() +" "+ nuevoTurno.getPeluquero() );
+		LOGGER.info("Validando el Turno: " + nuevoTurno.getDesde() +" - " +nuevoTurno.getHasta() +" "+ nuevoTurno.getEmpleado() );
 		
 		if (horarioInvalido(nuevoTurno))
 			throw new HorarioInvalidoException(nuevoTurno.getDesde() +" - "+nuevoTurno.getHasta());
@@ -154,16 +154,16 @@ public class TurnosService {
 		turnosDelDia.remove(nuevoTurno);
 		
 		for(Turno turno : turnosDelDia) 
-			if( (mismoPeluquero(nuevoTurno, turno) || mismoCliente(nuevoTurno, turno)) && horarioOcupado(nuevoTurno, turno))
-			throw new TurnoOcupadoException( (mismoPeluquero(nuevoTurno, turno) ? MSG_TURNO_OCUPADO_PELUQUERO : MSG_TURNO_OCUPADO_CLIENTE ));
+			if( (mismoEmpleado(nuevoTurno, turno) || mismoCliente(nuevoTurno, turno)) && horarioOcupado(nuevoTurno, turno))
+			throw new TurnoOcupadoException( (mismoEmpleado(nuevoTurno, turno) ? MSG_TURNO_OCUPADO_EMPLEADO : MSG_TURNO_OCUPADO_CLIENTE ));
 		
 		if (null == nuevoTurno.getCliente())
 			nuevoTurno.setCliente(clientesService.getClienteDesconocido());
 	}
 
 	
-	private boolean mismoPeluquero(Turno nuevoTurno, Turno turno) {
-		return turno.getPeluquero().equals(nuevoTurno.getPeluquero());
+	private boolean mismoEmpleado(Turno nuevoTurno, Turno turno) {
+		return turno.getEmpleado().equals(nuevoTurno.getEmpleado());
 	}
 	
 	private boolean mismoCliente(Turno nuevoTurno, Turno turno) {
@@ -219,14 +219,14 @@ public class TurnosService {
 		return repository.getTurnosCliente(clienteId);
 	}
 	
-	public List<TurnoDTO> getTurnosPeluquero(int peluqueroId, int index) {
-		LOGGER.info("Obteniendo los turnos para el peluquero con ID: " +  peluqueroId);
-		return repository.getTurnosPeluquero(peluqueroId,index);
+	public List<TurnoDTO> getTurnosEmpleado(int empleadoId, int index) {
+		LOGGER.info("Obteniendo los turnos para el empleado con ID: " +  empleadoId);
+		return repository.getTurnosEmpleado(empleadoId,index);
 	}
 	
-	public List<TurnoDTO> getTurnosPeluqueroSinPagar(int peluqueroId) {
-		LOGGER.info("Obteniendo los turnos sin pagar para el peluquero con ID: " +  peluqueroId);
-		return repository.getTurnosPeluqueroSinPagar(peluqueroId);
+	public List<TurnoDTO> getTurnosEmpleadoSinPagar(int empleadoId) {
+		LOGGER.info("Obteniendo los turnos sin pagar para el empleado con ID: " +  empleadoId);
+		return repository.getTurnosEmpleadoSinPagar(empleadoId);
 	}
 	
 	public List<TurnoDTO> getTurnosDelDia(Date fecha) {

@@ -15,7 +15,7 @@ public class Turno {
 
 	private int id;
 	private Cliente cliente;
-	private Peluquero peluquero;
+	private Empleado empleado;
 	private Boolean cobrado;
 	private Boolean pagado;
 	private Movimiento cobro;
@@ -39,7 +39,7 @@ public class Turno {
 	
 	public void update(Turno turno) {
 		this.cliente = turno.getCliente();
-		this.peluquero = turno.getPeluquero();
+		this.empleado= turno.getEmpleado();
 		this.desde = turno.getDesde();
 		this.hasta = turno.getHasta();
 		this.cobrado = turno.getCobrado();
@@ -94,12 +94,6 @@ public class Turno {
 	}
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
-	}
-	public Peluquero getPeluquero() {
-		return peluquero;
-	}
-	public void setPeluquero(Peluquero peluquero) {
-		this.peluquero = peluquero;
 	}
 	public int getId() {
 		return id;
@@ -174,7 +168,7 @@ public class Turno {
 	
 	@Override
 	public String toString() {
-		return "Turno [id=" + id + ", cliente=" + cliente + ", peluquero=" + peluquero + ", desde=" + desde + ", hasta=" + hasta + ", cobrado=" + cobrado + ", movimiento=" + cobro + ", trabajos=" + trabajos + "]";
+		return "Turno [id=" + id + ", cliente=" + cliente + ", peluquero=" + getEmpleado() + ", desde=" + desde + ", hasta=" + hasta + ", cobrado=" + cobrado + ", movimiento=" + cobro + ", trabajos=" + trabajos + "]";
 	}
 
 	public BigDecimal getMontoCobro() {
@@ -199,6 +193,14 @@ public class Turno {
 
 	public void setDescripcionTrabajos(String descripcionTrabajos) {
 		this.descripcionTrabajos = descripcionTrabajos;
+	}
+
+	public Empleado getEmpleado() {
+		return empleado;
+	}
+
+	public void setEmpleado(Empleado empleado) {
+		this.empleado = empleado;
 	}
 
 

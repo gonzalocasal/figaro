@@ -1,14 +1,14 @@
 <!Doctype html>
 <html>
 <head>
-	<title>Peluqueros</title>
+	<title>Empleados</title>
   <#include "/html/common/head.html">
 </head>
-<body ng-app=figaro ng-controller=peluquerosController data-ng-init="init()" >
+<body ng-app=figaro ng-controller=empleadosController data-ng-init="init()" >
   <#include "/html/common/menu.html">
   <div id=content class="content fade-in">
      <div class=banner>
-      <label class="banner-button add" ng-click="newPeluquero()"><i class="material-icons" >add content_cut</i> Nuevo</label>   
+      <label class="banner-button add" ng-click="newEmpleado()"><i class="material-icons" >add content_cut</i> Nuevo</label>   
       
       <span class=banner-buttons-hidden>
       
@@ -33,20 +33,20 @@
         </tr>
       </thead>
         <tbody>
-          <tr data-id={{peluquero.id}} class="data-row fade-in" ng-repeat="peluquero in peluqueros" ng-show="peluquero.habilitado"  ng-cloak>
-            <td><input ng-model="peluquero.checked" ng-click="actualizarSeleccion($index, peluqueros)" type="checkbox" /></td>
-            <td ng-click="detailPeluquero(peluquero.id)">{{peluquero.nombre}}</td>
-            <td ng-click="detailPeluquero(peluquero.id)">{{peluquero.apellido}}</td>
-            <td ng-click="detailPeluquero(peluquero.id)">{{peluquero.telefono}}</td>
-            <td ng-click="detailPeluquero(peluquero.id)">{{peluquero.email}}</td>
+          <tr data-id={{empleado.id}} class="data-row fade-in" ng-repeat="empleado in empleados" ng-show="empleado.habilitado"  ng-cloak>
+            <td><input ng-model="empleado.checked" ng-click="actualizarSeleccion($index, empleados)" type="checkbox" /></td>
+            <td ng-click="detailEmpleado(empleado.id)">{{empleado.nombre}}</td>
+            <td ng-click="detailEmpleado(empleado.id)">{{empleado.apellido}}</td>
+            <td ng-click="detailEmpleado(empleado.id)">{{empleado.telefono}}</td>
+            <td ng-click="detailEmpleado(empleado.id)">{{empleado.email}}</td>
           </tr>
         </tbody>
       </table>
       
   </div>
   <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
-  <#include "/html/peluqueros/peluqueros-modal.html">
+  <#include "/html/empleados/empleados-modal.html">
   <#include "/html/common/javascript.html">
-  <script src="js/peluquerosController.js" ></script>
+  <script src="js/empleadosController.js" ></script>
 </body>
 </html>

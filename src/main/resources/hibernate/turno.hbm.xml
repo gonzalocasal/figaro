@@ -18,8 +18,8 @@
             <column name="ID_CLIENTE" not-null="true" />
         </many-to-one>
         
-        <many-to-one name="peluquero" class="com.figaro.model.Peluquero" lazy="false" fetch="select">
-            <column name="ID_PELUQUERO" not-null="true" />
+        <many-to-one name="empleado" class="com.figaro.model.Empleado" lazy="false" fetch="select">
+            <column name="ID_EMPLEADO" not-null="true" />
         </many-to-one>
      	<many-to-one name="cobro" unique="true"  cascade="all-delete-orphan" class="com.figaro.model.Movimiento" lazy="false"  fetch="select">
             <column name="ID_COBRO" />

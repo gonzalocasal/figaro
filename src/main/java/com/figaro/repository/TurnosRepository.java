@@ -55,13 +55,13 @@ public class TurnosRepository extends AbstractRepository{
 	}
 	
 	
-	public Integer getCantidadTurnosPeluquero(int peluqueroId) {
-		Long cantidad = (Long) getCurrentSession().createQuery( "SELECT COUNT (*) FROM Turno AS t WHERE t.peluquero.id = :peluqueroId").setParameter("peluqueroId", peluqueroId).uniqueResult();
+	public Integer getCantidadTurnosEmpleado(int empleadoId) {
+		Long cantidad = (Long) getCurrentSession().createQuery( "SELECT COUNT (*) FROM Turno AS t WHERE t.empleado.id = :empleadoId").setParameter("empleadoId", empleadoId).uniqueResult();
 		return Integer.valueOf(cantidad.intValue());
 	}
 	
-	public BigDecimal getTotalPagosTurnosPeluquero(int peluqueroId) {
-		return (BigDecimal) getCurrentSession().createQuery( "SELECT SUM (t.montoPago) FROM Turno AS t WHERE t.peluquero.id = :peluqueroId").setParameter("peluqueroId", peluqueroId).uniqueResult();
+	public BigDecimal getTotalPagosTurnosEmpleado(int empleadoId) {
+		return (BigDecimal) getCurrentSession().createQuery( "SELECT SUM (t.montoPago) FROM Turno AS t WHERE t.empleado.id = :empleadoId").setParameter("empleadoId", empleadoId).uniqueResult();
 	}
 		
 	public List<TurnoDTO> searchTurno (Date desdeParam) {
@@ -111,9 +111,9 @@ public class TurnosRepository extends AbstractRepository{
 	}
 	
 	
-	public List<TurnoDTO> getTurnosPeluquero(int peluqueroId, int index ) {
-		List<Turno> turnos = getCurrentSession().createQuery( "FROM Turno AS t WHERE t.peluquero.id = :peluqueroId ORDER BY t.desde DESC")
-				.setParameter("peluqueroId", peluqueroId)
+	public List<TurnoDTO> getTurnosEmpleado(int empleadoId, int index ) {
+		List<Turno> turnos = getCurrentSession().createQuery( "FROM Turno AS t WHERE t.empleado.id = :empleadoId ORDER BY t.desde DESC")
+				.setParameter("empleadoId", empleadoId)
 				.setFirstResult(index*pageSize)
 				.setMaxResults(pageSize)
 				.list();
@@ -123,9 +123,9 @@ public class TurnosRepository extends AbstractRepository{
 		return dtos;
 	}
 	
-	public List<TurnoDTO> getTurnosPeluqueroSinPagar(int peluqueroId) {
-		List<Turno> turnos = getCurrentSession().createQuery( "FROM Turno AS t WHERE t.peluquero.id = :peluqueroId AND t.pagado = false ORDER BY t.desde DESC")
-				.setParameter("peluqueroId", peluqueroId)
+	public List<TurnoDTO> getTurnosEmpleadoSinPagar(int empleadoId) {
+		List<Turno> turnos = getCurrentSession().createQuery( "FROM Turno AS t WHERE t.empleado.id = :empleadoId AND t.pagado = false ORDER BY t.desde DESC")
+				.setParameter("empleadoId", empleadoId)
 				.list();
 		List<TurnoDTO> dtos = new ArrayList<TurnoDTO>();
 		for (Turno t : turnos)

@@ -2,12 +2,12 @@ package com.figaro.dto;
 
 import java.math.BigDecimal;
 
-public class TotalesPeluqueroDTO {
+public class TotalesEmpleadoDTO {
 	
 	private Integer turnos;
 	private BigDecimal pago;
 	
-	public TotalesPeluqueroDTO(Integer turnos, BigDecimal pago) {
+	public TotalesEmpleadoDTO(Integer turnos, BigDecimal pago) {
 		this.turnos = turnos;
 		this.pago = pago;
 	}

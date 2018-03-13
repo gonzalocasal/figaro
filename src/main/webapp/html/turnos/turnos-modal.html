@@ -27,8 +27,8 @@
           </select>
         </div> 
               
-        <div class=form-field><label>PELUQUERO:</label>
-          <select name=peluquero  ng-model="peluquero" ng-change="bindTrabajos()" ng-options="peluquero as peluquero.nombre + ' ' + peluquero.apellido   for peluquero in peluqueros" required>
+        <div class=form-field><label>EMPLEADO:</label>
+          <select name=empleado  ng-model="empleado" ng-change="bindTrabajos()" ng-options="empleado as empleado.nombre + ' ' + empleado.apellido   for empleado in empleados" required>
             <option value=""></option>
           </select>
         </div>
@@ -37,7 +37,7 @@
           <div class=form-field><label>TRABAJOS:</label></div>
           <table id=table>
             <tbody>
-            <tr ng-cloak   class=data-row  ng-repeat="trabajo in trabajosPeluquero" >
+            <tr ng-cloak   class=data-row  ng-repeat="trabajo in trabajosEmpleado" >
             <td ><input id={{trabajo.id}} type="checkbox"  value="trabajo"  ng-click="toggleTrabajo(trabajo)" ng-model=trabajo.selected> </td>
             <td >{{trabajo.servicio.descripcion}} </td>
             <td >{{trabajo.servicio.precio | currency}}</td>

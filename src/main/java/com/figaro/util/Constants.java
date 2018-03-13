@@ -12,7 +12,7 @@ public class Constants{
 	public static final String SIN_CIUDAD = "Sin Ciudad";
 	
 	public static final String CATEGORIA_TURNOS = "Turnos";
-	public static final String CATEGORIA_PELUQUERO = "Peluqueros";
+	public static final String CATEGORIA_EMPLEADOS = "Empleados";
 	public static final String CATEGORIA_VENTAS = "Ventas";
 
 	public static final String TIPO_PAGO_DEBITO  ="debito";
@@ -33,7 +33,7 @@ public class Constants{
 	
 	public static final String MSG_DUPLICADO = "Ya existe un elemento con estos datos";
 	public static final String MSG_TURNO_OCUPADO_CLIENTE   = "Ya hay un turno en el horario seleccionado para ese cliente";
-	public static final String MSG_TURNO_OCUPADO_PELUQUERO = "Ya hay un turno en el horario seleccionado para ese peluquero";
+	public static final String MSG_TURNO_OCUPADO_EMPLEADO = "Ya hay un turno en el horario seleccionado para ese empleado";
 	public static final String MSG_HORARIO_INVALIDO = "El horario seleccionado es invalido";
     public static final String MSG_DESCUENTO_INVALIDO = "El descuento no puede ser mayor al monto total";
 

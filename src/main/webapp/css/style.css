@@ -520,7 +520,7 @@ li a:hover {
     cursor: pointer;
 }
 
-.peluquero-fields{
+.empleado-fields{
     float: left;
     margin-right: 30px;
     margin-bottom: 20px;
@@ -584,7 +584,7 @@ li a:hover {
     margin-bottom: 20px
 }
 
-.ciudades, .peluqueros, .categorias{
+.ciudades, .empleados, .categorias{
     width: 250px;
     padding: 20px
 }
@@ -599,7 +599,7 @@ li a:hover {
     padding: 20px
 }
 
-.servicios,.ciudades,.peluqueros,.horario,.categorias {
+.servicios,.ciudades,.empleados,.horario,.categorias {
     display: inline-block;
     vertical-align: top;
     margin-right: 20px;

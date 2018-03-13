@@ -41,7 +41,7 @@ public class ConfiguracionRepository extends AbstractRepository {
 		LOGGER.info("Eliminando el Servicio: "+ servicio.getDescripcion());
 		getCurrentSession().delete(servicio);
 		
-		Query<Movimiento> query = getCurrentSession().createNativeQuery("delete from TRABAJO_PELUQUERO WHERE ID_SERVICIO = ?1");
+		Query<Movimiento> query = getCurrentSession().createNativeQuery("delete from TRABAJO_EMPLEADO WHERE ID_SERVICIO = ?1");
 	    query.setParameter(1, idServicio);
 	    query.executeUpdate();
 	}

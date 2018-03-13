@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 import com.figaro.model.Cliente;
 import com.figaro.model.Item;
 import com.figaro.model.Movimiento;
-import com.figaro.model.Peluquero;
+import com.figaro.model.Empleado;
 import com.figaro.model.Turno;
 import com.figaro.model.Venta;
 import com.figaro.repository.EstadisticasRepository;
@@ -82,28 +82,28 @@ public class EstadisticasService {
 		return mapMovimientos;
 	}
 	
-	public Map<String, BigDecimal> buscarTurnosPorPeluqueroIngreso(Date from, Date to) {
+	public Map<String, BigDecimal> buscarTurnosPorEmpleadoIngreso(Date from, Date to) {
 		List<Turno> searchTurnos = repository.searchBetween (from,to);
 		Map<String, BigDecimal> mapTurnos = new HashMap<>();
 		BigDecimal suma = new BigDecimal(0);
 		for (Turno turnos : searchTurnos) {
-			Peluquero peluquero = turnos.getPeluquero();
-			String nombreApellido = peluquero.getNombre() + ' ' + peluquero.getApellido();			
-			BigDecimal montoPeluquero = mapTurnos.get(nombreApellido);			 			
-			suma = (montoPeluquero == null) ? new BigDecimal(0) : mapTurnos.get(nombreApellido);
+			Empleado empleado = turnos.getEmpleado();
+			String nombreApellido = empleado.getNombre() + ' ' + empleado.getApellido();			
+			BigDecimal montoEmpleado = mapTurnos.get(nombreApellido);			 			
+			suma = (montoEmpleado == null) ? new BigDecimal(0) : mapTurnos.get(nombreApellido);
 			suma = suma.add((turnos.getMontoCobro() == null) ? new BigDecimal(0) : turnos.getMontoCobro() );						
 			mapTurnos.put(nombreApellido, suma);
 		}
 		return mapTurnos;
 	}
 	
-	public Map<String, Integer> buscarTurnosPorPeluqueroCant(Date from, Date to) {
+	public Map<String, Integer> buscarTurnosPorEmpleadoCant(Date from, Date to) {
 		
 		List<Turno> searchTurnos = repository.searchBetween (from,to);
 		Map<String, Integer> mapTurnos = new HashMap<>();		
 		for (Turno turnos : searchTurnos) {
-			Peluquero peluquero = turnos.getPeluquero();
-			String nombreApellido = peluquero.getNombre() + ' ' + peluquero.getApellido();			
+			Empleado empleado = turnos.getEmpleado();
+			String nombreApellido = empleado.getNombre() + ' ' + empleado.getApellido();			
 			Integer cantidadTurnos = mapTurnos.get(nombreApellido);
 			mapTurnos.put(nombreApellido, (cantidadTurnos == null) ? 1: cantidadTurnos + 1);
 		}

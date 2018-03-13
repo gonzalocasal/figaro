@@ -10,16 +10,16 @@
 
   <div class=fila-tarjetas-configuracion>
 
-      <div class="card peluqueros"> 
-        <div class=card-title><i class="material-icons">group </i><label class=card-title> PELUQUEROS HABILITADOS</label></div>
+      <div class="card empleados"> 
+        <div class=card-title><i class="material-icons">group </i><label class=card-title> EMPLEADOS HABILITADOS</label></div>
         <table id=table >
           <tbody>
-          <tr ng-cloak id={{ciudad.id}} class="data-row fade-in" ng-repeat="peluquero in peluqueros" >
-          <td ><input type="checkbox"  value="servicio" ng-click=togglePeluquero(peluquero) ng-model=peluquero.habilitado> {{peluquero.nombre}} {{peluquero.apellido}}</td>
+          <tr ng-cloak id={{ciudad.id}} class="data-row fade-in" ng-repeat="empleado in empleados" >
+          <td ><input type="checkbox"  value="servicio" ng-click=toggleEmpleado(empleado) ng-model=empleado.habilitado> {{empleado.nombre}} {{empleado.apellido}}</td>
           </tr>
           </tbody>
         </table>
-        <label  ng-cloak class=form-message>{{messagePeluquero}}</label>
+        <label  ng-cloak class=form-message>{{messageEmpleado}}</label>
         <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
     </div>
 

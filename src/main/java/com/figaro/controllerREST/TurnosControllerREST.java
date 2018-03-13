@@ -49,14 +49,14 @@ public class TurnosControllerREST {
 		return new ResponseEntity<>(service.getTurnosCliente(clienteId), HttpStatus.OK);
     }
 	
-	@GetMapping("turnos/peluquero/{peluqueroId}")
-    public ResponseEntity<List<TurnoDTO>> getTurnosPeluquero( @PathVariable int peluqueroId, @RequestParam int index) {
-		return new ResponseEntity<>(service.getTurnosPeluquero(peluqueroId, index), HttpStatus.OK);
+	@GetMapping("turnos/empleados/{empleadoId}")
+    public ResponseEntity<List<TurnoDTO>> getTurnosEmpleado( @PathVariable int empleadoId, @RequestParam int index) {
+		return new ResponseEntity<>(service.getTurnosEmpleado(empleadoId, index), HttpStatus.OK);
     }
 	
-	@GetMapping("turnos/peluquero/{peluqueroId}/sinpagar")
-    public ResponseEntity<List<TurnoDTO>> getTurnosPeluqueroSinPagar( @PathVariable int peluqueroId) {
-		return new ResponseEntity<>(service.getTurnosPeluqueroSinPagar(peluqueroId), HttpStatus.OK);
+	@GetMapping("turnos/empleados/{empleadoId}/sinpagar")
+    public ResponseEntity<List<TurnoDTO>> getTurnosEmpleadoSinPagar( @PathVariable int empleadoId) {
+		return new ResponseEntity<>(service.getTurnosEmpleadoSinPagar(empleadoId), HttpStatus.OK);
     }
 	
 	

@@ -24,7 +24,7 @@
           <th>CLIENTE</th>
           <th>TRABAJOS</th>
           <th>PRECIO</th>
-          <th>PELUQUERO</th>
+          <th>EMPLEADO</th>
           <th>COBRADO</th>
           <th></th>
       </tr>
@@ -35,7 +35,7 @@
       <td data-id={{turno.id}} ><a class=link ng-href="/turnos/cliente/{{turno.cliente.id}}">{{turno.cliente.nombre}} {{turno.cliente.apellido}} </a></td>
       <td data-id={{turno.id}} data-ng-click="detailTurno($event)">{{turno.descripcionTrabajos}}</td>
       <td data-id={{turno.id}} data-ng-click="detailTurno($event)">{{turno.montoCobro | currency}}</td>
-      <td data-id={{turno.id}} ><a class=link ng-href="/turnos/peluquero/{{turno.peluquero.id}}">{{turno.peluquero.nombre}} {{turno.peluquero.apellido}}</a></td>
+      <td data-id={{turno.id}} ><a class=link ng-href="/turnos/empleados/{{turno.empleado.id}}">{{turno.empleado.nombre}} {{turno.empleado.apellido}}</a></td>
       <td><input ng-model="turno.cobrado" ng-click="setCobrado(turno)" type="checkbox"></td>
       <td data-id={{turno.id}} data-ng-click="confirmDelete(turno.id)" class="tachotd" ><i class="material-icons tachoi">clear</i></td></tr>
       </tbody>

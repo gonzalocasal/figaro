@@ -21,7 +21,7 @@
               <th>FECHA</th>
               <th>TRABAJOS</th>
               <th>PRECIO</th>
-              <th>PELUQUERO</th>
+              <th>EMPLEADO</th>
               <th>COBRADO</th>
           </tr>
         </thead>
@@ -30,7 +30,7 @@
           <td id={{turno.id}} data-id={{turno.id}}>{{turno.desde.split(' ')[0] | date}} - {{turno.desde.split(' ')[1]}} hs</td>
           <td id={{turno.id}} data-id={{turno.id}}> {{turno.descripcionTrabajos}} </td>
           <td id={{turno.id}} data-id={{turno.id}} >{{turno.montoCobro | currency}}</td>
-          <td data-id={{turno.id}} ><a class=link ng-href="/turnos/peluquero/{{turno.peluquero.id}}"> {{turno.peluquero.nombre}} {{turno.peluquero.apellido}}</a></td>
+          <td data-id={{turno.id}} ><a class=link ng-href="/turnos/empleados/{{turno.empleado.id}}"> {{turno.empleado.nombre}} {{turno.empleado.apellido}}</a></td>
           <td><input ng-model="turno.cobrado"   ng-click="setCobrado(turno)" type="checkbox" ></td>
         </tr>
         </tbody>

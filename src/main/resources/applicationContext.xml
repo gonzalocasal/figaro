@@ -156,13 +156,13 @@
 	
 		
 	
-	<!-- PELUQUEROS !-->
-	<bean id="PeluquerosServiceTransactional" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+	<!-- EMPLEADOS !-->
+	<bean id="EmpleadosServiceTransactional" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="transactionManager">
 			<ref bean="transactionManager" />
 		</property>
 		<property name="target">
-			<ref bean="PeluquerosService" />
+			<ref bean="EmpleadosService" />
 		</property>
 		<property name="transactionAttributes">
 			<props>
@@ -171,9 +171,9 @@
 		</property>
 	</bean>
 
-	<bean id="PeluquerosService" class="com.figaro.service.PeluquerosService">
+	<bean id="EmpleadosService" class="com.figaro.service.EmpleadosService">
 		<property name="repository">
-			<ref bean="PeluquerosRepository" />
+			<ref bean="EmpleadosRepository" />
 		</property>
 		<property name="turnosRepository">
 			<ref bean="TurnosRepository" />
@@ -182,7 +182,7 @@
 		
 	</bean>
 
-	<bean id="PeluquerosRepository"	class="com.figaro.repository.PeluquerosRepository">
+	<bean id="EmpleadosRepository"	class="com.figaro.repository.EmpleadosRepository">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>

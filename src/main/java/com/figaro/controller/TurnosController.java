@@ -16,14 +16,14 @@ public class TurnosController {
 		return "html/turnos/turnos-cliente";
 	}
 
-	@RequestMapping("/turnos/peluquero/{peluqueroId}")
-	public String turnosDePeluquero() {
-		return "html/turnos/turnos-peluquero";
+	@RequestMapping("/turnos/empleados/{empleadoId}")
+	public String turnosDeEmpleado() {
+		return "html/turnos/turnos-empleado";
 	}
 
-	@RequestMapping("/turnos/peluquero/{peluqueroId}/sinpagar")
-	public String turnosDePeluqueroSinPagar() {
-		return "html/turnos/turnos-peluquero";
+	@RequestMapping("/turnos/empleados/{empleadoId}/sinpagar")
+	public String turnosDeEmpleadoSinPagar() {
+		return "html/turnos/turnos-empleado";
 	}
 
 	

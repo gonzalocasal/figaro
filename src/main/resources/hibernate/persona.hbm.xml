@@ -23,7 +23,7 @@
 				<property name="ultimaVisita" 	column="ULT_VISITA" type="date"/>
 		</union-subclass>
 	     	
-	     <union-subclass name="com.figaro.model.Peluquero" table="PELUQUERO" >
+	     <union-subclass name="com.figaro.model.Empleado" table="EMPLEADO" >
      		 <property name="habilitado" 	    column="HABILITADO"    type="boolean"/> 
    		     <set name="trabajos" inverse="false"   cascade="all" lazy="false" fetch="select">
          		<key><column name="ID_PERSONA" not-null="true" /></key>

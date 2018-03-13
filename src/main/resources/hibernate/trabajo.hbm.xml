@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-	<class name="com.figaro.model.Trabajo" table="TRABAJO_PELUQUERO" entity-name="Trabajo">
+	<class name="com.figaro.model.Trabajo" table="TRABAJO_EMPLEADO" entity-name="Trabajo">
 		<id name="id" column="ID_TRABAJO" type="integer" >
             <generator class="native" />
         </id>
@@ -10,7 +10,7 @@
 		<many-to-one name="servicio" entity-name="Servicio" lazy="false" fetch="select">
              <column name="ID_SERVICIO" />
          </many-to-one>
-		<many-to-one name="peluquero"  class="com.figaro.model.Peluquero" lazy="false" fetch="select">
+		<many-to-one name="empleado"  class="com.figaro.model.Empleado" lazy="false" fetch="select">
              <column name="ID_PERSONA" />
          </many-to-one>
 	</class>

@@ -8,7 +8,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.figaro.model.Cliente;
 import com.figaro.model.Movimiento;
-import com.figaro.model.Peluquero;
+import com.figaro.model.Empleado;
 import com.figaro.model.Turno;
 
 public class TurnoDTO {
@@ -16,7 +16,7 @@ public class TurnoDTO {
 	
 	private int id;
 	private Cliente cliente;
-	private Peluquero peluquero;
+	private Empleado empleado;
 	private Boolean cobrado;
 	private Boolean pagado;
 	private Movimiento cobro;
@@ -34,7 +34,7 @@ public class TurnoDTO {
 	public  TurnoDTO(Turno turno) {
 		this.id = turno.getId();
 		this.cliente = turno.getCliente();
-		this.peluquero = turno.getPeluquero();
+		this.empleado = turno.getEmpleado();
 		this.desde = turno.getDesde();
 		this.hasta = turno.getHasta();
 		this.cobrado = turno.getCobrado();
@@ -68,15 +68,6 @@ public class TurnoDTO {
 		this.cliente = cliente;
 	}
 
-
-	public Peluquero getPeluquero() {
-		return peluquero;
-	}
-
-
-	public void setPeluquero(Peluquero peluquero) {
-		this.peluquero = peluquero;
-	}
 
 
 	public Boolean getCobrado() {
@@ -166,6 +157,16 @@ public class TurnoDTO {
 
 	public void setHasta(Date hasta) {
 		this.hasta = hasta;
+	}
+
+
+	public Empleado getEmpleado() {
+		return empleado;
+	}
+
+
+	public void setEmpleado(Empleado empleado) {
+		this.empleado = empleado;
 	}
 
 	
