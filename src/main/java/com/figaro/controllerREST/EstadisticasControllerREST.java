@@ -27,37 +27,37 @@ public class EstadisticasControllerREST {
 	@Qualifier("EstadisticasServiceTransactional")
 	private EstadisticasService service;
 	
-	@GetMapping("estadisticas/clientesCiudad")
+	@GetMapping("estadisticas/clientes/ciudad")
     public ResponseEntity<Map<String, Integer>> buscarClienteCiudad() {
         return new ResponseEntity<>(service.buscarClienteCiudad(), HttpStatus.OK);
     }
 	
-	@GetMapping("estadisticas/clientesSexo")
+	@GetMapping("estadisticas/clientes/sexo")
     public ResponseEntity<Map<String, Integer>> buscarClienteSexo() {
         return new ResponseEntity<>(service.buscarClienteSexo(), HttpStatus.OK);
     }
 	
-	@GetMapping("estadisticas/productoMasVendido")
+	@GetMapping("estadisticas/productos/masvendido")
     public ResponseEntity<Map<String, Integer>> buscarProductoMasVendido(@RequestParam  @DateTimeFormat(pattern=DATE_FORMAT) Date from, @RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date to) {		
         return new ResponseEntity<>(service.buscarProductoMasVendido(from,to), HttpStatus.OK);
     }
 	
-	@GetMapping("estadisticas/totalesDeCaja")
+	@GetMapping("estadisticas/caja/totales")
     public ResponseEntity<Map<String, BigDecimal>> buscarTotalesDeCaja(@RequestParam  @DateTimeFormat(pattern=DATE_FORMAT) Date from, @RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date to)  {		
         return new ResponseEntity<>(service.buscarTotalesDeCaja(from,to), HttpStatus.OK);
     }
 		
-	@GetMapping("estadisticas/turnosPorEmpleadoCant")
+	@GetMapping("estadisticas/turnos/empleado/cantidad")
     public ResponseEntity<Map<String, Integer>> buscarTurnosPorEmpleadoCant(@RequestParam  @DateTimeFormat(pattern=DATE_FORMAT) Date from, @RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date to) {		
         return new ResponseEntity<>(service.buscarTurnosPorEmpleadoCant(from,to), HttpStatus.OK);
     }
 	
-	@GetMapping("estadisticas/turnosPorPeluqueroIngreso")
+	@GetMapping("estadisticas/turnos/empleado/ingreso")
     public ResponseEntity<Map<String, BigDecimal>> buscarTurnosPorEmpleadoIngreso(@RequestParam  @DateTimeFormat(pattern=DATE_FORMAT) Date from, @RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date to) {		
         return new ResponseEntity<>(service.buscarTurnosPorEmpleadoIngreso(from,to), HttpStatus.OK);
     }
 		
-	@GetMapping("estadisticas/turnosMasSolicitado")
+	@GetMapping("estadisticas/turnos/massolicitados")
     public ResponseEntity<TreeMap<String, Integer>> buscarTurnoMasSolicitado(@RequestParam  @DateTimeFormat(pattern=DATE_FORMAT) Date from, @RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date to) {		
         return new ResponseEntity<>(service.buscarTurnoMasSolicitado(from,to), HttpStatus.OK);
     }

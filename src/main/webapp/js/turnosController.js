@@ -86,7 +86,7 @@ app.controller('turnosController', function ($scope, $http) {
 
 
 
-    //BUSCA TRABAJO EN PELUQUERO
+    //BUSCA TRABAJO EN EMPLEADO
     function isInListaTrabajos(trabajo){
         for(var i = 0; i < $scope.trabajosEmpleado.length; i++)  
             if(trabajo.servicio.descripcion == $scope.trabajosEmpleado[i].servicio.descripcion )
@@ -189,7 +189,7 @@ app.controller('turnosController', function ($scope, $http) {
     return total;
     };
 
-    //OBTENER PAGO A PELUQUERO POR TURNO
+    //OBTENER PAGO A EMPLEADO POR TURNO
     $scope.getPago = function(trabajos) {
         var total = 0;
         for(var i = 0; i < trabajos.length; i++)
@@ -197,8 +197,8 @@ app.controller('turnosController', function ($scope, $http) {
         return total;
     };
 
-    //OBTENER TOTAL PAGO A PELUQUERO PENDIENTE
-    $scope.calcularTotalPagoPeluquero = function (turnos) {
+    //OBTENER TOTAL PAGO A EMPLEADO PENDIENTE
+    $scope.calcularTotalPagoEmpleado = function (turnos) {
         var total = 0;
         for(var i = 0; i < turnos.length; i++)
             total += turnos[i].montoPago
@@ -361,7 +361,7 @@ app.controller('turnosController', function ($scope, $http) {
         });  
     };
 
-    //OBTENER LISTA DE PELUQUEROS
+    //OBTENER LISTA DE EMPLEADOS
     $scope.getAllEmpleados = function() {
         $http.get("/rest/empleados/habilitados").then(function (response) {
             $scope.empleados = response.data;

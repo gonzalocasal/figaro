@@ -177,7 +177,7 @@ app.controller('configuracionController', function ($scope, $http) {
     };
 
     //HABILITAR - DESHABILITAR EMPLEADO
-    $scope.toggleEmpleado = function(empleados) {
+    $scope.toggleEmpleado = function(empleado) {
       $http.patch('/rest/empleados/'+empleado.id+'/habilitar');
     };
 

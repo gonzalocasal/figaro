@@ -93,8 +93,8 @@ app.controller('movimientosController', function ($scope, $http) {
 	    };
 
 	    
-	    //CLICK DETALLE PELUQUERO
-	    $scope.detailMovimientoPeluquero = function(event){
+	    //CLICK DETALLE EMPLEADO
+	    $scope.detailMovimientoEmpleado = function(event){
 	        $scope.message='';
 	        $scope.isNuevoMovimiento = false
 	        $scope.movimientoID = event.currentTarget.getAttribute("data-id");
@@ -107,30 +107,30 @@ app.controller('movimientosController', function ($scope, $http) {
 	            	$http.get("/rest/movimientos/setDeTrabajos",{params: { id: $scope.ngDetalle}}).then(function (response) {
 	            		$scope.ngMovimientoSetTrabajos = response.data;	            	
 	            	});
-	               	openModal("modal-caja-peluquero");
+	               	openModal("modal-caja-empleado");
 	            });                    
 	            
 		    });
 	    };
 
-	    $scope.calculaComisionPeluquero = function(event){	   
+	    $scope.calculaComisionEmpleado = function(event){	   
 	    	var precio = event.servicio.precio;
 	    	var comi = event.comision * 0.01;
 	    	var total = precio * comi;   
 	        return total;
 	    }
 
-	    $scope.calculaTotalPeluquero = function(){
+	    $scope.calculaTotalEmpleado = function(){
 	        var total = 0;
 	        angular.forEach($scope.ngMovimientoSetTrabajos, function(ngMovimientoSetTrabajos){
-	        	total = total + $scope.calculaComisionPeluquero(ngMovimientoSetTrabajos);
+	        	total = total + $scope.calculaComisionEmpleado(ngMovimientoSetTrabajos);
 	        })
 	        return total;
 	    }
 	    
-	    $scope.discardMovimientoPeluquero = function(event){
+	    $scope.discardMovimientoEmpleado = function(event){
 	        $scope.ngMovimiento = {};
-	        closeModal("modal-caja-peluquero");
+	        closeModal("modal-caja-empleado");
 	    };
 
 
@@ -170,7 +170,7 @@ app.controller('movimientosController', function ($scope, $http) {
 	            $scope.discardMovimiento();
 	            $scope.discardMovimientoVenta();
 	            $scope.discardMovimientoTurno();
-	            $scope.discardMovimientoPeluquero();
+	            $scope.discardMovimientoEmpleado();
 	        }
 	    });
 

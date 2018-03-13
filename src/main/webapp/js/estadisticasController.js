@@ -5,14 +5,14 @@ app.controller('estadisticasController', function ($scope, $http) {
 
 		//OBTENER LISTA DE CIUDADES
 		    $scope.getClientesCiudad = function() {
-		        $http.get("/rest/estadisticas/clientesCiudad").then(function (response) {
+		        $http.get("/rest/estadisticas/clientes/ciudad").then(function (response) {
 		            $scope.clientesCiudad = response.data;
 		        });			      
 		    };		  
 
 		//OBTENER LISTA DE CLIENTE SEXO
 		    $scope.getClientesSexo = function() {
-		        $http.get("/rest/estadisticas/clientesSexo").then(function (response) {
+		        $http.get("/rest/estadisticas/clientes/sexo").then(function (response) {
 		            $scope.clientesSexo = response.data;		            
 		        });			      
 		    };
@@ -20,7 +20,7 @@ app.controller('estadisticasController', function ($scope, $http) {
 
 		//OBTENER LISTA DE Producto mas vendido
 		    $scope.getProductoMasVendido = function() {
-		        $http.get("/rest/estadisticas/productoMasVendido",{params: { from: $scope.fechaInicio, to: $scope.fechaFin}}).then(function (response) {
+		        $http.get("/rest/estadisticas/productos/masvendido",{params: { from: $scope.fechaInicio, to: $scope.fechaFin}}).then(function (response) {
 		            $scope.productoMasVendido = response.data;		
 		            seleccionado = $scope.productoMasVendido;
                 	$scope.generarSeleccionado(seleccionado);             	            
@@ -29,7 +29,7 @@ app.controller('estadisticasController', function ($scope, $http) {
 
 		//OBTENER LISTA DE Totales De Caja
 		    $scope.getTotalesDeCaja = function() {
-		        $http.get("/rest/estadisticas/totalesDeCaja",{params: { from: $scope.fechaInicio, to: $scope.fechaFin}}).then(function (response) {
+		        $http.get("/rest/estadisticas/caja/totales",{params: { from: $scope.fechaInicio, to: $scope.fechaFin}}).then(function (response) {
 		            $scope.totalesDeCaja = response.data;		
 		            seleccionado = $scope.totalesDeCaja;
                 	$scope.generarSeleccionado(seleccionado);             	            
@@ -37,26 +37,26 @@ app.controller('estadisticasController', function ($scope, $http) {
 		    };	
      
      	//OBTENER LISTA DE Totales De Caja
-		    $scope.getTurnosPorPeluqueroCant = function() {
-		        $http.get("/rest/estadisticas/turnosPorPeluqueroCant",{params: { from: $scope.fechaInicio, to: $scope.fechaFin}}).then(function (response) {
-		            $scope.turnosPorPeluqueroCant = response.data;		
-		            seleccionado = $scope.turnosPorPeluqueroCant;
+		    $scope.getTurnosPorEmpleadoCant = function() {
+		        $http.get("/rest/estadisticas/turnos/empleado/cantidad",{params: { from: $scope.fechaInicio, to: $scope.fechaFin}}).then(function (response) {
+		            $scope.turnosPorEmpleadoCant = response.data;		
+		            seleccionado = $scope.turnosPorEmpleadoCant;
                 	$scope.generarSeleccionado(seleccionado);             	            
 		        });			      
 		    };	
 
 		//OBTENER LISTA DE Totales De Caja
-		    $scope.getTurnosPorPeluqueroIngreso = function() {
-		        $http.get("/rest/estadisticas/turnosPorPeluqueroIngreso",{params: { from: $scope.fechaInicio, to: $scope.fechaFin}}).then(function (response) {
-		            $scope.turnosPorPeluqueroIngreso = response.data;		
-		            seleccionado = $scope.turnosPorPeluqueroIngreso;
+		    $scope.getTurnosPorEmpleadoIngreso = function() {
+		        $http.get("/rest/estadisticas/turnos/empleado/ingreso",{params: { from: $scope.fechaInicio, to: $scope.fechaFin}}).then(function (response) {
+		            $scope.turnosPorEmpleadoIngreso = response.data;		
+		            seleccionado = $scope.turnosPorEmpleadoIngreso;
                 	$scope.generarSeleccionado(seleccionado);             	            
 		        });			      
 		    };	
 
 		//OBTENER LISTA DE Turno mas solicitado
 		    $scope.getTurnoMasSolicitado = function() {
-		        $http.get("/rest/estadisticas/turnosMasSolicitado",{params: { from: $scope.fechaInicio, to: $scope.fechaFin}}).then(function (response) {
+		        $http.get("/rest/estadisticas/turnos/massolicitados",{params: { from: $scope.fechaInicio, to: $scope.fechaFin}}).then(function (response) {
 		            $scope.turnosMasSolicitado = response.data;			            
 		            seleccionado = $scope.turnosMasSolicitado;
                 	$scope.generarSeleccionado(seleccionado);             	            
@@ -104,21 +104,21 @@ app.controller('estadisticasController', function ($scope, $http) {
                 			options = { scales: { yAxes: [{ ticks: { beginAtZero: false} }] } };
                 			$scope.getTotalesDeCaja();   			
                 			break;
-                	case 'turnosPorPeluqueroCant':  
+                	case 'turnosPorEmpleadoCant':  
                 			$scope.fechaFin = getDateFormatedEnd($scope.searchTo);
                 			$scope.fechaInicio = $scope.searchFrom;                			   
                 			$scope.muestra = true;
                 			tipos = 'bar';
                 			options = { scales: { yAxes: [{ ticks: { beginAtZero: true, min: 0 } }] } };
-                			$scope.getTurnosPorPeluqueroCant();   			
+                			$scope.getTurnosPorEmpleadoCant();   			
                 			break;
-                	case 'turnosPorPeluqueroIngreso':       
+                	case 'turnosPorEmpleadoIngreso':       
                 			$scope.fechaFin = getDateFormatedEnd($scope.searchTo);
                 			$scope.fechaInicio = $scope.searchFrom;                			   
                 			$scope.muestra = true; 
                 			tipos = 'bar';               			
                 			options = { scales: { yAxes: [{ ticks: { beginAtZero: true, min: 0 } }] } };
-                			$scope.getTurnosPorPeluqueroIngreso();   			
+                			$scope.getTurnosPorEmpleadoIngreso();   			
                 			break;
             		default:
             	}

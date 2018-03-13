@@ -11,7 +11,7 @@
       </div>
 
       <div class=banner ng-cloak>
-        <label class=banner-label ><i class=material-icons >content_cut</i> Peluquero: {{ngMovimientoTurno.empleado.nombre}} {{ngMovimientoTurno.empleado.apellido}}</label>
+        <label class=banner-label ><i class=material-icons >content_cut</i> Empleado: {{ngMovimientoTurno.empleado.nombre}} {{ngMovimientoTurno.empleado.apellido}}</label>
       </div>
 
       <div class=banner ng-cloak>        
@@ -36,18 +36,18 @@
         <td data-id={{movimiento.id}}>{{movimiento.servicio.descripcion}}</td>
         <td data-id={{movimiento.id}}>{{movimiento.servicio.precio}}</td>
         <td data-id={{movimiento.id}}>%{{movimiento.comision}}</td>
-        <td data-id={{movimiento.id}}>{{calculaComisionPeluquero(movimiento)}}</td>
+        <td data-id={{movimiento.id}}>{{calculaComisionEmpleado(movimiento)}}</td>
     
       </tr>
     </tbody>
   </table>
 
      <div class=banner ng-cloak>
-      <label class=banner-label ><i class=material-icons >account_balance_wallet</i> Total: <font ng-cloak ng-class=green>{{ calculaTotalPeluquero() | currency }}</font></label>  
+      <label class=banner-label ><i class=material-icons >account_balance_wallet</i> Total: <font ng-cloak ng-class=green>{{ calculaTotalEmpleado() | currency }}</font></label>  
   
   </div>
        <div class=buttons>
-          <button class="button accept" type="button" ng-click="discardMovimientoPeluquero()">ACEPTAR</button>
+          <button class="button accept" type="button" ng-click="discardMovimientoEmpleado()">ACEPTAR</button>
         </div>
   
       </form>
