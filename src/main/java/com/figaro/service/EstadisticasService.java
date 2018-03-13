@@ -70,11 +70,10 @@ public class EstadisticasService {
 	public Map<String, BigDecimal> buscarTotalesDeCaja(Date from, Date to) {
 		List<Movimiento> searchMovimientos = movimientosService.searchMovimientos(from, to, "");
 		Map<String, BigDecimal> mapMovimientos = new HashMap<>();
-		BigDecimal suma = new BigDecimal(0);
 		for (Movimiento movimiento : searchMovimientos) {
 			String categoria = movimiento.getCategoria();
 			BigDecimal monto = mapMovimientos.get(categoria);			 			
-			suma =  (monto == null) ? new BigDecimal(0) : mapMovimientos.get(categoria);
+			BigDecimal suma =  (monto == null) ? new BigDecimal(0) : monto;
 			suma =  (movimiento.getIsGasto())? suma.subtract(movimiento.getPrecio()) : suma.add(movimiento.getPrecio());		
 			mapMovimientos.put(categoria, suma);
 		}
