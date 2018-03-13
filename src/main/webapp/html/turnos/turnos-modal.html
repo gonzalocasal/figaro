@@ -8,10 +8,8 @@
           <i class="material-icons add" ng-controller=clientesController ng-init="isModalOpen=true" ng-click="newClient()" >person_add</i>
         </div>
         
-        <div class="form-field" ng-click="setCliente(cliente)" ng-repeat="cliente in clientes" >
-
+        <div class="form-field" ng-hide=desconocido ng-click="setCliente(cliente)" ng-repeat="cliente in clientes" >
           <input id={{trabajo.id}} type="checkbox"  ng-click="setCliente(cliente)" ng-model=cliente.selected> {{cliente.nombre}} {{cliente.apellido}}
-        
         </div>
 
         <input  type="checkbox" class="form-field" ng-click="setClienteDesconocido()"  ng-model=desconocido> Cliente Desconocido
@@ -53,12 +51,14 @@
           {{trabajo.descripcion}} {{trabajo.precio | currency}}
         </div>
         <div class="form-field">TOTAL: <span >{{totalTrabajosSeleccionados | currency}}</span></div>
-        <div class="form-field" ng-hide=desconocido><span>CLIENTE: </span><a class=link target="_blank" ng-href="/turnos/cliente/{{ngTurno.cliente.id}}"> {{ngTurno.cliente.nombre}} {{ngTurno.cliente.apellido}} </a> </div>
+        
         <label>{{ngTurno.cliente.notas}}</label>
+        
         <div class=buttons>
           <button class="button cancel" type="button" ng-click="discardTurno()">CANCELAR</button>
           <button class="button accept" type="submit">ACEPTAR</button>
         </div>
+        
         <label class=form-message>{{message}}</label>
       </form>
     </div>
