@@ -35,8 +35,21 @@ public class ClientesService {
 	}
 	
 	public List<Cliente> getAllClientes(){
-		LOGGER.debug("Obteniendo todos los clientes");
-		return repository.getAll();
+		LOGGER.info("Obteniendo todos los clientes");
+		List<Cliente> clientes = repository.getAll();
+		removeClienteDesconocido(clientes);  
+		return clientes;
+	}
+
+	public List<Cliente> buscar(String search) {
+		LOGGER.info("Buscando cliente: " + search);
+		List<Cliente> clientes = repository.buscar(search);
+		removeClienteDesconocido(clientes);
+		return clientes;
+	}
+
+	private void removeClienteDesconocido(List<Cliente> clientes) {
+		clientes.removeIf(c -> NOMBRE_CLIENTE_DESCONOCIDO.equals(c.getNombre()) && APELLIDO_CLIENTE_DESCONOCIDO.equals(c.getApellido()));
 	}
 	
 	public Cliente getClienteDesconocido() {
@@ -59,10 +72,7 @@ public class ClientesService {
 		this.repository = repository;
 	}
 
-	public List<Cliente> buscar(String search) {
-		return repository.buscar(search);
-	}
-
+	
 	
 
 }
