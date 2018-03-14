@@ -584,27 +584,19 @@ li a:hover {
     margin-bottom: 20px
 }
 
-.ciudades, .empleados, .categorias{
-    width: 250px;
-    padding: 20px
-}
-
-.servicios{
-    width: 450px;
-    padding: 20px
-}
-
-.horario{
-    width: 300px;
-    padding: 20px
-}
-
-.servicios,.ciudades,.empleados,.horario,.categorias {
+.ciudades, .empleados, .categorias, .servicios, .horario{
+    width: 360px;
+    height: 230px;
+    padding: 20px;
+    margin-right: 20px;
     display: inline-block;
     vertical-align: top;
-    margin-right: 20px;
+    overflow: auto  
 }
 
+.servicio-precio{
+    text-align: right;
+}
 
 .card label{
     width: auto;
