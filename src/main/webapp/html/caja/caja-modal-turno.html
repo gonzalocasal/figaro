@@ -15,7 +15,7 @@
       </div>
 
       <div class=banner ng-cloak>        
-        <label class=banner-label ><i class=material-icons >today</i> Horario: {{ngMovimientoTurno.desde}} - {{ngMovimientoTurno.hasta}}</label>
+        <label class=banner-label ><i class=material-icons >today</i> Horario: {{ngMovimientoTurno.desde.split(' ')[0] | date}} de {{ngMovimientoTurno.desde.split(' ')[1]}} a {{ngMovimientoTurno.hasta.split(' ')[1]}}</label>
       </div>
 
 
