@@ -95,7 +95,7 @@ app.controller('empleadosController', function ($scope, $http) {
         if(typeof $scope.empleadoSelected === "undefined")
             alert('Seleccione un empleado');
         else
-           window.location.href = "/turnos/empleado/"+$scope.empleadoSelected.id
+           window.location.href = "/turnos/empleados/"+$scope.empleadoSelected.id
 
     };
    
