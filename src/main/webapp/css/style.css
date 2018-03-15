@@ -606,10 +606,14 @@ li a:hover {
 }
 
 
-.fila-tarjetas-configuracion th , .fila-tarjetas-configuracion td{
+.fila-tarjetas-configuracion td{
      width: 100%;
 }
 
+
+.horario td{
+    width: 60%;
+}
 
 .servicio-precio{
     text-align: right;
