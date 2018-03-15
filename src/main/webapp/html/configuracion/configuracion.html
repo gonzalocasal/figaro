@@ -80,6 +80,36 @@
       </form>
     </div>
 
+    <div class="card empleados"> 
+        <div class=card-title><i class="material-icons">group </i><label class=card-title> EMPLEADOS HABILITADOS</label></div>
+        <table id=table >
+          <tbody>
+          <tr ng-cloak id={{ciudad.id}} class="data-row fade-in" ng-repeat="empleado in empleados" >
+          <td ><input type="checkbox"  value="servicio" ng-click=toggleEmpleado(empleado) ng-model=empleado.habilitado> {{empleado.nombre}} {{empleado.apellido}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <label  ng-cloak class=form-message>{{messageEmpleado}}</label>
+        <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
+    </div>
+
+
+     <div class="card categorias">
+      <form ng-submit="addCategoria()">
+        <div class=card-title><i class="material-icons">label</i><label class=card-title>CATEGOR&Iacute;AS DE CAJA</label></div>
+        <input type="text" placeholder="Nombre" ng-model="ngCategoria.nombre" maxlength="25" pattern="^[^\s].*([A-zÀ-ž\s]){2,25}" ng-pattern-restrict required>
+        <table id=table>
+          <tbody>
+          <tr ng-cloak id={{categoria.id}} class="data-row fade-in" ng-repeat="categoria in categorias" >
+          <td>{{categoria.nombre}}</td>
+          <td class=delete ><i class="material-icons" data-id={{categoria.id}} ng-click="removeCategoria($event)">clear</i></td>
+          </tr>
+          </tbody>
+        </table>
+        <label  ng-cloak class=form-message>{{messageCategoria}}</label>
+      </form>
+      <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
+    </div>
 
 
 
@@ -101,43 +131,7 @@
     </div>
 
 
-
   </div>
-
-    <div class="card empleados"> 
-        <div class=card-title><i class="material-icons">group </i><label class=card-title> EMPLEADOS HABILITADOS</label></div>
-        <table id=table >
-          <tbody>
-          <tr ng-cloak id={{ciudad.id}} class="data-row fade-in" ng-repeat="empleado in empleados" >
-          <td ><input type="checkbox"  value="servicio" ng-click=toggleEmpleado(empleado) ng-model=empleado.habilitado> {{empleado.nombre}} {{empleado.apellido}}</td>
-          </tr>
-          </tbody>
-        </table>
-        <label  ng-cloak class=form-message>{{messageEmpleado}}</label>
-        <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
-    </div>
-
-   
-
-    <div class="card categorias">
-      <form ng-submit="addCategoria()">
-        <div class=card-title><i class="material-icons">label</i><label class=card-title>CATEGOR&Iacute;AS DE CAJA</label></div>
-        <input type="text" placeholder="Nombre" ng-model="ngCategoria.nombre" maxlength="25" pattern="^[^\s].*([A-zÀ-ž\s]){2,25}" ng-pattern-restrict required>
-        <table id=table>
-          <tbody>
-          <tr ng-cloak id={{categoria.id}} class="data-row fade-in" ng-repeat="categoria in categorias" >
-          <td>{{categoria.nombre}}</td>
-          <td class=delete ><i class="material-icons" data-id={{categoria.id}} ng-click="removeCategoria($event)">clear</i></td>
-          </tr>
-          </tbody>
-        </table>
-        <label  ng-cloak class=form-message>{{messageCategoria}}</label>
-      </form>
-      <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
-    </div>
-
-
-
 
 
 </div>
