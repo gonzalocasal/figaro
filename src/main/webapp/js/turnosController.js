@@ -324,8 +324,15 @@ app.controller('turnosController', function ($scope, $http) {
     
     //CONFIRMAR DESHACER COBRO
     $scope.toggleCobro = function (turno) {
-        $http.put('/rest/turnos/'+turno.id+'/cobrado/cancelar');
-        closeModal("modal-cancelar-cobro");      
+     
+        $http.put('/rest/turnos/'+turno.id+'/cobrado/cancelar').then(
+            function successCallback(response) {
+                closeModal("modal-cancelar-cobro");
+                $scope.initMovimiento();
+          }, function errorCallback(response) {
+                $scope.message=response.data.message;
+        });
+
     }
 
 

@@ -32,14 +32,14 @@
       <tr ng-cloak id={{movimiento.id}} data-id={{movimiento.id}} class=data-row ng-repeat="movimiento in ngMovimientoSetTrabajos">
     
         <td data-id={{movimiento.id}}>{{movimiento.servicio.descripcion}}</td>
-        <td data-id={{movimiento.id}}>{{movimiento.servicio.precio}}</td>
+        <td data-id={{movimiento.id}}>{{movimiento.servicio.precio | currency}}</td>
     
       </tr>
     </tbody>
   </table>
 
       <div class=banner ng-cloak>        
-        <label class=banner-label ><i class=material-icons >favorite_border</i> Descuento: {{ngMovimiento.descuento}}</label>
+        <label class=banner-label ><i class=material-icons >favorite_border</i> Descuento: {{ngMovimiento.descuento | currency}}</label>
       </div>
 
      <div class=banner ng-cloak>
