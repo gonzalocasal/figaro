@@ -62,7 +62,6 @@ public class TurnosService {
 		turno.setCobrado(true);
 		Movimiento nuevoCobro = generateCobro(turno,cobro);
 		turno.setCobro(nuevoCobro);
-		turno.setMontoCobro(nuevoCobro.getPrecio());
 		repository.updateTurnoCobro(turno);
 		Cliente cliente = turno.getCliente();
 		cliente.setUltimaVisita(turno.getDesde());

@@ -86,12 +86,12 @@ public class EstadisticasService {
 		List<Turno> searchTurnos = repository.searchBetween (from,to);
 		Map<String, BigDecimal> mapTurnos = new HashMap<>();
 		BigDecimal suma = new BigDecimal(0);
-		for (Turno turnos : searchTurnos) {
-			Empleado empleado = turnos.getEmpleado();
+		for (Turno turno : searchTurnos) {
+			Empleado empleado = turno.getEmpleado();
 			String nombreApellido = empleado.getNombre() + ' ' + empleado.getApellido();			
 			BigDecimal montoEmpleado = mapTurnos.get(nombreApellido);			 			
 			suma = (montoEmpleado == null) ? new BigDecimal(0) : mapTurnos.get(nombreApellido);
-			suma = suma.add((turnos.getMontoCobro() == null) ? new BigDecimal(0) : turnos.getMontoCobro() );						
+			suma = suma.add((turno.getCobro() == null) ? new BigDecimal(0) : turno.getCobro().getPrecio() );						
 			mapTurnos.put(nombreApellido, suma);
 		}
 		return mapTurnos;
