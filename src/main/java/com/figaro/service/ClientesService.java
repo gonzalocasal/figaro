@@ -49,15 +49,15 @@ public class ClientesService {
 	}
 
 	private void removeClienteDesconocido(List<Cliente> clientes) {
-		clientes.removeIf(c -> NOMBRE_CLIENTE_DESCONOCIDO.equals(c.getNombre()) && APELLIDO_CLIENTE_DESCONOCIDO.equals(c.getApellido()));
+		clientes.removeIf(c -> CLIENTE_DESCONOCIDO_NOMBRE.equals(c.getNombre()) && CLIENTE_DESCONOCIDO_APELLIDO.equals(c.getApellido()));
 	}
 	
 	public Cliente getClienteDesconocido() {
-		List<Cliente> resultadoBusqueda = buscar(NOMBRE_CLIENTE_DESCONOCIDO+" "+APELLIDO_CLIENTE_DESCONOCIDO);
+		List<Cliente> resultadoBusqueda = repository.buscar(CLIENTE_DESCONOCIDO_NOMBRE+" "+CLIENTE_DESCONOCIDO_APELLIDO);
 		Cliente desconocido = new Cliente();
 		if (resultadoBusqueda.isEmpty()) {
-			desconocido.setNombre(NOMBRE_CLIENTE_DESCONOCIDO);
-			desconocido.setApellido(APELLIDO_CLIENTE_DESCONOCIDO);
+			desconocido.setNombre(CLIENTE_DESCONOCIDO_NOMBRE);
+			desconocido.setApellido(CLIENTE_DESCONOCIDO_APELLIDO);
 			saveCliente(desconocido);
 		}else
 			desconocido = resultadoBusqueda.get(0);

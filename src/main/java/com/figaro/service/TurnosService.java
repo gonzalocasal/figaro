@@ -1,6 +1,6 @@
 package com.figaro.service;
 
-import static com.figaro.util.Constants.CATEGORIA_EMPLEADOS;
+import static com.figaro.util.Constants.*;
 import static com.figaro.util.Constants.CATEGORIA_TURNOS;
 import static com.figaro.util.Constants.MSG_TURNO_OCUPADO_CLIENTE;
 import static com.figaro.util.Constants.MSG_TURNO_OCUPADO_EMPLEADO;
@@ -149,6 +149,9 @@ public class TurnosService {
 	private void validateTurno(Turno nuevoTurno) {
 		LOGGER.info("Validando el Turno: " + nuevoTurno.getDesde() +" - " +nuevoTurno.getHasta() +" "+ nuevoTurno.getEmpleado() );
 		
+		if (null == nuevoTurno.getCliente())
+			nuevoTurno.setCliente(clientesService.getClienteDesconocido());
+		
 		if (horarioInvalido(nuevoTurno))
 			throw new HorarioInvalidoException(nuevoTurno.getDesde() +" - "+nuevoTurno.getHasta());
 		
@@ -159,8 +162,7 @@ public class TurnosService {
 			if( (mismoEmpleado(nuevoTurno, turno) || mismoCliente(nuevoTurno, turno)) && horarioOcupado(nuevoTurno, turno))
 			throw new TurnoOcupadoException( (mismoEmpleado(nuevoTurno, turno) ? MSG_TURNO_OCUPADO_EMPLEADO : MSG_TURNO_OCUPADO_CLIENTE ));
 		
-		if (null == nuevoTurno.getCliente())
-			nuevoTurno.setCliente(clientesService.getClienteDesconocido());
+		
 	}
 
 	
@@ -169,7 +171,8 @@ public class TurnosService {
 	}
 	
 	private boolean mismoCliente(Turno nuevoTurno, Turno turno) {
-		return turno.getCliente().equals(nuevoTurno.getCliente());
+		Boolean isDesconocido = CLIENTE_DESCONOCIDO_NOMBRE.equals( nuevoTurno.getCliente().getNombre()) && CLIENTE_DESCONOCIDO_APELLIDO.equals(nuevoTurno.getCliente().getApellido());
+		return turno.getCliente().equals(nuevoTurno.getCliente()) && !isDesconocido;
 	}
 	
 	private boolean horarioOcupado(Turno nuevoTurno, Turno turno) {
