@@ -155,7 +155,7 @@ app.controller('turnosController', function ($scope, $http) {
         $scope.ngTurno.desde = getStringDate($scope.ngDateTurno)+" "+$scope.startHour;
         $scope.ngTurno.hasta = getStringDate($scope.ngDateTurno)+" "+$scope.endHour;
         $scope.ngTurno.empleado = $scope.empleado;
-        if($scope.ngTurno.desde!=null && $scope.startHour!=null && $scope.endHour!=null){
+        if($scope.empleado!=null && $scope.startHour!=null && $scope.endHour!=null){
             $http.post('/rest/turnos/ocupado', $scope.ngTurno)
             .then(function successCallback(response) {
                 $scope.warnmessage='';
@@ -411,8 +411,8 @@ app.controller('turnosController', function ($scope, $http) {
             let index = $scope.empleados.indexOf($scope.empleado);
             $scope.empleados.splice((index), 1);
         }
-        $scope.startHour= "";
-        $scope.endHour = ""; 
+        $scope.startHour= null;
+        $scope.endHour = null; 
         $scope.empleado = {};
         $scope.clientes=[];
         $scope.trabajos=[];

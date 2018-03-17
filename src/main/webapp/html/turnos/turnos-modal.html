@@ -17,14 +17,19 @@
         <div class=form-field><label>FECHA: </label><input type="date" ng-model="ngDateTurno" ng-change="getAllEmpleados()" required></input></div>
         <div class=form-field>
         <label>DESDE:</label>
-          <select  class=time-input ng-model="startHour" ng-change="isEmpleadoOcupado()"  ng-options="item for item in horario.rangoUsuario" required></select>
+          <select  class=time-input ng-model="startHour" ng-change="isEmpleadoOcupado()"  ng-options="item for item in horario.rangoUsuario" required>
+             <option></option>
+          </select>
       
         <label>HASTA:</label>
-          <select class=time-input ng-model="endHour" ng-change="isEmpleadoOcupado()"  ng-options="item for item in horario.rangoUsuario" required></select>
+          <select class=time-input ng-model="endHour" ng-change="isEmpleadoOcupado()"  ng-options="item for item in horario.rangoUsuario" required>
+             <option></option>
+          </select>
         </div> 
               
         <div class=form-field><label>EMPLEADO:</label>
           <select name=empleado  ng-model="empleado" ng-change="bindTrabajos();isEmpleadoOcupado()" ng-options="empleado as empleado.nombre + ' ' + empleado.apellido   for empleado in empleados" required>
+          <option></option>
           </select>
         </div>
 
