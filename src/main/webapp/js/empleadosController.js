@@ -145,7 +145,8 @@ app.controller('empleadosController', function ($scope, $http) {
     $scope.sendEmpleado = function() {
 
         $scope.actualizarTrabajos();
-    
+        $scope.actualizarDiasDisponible();
+
         if($scope.update == null){
             $scope.ngEmpleado.fechaIngreso = getToday();
             $http.post('/rest/empleados/alta', $scope.ngEmpleado)
@@ -191,6 +192,15 @@ app.controller('empleadosController', function ($scope, $http) {
         });    
     };
 
+
+    //ASIGNAR TRABAJOS SELECCIONADOS A EMPLEADO
+    $scope.actualizarDiasDisponible = function(dia) {
+        $scope.ngEmpleado.diasDisponible = [];
+        $(".dia-disponible:checked").each(function() {
+            $scope.ngEmpleado.diasDisponible.push($(this).val());
+        });
+    };  
+
     //SELECCIONAR TODOS
     $scope.checkAllTrabajos = function (){ 
         $scope.servicios.forEach(function(servicio) {
@@ -201,7 +211,7 @@ app.controller('empleadosController', function ($scope, $http) {
     //DESCARTAR FORMULARIO
     $scope.discardEmpleado = function(event){
         $scope.update = null;
-        $scope.ngf = {"servicios" :[]};
+        $scope.ngEmplado = {};
         closeModal("modal-empleados");
     };
 

@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 
 import com.figaro.dto.TurnoDTO;
 import com.figaro.exception.HorarioInvalidoException;
+import com.figaro.exception.TurnoOcupadoEmpleadoException;
 import com.figaro.exception.TurnoOcupadoException;
 import com.figaro.model.Cliente;
 import com.figaro.model.Movimiento;
@@ -23,8 +24,6 @@ import com.figaro.repository.TurnosRepository;
 
 public class TurnosService {
 	
-	
-
 	final static Logger LOGGER = Logger.getLogger(TurnosService.class);
 	
 	private ClientesService clientesService;
@@ -38,6 +37,17 @@ public class TurnosService {
 		int newID = repository.saveTurno(turno);
 		turno.setId(newID);
 		return turno ;  
+	}
+	
+	public Turno updateTurno(Turno turno) {
+		LOGGER.info("Actualizando el Turno: " + turno.toString());
+		validateTurno(turno);
+		updatePago(turno);
+		updateCobro(turno);
+		Turno updated = getTurno(turno.getId());
+		updated.update(turno);
+		repository.updateTurno(updated);
+		return updated;
 	}
 
 	public Turno pagar(int turnoId){
@@ -88,16 +98,6 @@ public class TurnosService {
 		return turno;
 	}
 	
-	public Turno updateTurno(Turno turno) {
-		LOGGER.info("Actualizando el Turno: " + turno.toString());
-		validateTurno(turno);
-		updatePago(turno);
-		updateCobro(turno);
-		Turno updated = getTurno(turno.getId());
-		updated.update(turno);
-		repository.updateTurno(updated);
-		return updated;
-	}
 
 	private Movimiento generateCobro(Turno turno,Movimiento cobro) {
 		Movimiento movimiento = new Movimiento();
@@ -149,46 +149,64 @@ public class TurnosService {
 	private void validateTurno(Turno nuevoTurno) {
 		LOGGER.info("Validando el Turno: " + nuevoTurno.getDesde() +" - " +nuevoTurno.getHasta() +" "+ nuevoTurno.getEmpleado() );
 		
-		if (null == nuevoTurno.getCliente())
-			nuevoTurno.setCliente(clientesService.getClienteDesconocido());
+		isClienteDesconocido(nuevoTurno);
+		isHorarioInvalido(nuevoTurno);
 		
-		if (horarioInvalido(nuevoTurno))
-			throw new HorarioInvalidoException(nuevoTurno.getDesde() +" - "+nuevoTurno.getHasta());
-		
-		List<Turno> turnosDelDia = repository.searchTurnoValidation(nuevoTurno.getDesde());
+		List<Turno> turnosDelDia = repository.searchTurno(nuevoTurno.getDesde());
 		turnosDelDia.remove(nuevoTurno);
 		
 		for(Turno turno : turnosDelDia) 
-			if( (mismoEmpleado(nuevoTurno, turno) || mismoCliente(nuevoTurno, turno)) && horarioOcupado(nuevoTurno, turno))
-			throw new TurnoOcupadoException( (mismoEmpleado(nuevoTurno, turno) ? MSG_TURNO_OCUPADO_EMPLEADO : MSG_TURNO_OCUPADO_CLIENTE ));
-		
-		
+			if( mismoCliente(nuevoTurno, turno)  && isHorarioOcucupado(nuevoTurno, turno))
+				throw new TurnoOcupadoException( MSG_TURNO_OCUPADO_CLIENTE );
+	}
+	
+	
+	public Boolean isEmpleadoOcupado (Turno nuevoTurno) {
+		List<Turno> turnosDelDia = repository.searchTurno(nuevoTurno.getDesde());
+		turnosDelDia.remove(nuevoTurno);
+		for(Turno turno : turnosDelDia) 
+			if( mismoEmpleado(nuevoTurno, turno) && isHorarioOcucupado(nuevoTurno, turno))
+				throw new TurnoOcupadoEmpleadoException( MSG_TURNO_OCUPADO_EMPLEADO);
+		return false;
+	}
+	
+
+	private void isHorarioInvalido(Turno nuevoTurno) {
+		if (nuevoTurno.getDesde().compareTo(nuevoTurno.getHasta()) >= 0)
+			throw new HorarioInvalidoException(nuevoTurno.getDesde()+" - "+nuevoTurno.getHasta());
 	}
 
-	
-	private boolean mismoEmpleado(Turno nuevoTurno, Turno turno) {
-		return turno.getEmpleado().equals(nuevoTurno.getEmpleado());
+	private void isClienteDesconocido(Turno nuevoTurno) {
+		if (null == nuevoTurno.getCliente())
+			nuevoTurno.setCliente(clientesService.getClienteDesconocido());
 	}
 	
-	private boolean mismoCliente(Turno nuevoTurno, Turno turno) {
-		Boolean isDesconocido = CLIENTE_DESCONOCIDO_NOMBRE.equals( nuevoTurno.getCliente().getNombre()) && CLIENTE_DESCONOCIDO_APELLIDO.equals(nuevoTurno.getCliente().getApellido());
-		return turno.getCliente().equals(nuevoTurno.getCliente()) && !isDesconocido;
-	}
-	
-	private boolean horarioOcupado(Turno nuevoTurno, Turno turno) {
+	private Boolean isHorarioOcucupado(Turno nuevoTurno, Turno turno) {
 		return horarioInicioOcupado(nuevoTurno, turno) || 
 			   horarioFinOcupado(nuevoTurno, turno) || 
 			   mismoHorario(nuevoTurno, turno) || 
 			   dentroDeLaFranja(nuevoTurno, turno);
 	}
 	
-	private boolean dentroDeLaFranja(Turno nuevoTurno, Turno turno) {
+	private Boolean mismoEmpleado(Turno nuevoTurno, Turno turno) {
+		return turno.getEmpleado().equals(nuevoTurno.getEmpleado());
+	}
+	
+	private Boolean mismoCliente(Turno nuevoTurno, Turno turno) {
+		Boolean isDesconocido = CLIENTE_DESCONOCIDO_NOMBRE.equals( nuevoTurno.getCliente().getNombre()) &&
+				                CLIENTE_DESCONOCIDO_APELLIDO.equals(nuevoTurno.getCliente().getApellido());
+		return turno.getCliente().equals(nuevoTurno.getCliente()) && !isDesconocido;
+	}
+	
+
+	
+	private Boolean dentroDeLaFranja(Turno nuevoTurno, Turno turno) {
 		Date inicio = turno.getDesde();
 		Date fin    = turno.getHasta();
 		return  (nuevoTurno.getDesde().before(inicio) && nuevoTurno.getHasta().after(fin));
 	}
 
-	private boolean horarioInicioOcupado(Turno nuevoTurno, Turno turno) {
+	private Boolean horarioInicioOcupado(Turno nuevoTurno, Turno turno) {
 		Date inicio = turno.getDesde();
 		Date fin    = turno.getHasta();
 		return  (nuevoTurno.getDesde().equals(inicio) || nuevoTurno.getDesde().after(inicio))  && 
@@ -196,21 +214,18 @@ public class TurnosService {
 	}
 	
 	
-	private boolean horarioFinOcupado(Turno nuevoTurno, Turno turno) {
+	private Boolean horarioFinOcupado(Turno nuevoTurno, Turno turno) {
 		Date inicio = turno.getDesde();
 		Date fin    = turno.getHasta();
 		return  ( nuevoTurno.getHasta().equals(fin) || nuevoTurno.getHasta().before(fin)) &&
 				 nuevoTurno.getHasta().after(inicio);
 	}
 
-	private boolean mismoHorario(Turno nuevoTurno, Turno turno) {
+	private Boolean mismoHorario(Turno nuevoTurno, Turno turno) {
 		return turno.getDesde().equals(nuevoTurno.getDesde()) && 
 			   turno.getHasta().equals(nuevoTurno.getHasta());
 	}
 	
-	private boolean horarioInvalido(Turno nuevoTurno) {
-		return nuevoTurno.getDesde().compareTo(nuevoTurno.getHasta()) >= 0;
-	}
 	
 	
 	public Turno getTurno(int turnoId) {
@@ -240,7 +255,7 @@ public class TurnosService {
 	}
 
 	public List<TurnoDTO> searchTurno(Date desde) {
-		return repository.searchTurno(desde);
+		return repository.searchTurnoDTO(desde);
 	}
 
 	public void setRepository(TurnosRepository repository) {

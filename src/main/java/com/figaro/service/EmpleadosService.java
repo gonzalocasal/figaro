@@ -2,6 +2,8 @@ package com.figaro.service;
 
 
 import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,9 +66,19 @@ public class EmpleadosService {
 		return repository.getEmpleados();
 	}
 
+	public List<Empleado> getEmpleadosDisponibles(Date fecha) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(fecha);
+		Integer hoy = c.get(Calendar.DAY_OF_WEEK);
+		List<Empleado> empleados = getEmpleadosHabilitados();
+		List<Empleado> disponibles = empleados.stream().filter(e -> e.getDiasDisponible().contains(hoy)).collect(Collectors.toList());
+		return disponibles;
+	}
+	
 	public List<Empleado> getEmpleadosHabilitados() {
 		List<Empleado> empleados = getEmpleados();
-		return empleados.stream().filter(e -> e.isHabilitado()).collect(Collectors.toList());
+		List<Empleado> habilitados = empleados.stream().filter(e -> e.isHabilitado()).collect(Collectors.toList());
+		return habilitados;
 	}
 
 	public void setTurnosRepository(TurnosRepository turnosRepository) {

@@ -4,7 +4,6 @@ app.controller('turnosController', function ($scope, $http) {
 
     //INIT TURNOS
     $scope.init = function(){
-        $scope.getAllEmpleados();
         $scope.ngDateTurno = stringToDate(getToday());
         $scope.getTurnos();
         $scope.getHorario();
@@ -47,7 +46,7 @@ app.controller('turnosController', function ($scope, $http) {
         else
             $scope.queryCliente = $scope.ngTurno.cliente.nombre+' '+$scope.ngTurno.cliente.apellido;
 
-        //BIND EMLEADO 
+        //BIND EMPLEADO 
         if($scope.ngTurno.empleado.habilitado){
             for(var i = 0; i < $scope.empleados.length; i++)
             if($scope.ngTurno.empleado.id == $scope.empleados[i].id)
@@ -99,10 +98,11 @@ app.controller('turnosController', function ($scope, $http) {
         $scope.trabajosEmpleado=[];
         $scope.trabajosSeleccionados = [];
         $scope.totalTrabajosSeleccionados=0;
-        for(var i = 0; i < $scope.empleado.trabajos.length; i++){
-            $scope.empleado.trabajos[i].selected=false;
-            $scope.trabajosEmpleado.push($scope.empleado.trabajos[i])
-        }
+        if ($scope.empleado!=null)
+            for(var i = 0; i < $scope.empleado.trabajos.length; i++){
+                $scope.empleado.trabajos[i].selected=false;
+                $scope.trabajosEmpleado.push($scope.empleado.trabajos[i])
+            }
     };
 
 
@@ -135,6 +135,7 @@ app.controller('turnosController', function ($scope, $http) {
 
     //OBTENER TURNOS
     $scope.getTurnos = function() {
+        $scope.getAllEmpleados();
         loadingTurnos();
         if ($scope.ngDateTurno== null)
              $scope.getTurnosHoy();
@@ -144,6 +145,24 @@ app.controller('turnosController', function ($scope, $http) {
             $scope.getTotalDiario($scope.turnos);
             loadTurnosComplete();
         });
+    };
+
+
+
+
+    //VALIDAR SI EMPLEADO YA TIENE UN TURNO
+    $scope.isEmpleadoOcupado = function() {
+        $scope.ngTurno.desde = getStringDate($scope.ngDateTurno)+" "+$scope.startHour;
+        $scope.ngTurno.hasta = getStringDate($scope.ngDateTurno)+" "+$scope.endHour;
+        $scope.ngTurno.empleado = $scope.empleado;
+        if($scope.ngTurno.desde!=null && $scope.startHour!=null && $scope.endHour!=null){
+            $http.post('/rest/turnos/ocupado', $scope.ngTurno)
+            .then(function successCallback(response) {
+                $scope.warnmessage='';
+              }, function errorCallback(response) {
+                $scope.warnmessage=response.data.message;
+            });
+        }     
     };
 
 
@@ -370,10 +389,13 @@ app.controller('turnosController', function ($scope, $http) {
 
     //OBTENER LISTA DE EMPLEADOS
     $scope.getAllEmpleados = function() {
-        $http.get("/rest/empleados/habilitados").then(function (response) {
+        $scope.empleados=[];
+        fecha = ($scope.ngDateTurno==null) ? getToday() : getStringDate($scope.ngDateTurno);        
+        $http.get("/rest/empleados/disponibles",{params:{fecha: fecha}}).then(function (response) {
             $scope.empleados = response.data;
         });
     };
+
 
     //OBTENER HORARIO
     $scope.getHorario = function() {
@@ -399,6 +421,7 @@ app.controller('turnosController', function ($scope, $http) {
         $scope.queryTrabajo ='';
         $scope.desconocido =false;
         $scope.message='';
+        $scope.warnmessage='';
         $scope.update=false;
         closeModal("modal-turnos");
     };

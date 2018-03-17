@@ -21,7 +21,7 @@
       <div class=form-field><label>PISO:</label><input type="number"     ng-model="ngEmpleado.dirPiso"  min=0 max=100 maxlength=3  > <label>DPTO:</label><input type="text" ng-model="ngEmpleado.dirDpto" maxlength="3" size="3"></div>
     </div>
     
-    <div >  
+    <div class=trabajos-empleado>  
         <table class="trabajos-list">
             <tbody>
             <tr><th></th><th>TRABAJO</th><th>COMISI&Oacute;N</th></tr>  
@@ -32,7 +32,27 @@
             <td><input type="number"  ng-init="servicio.comision=0" ng-model="servicio.comision" min=0 max=100 size=1 required/>%</td>
             </tr>
           </tbody>
-          </table>
+        </table>
+    </div>
+
+    <div class=dias-empleado>  
+        <div class=form-field<label>D&Iacute;AS DISPONIBLE:</label></div>
+        <table class="dias-disponible-list">
+            <tbody>
+            <tr><th>D</th><th>L</th><th>M</th><th>M</th><th>J</th><th>V</th><th>S</th></tr> 
+            <tr>
+              
+                
+                <td><input class=dia-disponible value="1" type="checkbox" ng-checked="ngEmpleado.diasDisponible==null || ngEmpleado.diasDisponible.indexOf(1)>=0"></td>
+                <td><input class=dia-disponible value="2" type="checkbox" ng-checked="ngEmpleado.diasDisponible==null || ngEmpleado.diasDisponible.indexOf(2)>=0"></td>
+                <td><input class=dia-disponible value="3" type="checkbox" ng-checked="ngEmpleado.diasDisponible==null || ngEmpleado.diasDisponible.indexOf(3)>=0"></td>
+                <td><input class=dia-disponible value="4" type="checkbox" ng-checked="ngEmpleado.diasDisponible==null || ngEmpleado.diasDisponible.indexOf(4)>=0"></td>
+                <td><input class=dia-disponible value="5" type="checkbox" ng-checked="ngEmpleado.diasDisponible==null || ngEmpleado.diasDisponible.indexOf(5)>=0"></td>
+                <td><input class=dia-disponible value="6" type="checkbox" ng-checked="ngEmpleado.diasDisponible==null || ngEmpleado.diasDisponible.indexOf(6)>=0"></td>
+                <td><input class=dia-disponible value="7" type="checkbox" ng-checked="ngEmpleado.diasDisponible==null || ngEmpleado.diasDisponible.indexOf(7)>=0"></td>
+            </tr> 
+          </tbody>
+        </table>
     </div>
 
         

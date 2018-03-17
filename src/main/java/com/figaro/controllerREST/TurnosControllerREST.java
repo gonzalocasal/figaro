@@ -39,6 +39,11 @@ public class TurnosControllerREST {
 		return new ResponseEntity<>(service.saveTurno(turno), HttpStatus.CREATED);
 	}
 	
+	@PostMapping("turnos/ocupado")
+    public ResponseEntity<Boolean> isEmpleadoOcupado(@RequestBody Turno turno) {
+		return new ResponseEntity<>(service.isEmpleadoOcupado(turno), HttpStatus.OK);
+	}
+	
 	@GetMapping("turnos/{turnoId}")
     public ResponseEntity<Turno> getTurno( @PathVariable int turnoId) {
 		return new ResponseEntity<>(service.getTurno(turnoId), HttpStatus.OK);

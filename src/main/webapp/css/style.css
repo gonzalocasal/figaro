@@ -301,8 +301,18 @@ li a:hover {
     width:100%
 }
 
-.trabajos-list{
+.trabajos-list, .dias-disponible-list{
     width: 350px
+}
+
+.trabajos-empleado{
+    height: 250px;
+    margin-bottom: 30px;
+    overflow: auto;
+}
+
+.dias-disponible-list td {
+    text-align: center;
 }
 
 .trabajos-list input{
@@ -319,8 +329,12 @@ li a:hover {
     text-align: left
 }
 
-.trabajos-list tr:nth-child(odd) {
+.trabajos-list tr:nth-child(odd) ,.dias-disponible-list tr:nth-child(odd) {
     background-color: #FFF
+}
+
+.dias-laborables{
+    margin-top: 40px;
 }
 
 .active a{
@@ -410,10 +424,18 @@ li a:hover {
 }
 
 .form-message{
-    margin-top: 5px;
+    margin-top: 10px;
     font-size: 13px;
+    font-weight: 500;
     color: red;
 
+}
+
+.form-warn{
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #b9a336;
 }
 
 .form-message-ok{

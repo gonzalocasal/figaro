@@ -29,6 +29,10 @@
          		<key><column name="ID_PERSONA" not-null="true" /></key>
          		<one-to-many entity-name="Trabajo"/>
     	     </set>
+    	     <set name="diasDisponible" inverse="false"  table="DIA_EMPLEADO"  cascade="all" lazy="false" fetch="select">
+         		<key><column name="ID_PERSONA" not-null="true" /></key>
+         		<element column="DIA" type="integer"></element>
+    	     </set>
 		</union-subclass>
 		
 		

@@ -14,7 +14,7 @@
         <label class="banner-button" ng-click="getTurnosHoy()">Hoy</label>
         <label class="banner-button" ng-click="getTurnosDiaSiguiente()">Siguiente</label>
         <div class="separator"></div>
-        <label >Fecha: <input class=input-banner type=date ng-model=ngDateTurno ng-focus="focus=true" ng-blur="focus=false" ng-change="getTurnos()"></label>
+        <label >Fecha: <input class=input-banner type=date  ng-model=ngDateTurno ng-focus="focus=true" ng-blur="focus=false" ng-change="getTurnos();getAllEmpleados()"></label>
     </div>
   
     <table  ng-cloak ng-if="turnos.length > 0" id=table class=main-table>

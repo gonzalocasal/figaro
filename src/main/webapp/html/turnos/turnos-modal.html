@@ -14,22 +14,17 @@
 
         <input  type="checkbox" class="form-field" ng-click="setClienteDesconocido()"  ng-model=desconocido> Cliente Desconocido
 
-        <div class=form-field><label>FECHA: </label><input type="date" ng-model="ngDateTurno" required></input></div>
+        <div class=form-field><label>FECHA: </label><input type="date" ng-model="ngDateTurno" ng-change="getAllEmpleados()" required></input></div>
         <div class=form-field>
         <label>DESDE:</label>
-          <select  class=time-input ng-model="startHour" ng-options="item for item in horario.rangoUsuario" required>
-            <option value=""></option>
-          </select>
+          <select  class=time-input ng-model="startHour" ng-change="isEmpleadoOcupado()"  ng-options="item for item in horario.rangoUsuario" required></select>
       
         <label>HASTA:</label>
-          <select class=time-input ng-model="endHour" ng-options="item for item in horario.rangoUsuario" required>
-            <option value=""></option>
-          </select>
+          <select class=time-input ng-model="endHour" ng-change="isEmpleadoOcupado()"  ng-options="item for item in horario.rangoUsuario" required></select>
         </div> 
               
         <div class=form-field><label>EMPLEADO:</label>
-          <select name=empleado  ng-model="empleado" ng-change="bindTrabajos()" ng-options="empleado as empleado.nombre + ' ' + empleado.apellido   for empleado in empleados" required>
-            <option value=""></option>
+          <select name=empleado  ng-model="empleado" ng-change="bindTrabajos();isEmpleadoOcupado()" ng-options="empleado as empleado.nombre + ' ' + empleado.apellido   for empleado in empleados" required>
           </select>
         </div>
 
@@ -51,9 +46,9 @@
           {{trabajo.descripcion}} {{trabajo.precio | currency}}
         </div>
 
-        <div class="form-field" ng-if="ngTurno.cobro.descuento>0">DESCUENTO: <span >{{ngTurno.cobro.descuento | currency}}</span></div>
+        <div class="form-field" ng-if="ngTurno.cobro.descuento>0"><i class=material-icons >favorite_border</i>DESCUENTO: <span >{{ngTurno.cobro.descuento | currency}}</span></div>
 
-        <div class="form-field">PRECIO: <span >{{totalTrabajosSeleccionados | currency}}</span></div>
+        <div class="form-field"><i class=material-icons >account_balance_wallet</i>PRECIO: <span >{{totalTrabajosSeleccionados | currency}}</span></div>
         
         <label>{{ngTurno.cliente.notas}}</label>
         
@@ -62,7 +57,8 @@
           <button class="button accept" type="submit">ACEPTAR</button>
         </div>
         
-        <label class=form-message>{{message}}</label>
+        <label class=form-message>{{message}}</label><br>
+        <label class=form-warn>{{warnmessage}}</label>
       </form>
     </div>
 </div>

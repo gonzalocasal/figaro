@@ -64,7 +64,7 @@ public class TurnosRepository extends AbstractRepository{
 		return (BigDecimal) getCurrentSession().createQuery( "SELECT SUM (t.montoPago) FROM Turno AS t WHERE t.empleado.id = :empleadoId").setParameter("empleadoId", empleadoId).uniqueResult();
 	}
 		
-	public List<TurnoDTO> searchTurno (Date desdeParam) {
+	public List<TurnoDTO> searchTurnoDTO (Date desdeParam) {
 		LocalDate localDate = desdeParam.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(localDate.getYear(), localDate.getMonthValue()-1, localDate.getDayOfMonth(), 0, 0, 0);
@@ -84,7 +84,7 @@ public class TurnosRepository extends AbstractRepository{
 	}
 
 	
-	public List<Turno> searchTurnoValidation (Date desdeParam) {
+	public List<Turno> searchTurno (Date desdeParam) {
 		LocalDate localDate = desdeParam.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(localDate.getYear(), localDate.getMonthValue()-1, localDate.getDayOfMonth(), 0, 0, 0);

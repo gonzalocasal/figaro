@@ -34,6 +34,13 @@ public class GlobalExceptionHandler {
 		LOGGER.error( e.getMessage());
     	return new ApiError(HttpStatus.BAD_REQUEST, e.getMessage());
     }
+
+	@ExceptionHandler(value = TurnoOcupadoEmpleadoException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)  
+	public ApiError turnoEmpleadoOcupado(Exception e){
+		LOGGER.warn( e.getMessage());
+		return new ApiError(HttpStatus.PRECONDITION_FAILED, e.getMessage());
+	}
 	
 	
 	@ExceptionHandler(value = HorarioInvalidoException.class)

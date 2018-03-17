@@ -32,9 +32,9 @@ public class Constants{
 	
 	
 	public static final String MSG_DUPLICADO = "Ya existe un elemento con estos datos";
-	public static final String MSG_TURNO_OCUPADO_CLIENTE   = "Ya hay un turno en el horario seleccionado para ese cliente";
-	public static final String MSG_TURNO_OCUPADO_EMPLEADO = "Ya hay un turno en el horario seleccionado para ese empleado";
-	public static final String MSG_HORARIO_INVALIDO = "El horario seleccionado es invalido";
-    public static final String MSG_DESCUENTO_INVALIDO = "El descuento no puede ser mayor al monto total";
+	public static final String MSG_TURNO_OCUPADO_CLIENTE   = "Error: el cliente ya tiene un turno reservado en ese horario";
+	public static final String MSG_TURNO_OCUPADO_EMPLEADO = "Advertencia: el empleado ya tiene un turno reservado en ese horario";
+	public static final String MSG_HORARIO_INVALIDO =   "Error: El horario seleccionado es inválido";
+    public static final String MSG_DESCUENTO_INVALIDO = "Error: El descuento no puede ser mayor al monto total";
 
 }
