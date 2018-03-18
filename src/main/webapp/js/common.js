@@ -57,6 +57,12 @@ function getSemana(date){
 	return semana;
 }
 
+
+function getDayOfWeek(){
+	var d = new Date();
+	return d.getDay() + 1;
+}
+
 function getMes(date){
 	var mes = {};
 	mes.dStart = new Date(date.getFullYear(), date.getMonth(), 1);

@@ -82,23 +82,12 @@ app.controller('empleadosController', function ($scope, $http) {
 
 
 
-    //REDIRIGIR A LOS TURNOS SIN PAGAR
-    $scope.irSinPagar = function() {
-        if(typeof $scope.empleadoSelected === "undefined")
-            alert('Seleccione un empleado');
-        else
-            window.location.href = "/turnos/empleados/"+$scope.empleadoSelected.id+"/sinpagar"
-    };
-  
-    //REDIRIGIR A HISTORIAL DE EMPLEADO
-    $scope.irTurnos = function() {
-        if(typeof $scope.empleadoSelected === "undefined")
-            alert('Seleccione un empleado');
-        else
-           window.location.href = "/turnos/empleados/"+$scope.empleadoSelected.id
+    //CALCULAR SI EL EMPLEADO TRABAJA HoY
+    $scope.isDisponible = function(empleado) {
+       return empleado.diasDisponible.indexOf(getDayOfWeek()) >-1;
 
     };
-   
+  
    
     //ACTUALIZAR SELECCION
     $scope.actualizarSeleccion = function(position, empleados) {
@@ -211,7 +200,7 @@ app.controller('empleadosController', function ($scope, $http) {
     //DESCARTAR FORMULARIO
     $scope.discardEmpleado = function(event){
         $scope.update = null;
-        $scope.ngEmplado = {};
+        $scope.ngEmpleado = {};
         closeModal("modal-empleados");
     };
 

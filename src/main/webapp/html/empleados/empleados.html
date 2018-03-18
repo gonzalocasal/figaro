@@ -7,42 +7,29 @@
 <body ng-app=figaro ng-controller=empleadosController data-ng-init="init()" >
   <#include "/html/common/menu.html">
   <div id=content class="content fade-in">
+     
      <div class=banner>
-      <label class="banner-button add" ng-click="newEmpleado()"><i class="material-icons" >group</i> Nuevo</label>   
-      
-      <span class=banner-buttons-hidden>
-      
-        <div class="separator"></div> 
-        <label class="banner-button add" ng-click="irTurnos()" ><i class="material-icons" >date_range</i> Turnos</label>   
-      
-        <div class="separator"></div>
-        <label class="banner-button add" ng-click="irSinPagar()" ><i class="material-icons" >payment</i> Pagar</label>   
+      <label class="banner-button add" ng-click="newEmpleado()"><i class="material-icons" >account_circle</i> Nuevo</label>         
+    </div>
 
-      </span>  
+    <div class="card empleado" ng-repeat="empleado in empleados" ng-click="detailEmpleado(empleado.id)">
+       
+        <i ng-class="isDisponible(empleado) ? 'empleado-disponible' : 'empleado-indisponible'" >lens</i>
+
+        <label><i class=material-icons >account_circle</i> Empleado: {{empleado.nombre}} {{empleado.apellido}}</label><br>
+        
+        <label><i class=material-icons >event</i> Ingreso: {{empleado.fechaIngreso | date}}</label><br>
+        
+        <label><i class=material-icons >call</i> Tel&eacute;fono: {{empleado.telefono}}</label><br>
+        
+        <label><i class=material-icons >mail_outline</i> Email: {{empleado.email}}</label><br>
+        
+        <label><a ng-href="/turnos/empleados/{{empleado.id}}"><i class="material-icons" >date_range</i> Ver turnos</a></label><br>
+        
+        <label><a ng-href="/turnos/empleados/{{empleado.id}}/sinpagar"><i class="material-icons" >payment</i> Pagar</a></label><br> 
 
     </div>
-    
-      <table class=main-table>
-        <thead>
-        <tr>
-            <th></th>
-            <th>NOMBRE</th>
-            <th>APELLIDO</th>
-            <th>TEL&Eacute;FONO</th>
-            <th>EMAIL</th>
-        </tr>
-      </thead>
-        <tbody>
-          <tr data-id={{empleado.id}} class="data-row fade-in" ng-repeat="empleado in empleados" ng-show="empleado.habilitado"  ng-cloak>
-            <td><input ng-model="empleado.checked" ng-click="actualizarSeleccion($index, empleados)" type="checkbox" /></td>
-            <td ng-click="detailEmpleado(empleado.id)">{{empleado.nombre}}</td>
-            <td ng-click="detailEmpleado(empleado.id)">{{empleado.apellido}}</td>
-            <td ng-click="detailEmpleado(empleado.id)">{{empleado.telefono}}</td>
-            <td ng-click="detailEmpleado(empleado.id)">{{empleado.email}}</td>
-          </tr>
-        </tbody>
-      </table>
-      
+  
   </div>
   <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
   <#include "/html/empleados/empleados-modal.html">
