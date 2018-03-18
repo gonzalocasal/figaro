@@ -12,7 +12,7 @@
       <label class="banner-button add" ng-click="newEmpleado()"><i class="material-icons" >account_circle</i> Nuevo</label>         
     </div>
 
-    <div class="card empleado" ng-repeat="empleado in empleados" ng-click="detailEmpleado(empleado.id)">
+    <div class="card empleado fade-in" ng-repeat="empleado in empleados" ng-click="detailEmpleado(empleado.id)">
        
         <i ng-class="isDisponible(empleado) ? 'empleado-disponible' : 'empleado-indisponible'" >lens</i>
 
