@@ -341,17 +341,20 @@ li a:hover {
 }
 
 
-
 .trabajos-list, .dias-disponible-list{
-    width: 350px
+    width: 335px
 }
 
 .trabajos-empleado{
     height: 250px;
-    width: 350px;
     overflow-y: auto;
     margin-bottom: 15px;
     overflow: auto;
+}
+
+
+.trabajo-comision{
+    text-align: right;
 }
 
 .dias-disponible-list{
@@ -368,9 +371,6 @@ li a:hover {
    background-color: transparent
 }
 
-.trabajos-list tr:hover td input {
-    color: white
-}
 
 .trabajos-list th{
     text-align: left
@@ -379,6 +379,16 @@ li a:hover {
 .trabajos-list tr:nth-child(odd) ,.dias-disponible-list tr:nth-child(odd) {
     background-color: #FFF
 }
+
+
+
+.trabajos-list tr:hover td , .dias-disponible-list tr:hover td{
+    background-color: white;
+    color: inherit;
+    cursor: inherit;
+}
+
+
 
 .dias-laborables{
     margin-top: 40px;
@@ -467,7 +477,7 @@ li a:hover {
 
 
 .modal-double{
-    width: 700px;
+    width: 745px;
 }
 
 .form-message{
@@ -511,20 +521,21 @@ li a:hover {
     width: 95px
 }
 
-.modal-content form input, .modal-double form input {
-    font-family: 'Roboto', sans-serif;
-    display: inline-block
-}
 
 .modal-content form input:focus, form select:focus , .modal-double form input:focus, form select:focus {
     outline: none !important;
     border-bottom: 2px solid #292961
 }
 
-.modal-content form input, .modal-double form input { 
+.modal-content form input, .modal-double form input, .modal-content form select, .modal-double form select { 
+    font-family: 'Roboto', sans-serif;
     border-top-width: 0px;
     border-right-width: 0px;
-    border-left-width: 0px
+    border-left-width: 0px;
+    border-bottom-width: 2px; 
+    border-bottom-color: #EEE;
+    display: inline-block;
+    background: transparent;
 }
 
 .modal-content form .buttons, .modal-double form .buttons{
@@ -550,14 +561,6 @@ li a:hover {
     box-shadow: 0 1px 4px rgba(0, 0, 0, .6)
 }
 
-.modal-content form select, .modal-double form select{    
-    background: transparent;
-    border-bottom-color: #EEE;
-    border-bottom-width: 2px;
-    border-top-width: 0px;
-    border-right-width: 0px;
-    border-left-width: 0px
-}
 
 .link,.ver-mas {
     color: #292961;
@@ -580,8 +583,8 @@ li a:hover {
 }
 
 .banner-button a, .banner-button a:visited, .banner-button a:hover, .banner-button a:active {
-  color: inherit;
-      font-size: 13px;
+    color: inherit;
+    font-size: 13px;
 }
 
 .banner-button select{
@@ -590,7 +593,7 @@ li a:hover {
 
 .empleado-fields{
     float: left;
-    margin-right: 30px;
+    margin-right: 5px;
     margin-bottom: 20px;
 }
 
