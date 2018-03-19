@@ -32,30 +32,16 @@ public class TasksService {
 			"    <head>\r\n" + 
 			"        <title>Figaro Mail</title>\r\n" + 
 			"    </head>\r\n" + 
-			"    <body>\r\n" + 
-			"        <style type=\"text/css\">\r\n" + 
-			"            body{\r\n" + 
-			"                font-family:  Roboto-Regular,Helvetica,Arial,sans-serif;\r\n" + 
-			"                text-align: center;\r\n" + 
-			"                background-color: #f6f6f6;\r\n" + 
-			"                width:100%;\r\n" + 
-			"            }\r\n" + 
-			"            .header{\r\n" + 
-			"                background-color: #292961; \r\n" + 
-			"                color: white;\r\n" + 
-			"            }\r\n" + 
-			"            table{\r\n" + 
-			"                display: inline-table;\r\n" + 
-			"                width: 600px;\r\n" + 
-			"                border-collapse: collapse;\r\n" + 
-			"            }\r\n" + 
-			"            td, th {\r\n" + 
-			"                padding-left: 8px;\r\n" + 
-			"            }\r\n" + 
-			"        </style>\r\n" + 
+			"    <body style=\"font-family:  Roboto-Regular,Helvetica,Arial,sans-serif; text-align: center; background-color: #f6f6f6; width:100%;\">\r\n" + 
+			"        \r\n" + 
+			"        <table style=\" display: inline-table; \r\n" + 
+			"                       width: 600px; \r\n" + 
+			"                       background-color: white;\r\n" + 
+			"                       border-collapse: collapse; \r\n" + 
+			"                       padding: :8px;\r\n" + 
+			"                       border-bottom: 3px solid gainsboro;\">\r\n" + 
 			"\r\n" + 
-			"        <table>\r\n" + 
-			"            <tr class=header >\r\n" + 
+			"            <tr style=\"background-color: #292961; color: white;\" >\r\n" + 
 			"                <td>Horario</td>\r\n" + 
 			"                <td>Cliente</td>\r\n" + 
 			"                <td>Trabajos</td>\r\n" + 

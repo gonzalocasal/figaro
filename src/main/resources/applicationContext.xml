@@ -378,7 +378,7 @@
 	
 	<bean id="cronTrigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 	    <property name="jobDetail" ref="simpleJobDetail" />
-	    <property name="cronExpression" value="0 12 16 ? * MON-SUN*" />
+	    <property name="cronExpression" value="0 40 17 ? * MON-SUN*" />
 	</bean>
 	
 	
