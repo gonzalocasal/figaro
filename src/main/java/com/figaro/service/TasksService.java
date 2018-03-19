@@ -1,6 +1,7 @@
 package com.figaro.service;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,45 @@ public class TasksService {
 	private EmpleadosService empleadosService;
 	
 	
-	private String emailTemplate = "<html> <head> <title>Figaro Mail</title> </head> <body> <style type=\"text/css\"> body{font-family: Roboto-Regular,Helvetica,Arial,sans-serif; text-align: center; background-color: #f6f6f6; width:100%;}.header{background-color: #292961; color: white}table{display: inline-table; width: 600px; border-collapse: collapse;}td, th{padding-left: 8px;}</style> <table> <tr class=header > <td>Horario</td><td>Cliente</td><td>Trabajos</td></tr>%s </table> <footer> <img width=\"160\" height=\"80\" src=\"https://beta.figaro.com.ar/imgs/logo2.png\"> </footer> </body></html>";
+	private String emailTemplate = "<html>\r\n" + 
+			"    <head>\r\n" + 
+			"        <title>Figaro Mail</title>\r\n" + 
+			"    </head>\r\n" + 
+			"    <body>\r\n" + 
+			"        <style type=\"text/css\">\r\n" + 
+			"            body{\r\n" + 
+			"                font-family:  Roboto-Regular,Helvetica,Arial,sans-serif;\r\n" + 
+			"                text-align: center;\r\n" + 
+			"                background-color: #f6f6f6;\r\n" + 
+			"                width:100%;\r\n" + 
+			"            }\r\n" + 
+			"            .header{\r\n" + 
+			"                background-color: #292961; \r\n" + 
+			"                color: white;\r\n" + 
+			"            }\r\n" + 
+			"            table{\r\n" + 
+			"                display: inline-table;\r\n" + 
+			"                width: 600px;\r\n" + 
+			"                border-collapse: collapse;\r\n" + 
+			"            }\r\n" + 
+			"            td, th {\r\n" + 
+			"                padding-left: 8px;\r\n" + 
+			"            }\r\n" + 
+			"        </style>\r\n" + 
+			"\r\n" + 
+			"        <table>\r\n" + 
+			"            <tr class=header >\r\n" + 
+			"                <td>Horario</td>\r\n" + 
+			"                <td>Cliente</td>\r\n" + 
+			"                <td>Trabajos</td>\r\n" + 
+			"            </tr>\r\n" + 
+			"            %s\r\n" + 
+			"        </table>\r\n" + 
+			"        <footer>\r\n" + 
+			"            <img width=\"160\" height=\"80\" src=\"https://beta.figaro.com.ar/imgs/logo2.png\">\r\n" + 
+			"        </footer>\r\n" + 
+			"    </body>\r\n" + 
+			"</html>";
 	
 	
 	 public void  sendMail(String email, String subject ,String message) {
@@ -65,18 +104,16 @@ public class TasksService {
 				turno = String.format(turno, hora+cliente+trabajos);
 				turnos = turnos.concat(turno);
 			}
-			String email   = String.format(emailTemplate, turnos);
+			String email   = emailTemplate.replace("%s", turnos);
 			String subject = String.format("Buen día %s :) estos son tus turnos para hoy:", e.getNombre());
 			sendMail(e.getEmail(), subject, email);
 		}
 	}
 
 	private String generateHoraTurno(TurnoDTO t) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(t.getDesde());
-		String desde = (calendar.get(Calendar.HOUR_OF_DAY)) +":"+(calendar.get(Calendar.MINUTE)); 
-		calendar.setTime(t.getHasta());
-		String hasta = (calendar.get(Calendar.HOUR_OF_DAY)) +":"+(calendar.get(Calendar.MINUTE));
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm"); 
+		String desde = sdf.format(t.getDesde());
+		String hasta = sdf.format(t.getHasta());
 		return desde+" - "+hasta;
 	}
 
