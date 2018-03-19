@@ -356,7 +356,13 @@
 	
 	
 	<bean id="TasksService" class="com.figaro.service.TasksService">
+		<property name="turnosService">
+			<ref bean="TurnosServiceTransactional" />
+		</property>
 		
+		<property name="empleadosService">
+			<ref bean="EmpleadosServiceTransactional" />
+		</property>
 	</bean>
 	
 	
@@ -372,7 +378,7 @@
 	<!-- Run the job every 5 seconds only on Weekends -->
 	<bean id="cronTrigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 	    <property name="jobDetail" ref="simpleJobDetail" />
-	    <property name="cronExpression" value="0 45 10 ? * MON-SUN*" />
+	    <property name="cronExpression" value="0 15 12 ? * MON-SUN*" />
 	</bean>
 	
 	
