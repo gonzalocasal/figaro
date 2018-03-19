@@ -18,26 +18,6 @@ import com.sendgrid.SendGrid;
 
 public class TasksService {
 
-	@GetMapping("email")
-	 public ResponseEntity<String>  sendMail() throws IOException {
-	    Email from = new Email("test@example.com");
-	    String subject = "Hello World from the SendGrid Java Library!";
-	    Email to = new Email("gonzalocasal@gmail.com");
-	    Content content = new Content("text/plain", "Hello, Email!");
-	    Mail mail = new Mail(from, subject, to, content);
-
-	    SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
-	    Request request = new Request();
-	    try {
-	      request.method = Method.POST;
-	      request.endpoint = "mail/send";
-	      request.body = mail.build();
-	      Response response = sg.api(request);
-	    } catch (IOException ex) {
-	      throw ex;
-	    }
-	    return new ResponseEntity<>("OK", HttpStatus.OK);
-	  }
 	
 	
 }
