@@ -34,6 +34,7 @@ dependencies {
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-freemarker', version: '1.1.7.RELEASE'
     compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
     compile("org.springframework.boot:spring-boot-starter-security")
+    compile 'com.sendgrid:sendgrid-java:3.0.9'
 
     testCompile("junit:junit")
 }
