@@ -1,23 +1,32 @@
 package com.figaro.service;
 
 
-import com.sendgrid.*;
 import java.io.IOException;
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.sendgrid.Content;
+import com.sendgrid.Email;
+import com.sendgrid.Mail;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
 
 
 public class TasksService {
 
-	@RequestMapping("/email")
-	 public void sendMail() throws IOException {
+	@GetMapping("email")
+	 public ResponseEntity<String>  sendMail() throws IOException {
 	    Email from = new Email("test@example.com");
 	    String subject = "Hello World from the SendGrid Java Library!";
 	    Email to = new Email("gonzalocasal@gmail.com");
 	    Content content = new Content("text/plain", "Hello, Email!");
 	    Mail mail = new Mail(from, subject, to, content);
 
-	    SendGrid sg = new SendGrid("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");
+	    SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
 	    Request request = new Request();
 	    try {
 	      request.method = Method.POST;
@@ -27,6 +36,7 @@ public class TasksService {
 	    } catch (IOException ex) {
 	      throw ex;
 	    }
+	    return new ResponseEntity<>("OK", HttpStatus.OK);
 	  }
 	
 	
