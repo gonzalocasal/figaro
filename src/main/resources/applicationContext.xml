@@ -351,5 +351,45 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
+	
+	
+	
+	
+	<bean id="TasksService" class="TasksService">
+		
+	</bean>
+	
+	
+	
+	
+	<!-- For times when you just need to invoke a method on a specific object -->
+	<bean id="simpleJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    	<property name="targetObject" ref="TasksService" />
+    	<property name="targetMethod" value="sendMail" />
+	</bean>
+	
+	
+	
+	<!-- Run the job every 5 seconds only on Weekends -->
+	<bean id="cronTrigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+	    <property name="jobDetail" ref="simpleJobDetail" />
+	    <property name="cronExpression" value="	0 45 10 ? * MON-SUN*" />
+	</bean>
+	
+	
+	<!-- Scheduler factory bean to glue together jobDetails and triggers to Configure Quartz Scheduler -->
+	<bean  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="jobDetails">
+        <list>
+            <ref bean="simpleJobDetail" />
+        </list>
+    </property>
+    <property name="triggers">
+        <list>
+            <ref bean="cronTrigger" />
+        </list>
+    </property>
+</bean>
+	
 
 </beans>
