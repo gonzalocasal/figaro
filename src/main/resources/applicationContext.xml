@@ -354,9 +354,6 @@
 	
 	
 	
-	
-	
-	
 	<bean id="TasksService" class="com.figaro.service.TasksService">
 		<property name="turnosService">
 			<ref bean="TurnosServiceTransactional" />
@@ -367,33 +364,28 @@
 		</property>
 	</bean>
 	
-	
-	
-	<bean id="simpleJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	<bean id="emailsJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
     	<property name="targetObject" ref="TasksService" />
-    	<property name="targetMethod" value="testJob" />
+    	<property name="targetMethod" value="emailsJob" />
 	</bean>
 	
-	
-	
-	<bean id="cronTrigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-	    <property name="jobDetail" ref="simpleJobDetail" />
-	    <property name="cronExpression" value="0 40 17 ? * MON-SUN*" />
+	<bean id="emailsTrigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+	    <property name="jobDetail" ref="emailsJob" />
+	    <property name="cronExpression" value="${jobs.schedule}" />
 	</bean>
-	
 	
 	<bean  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-    <property name="jobDetails">
-        <list>
-            <ref bean="simpleJobDetail" />
-        </list>
-    </property>
-    <property name="triggers">
-        <list>
-            <ref bean="cronTrigger" />
-        </list>
-    </property>
-</bean>
+	    <property name="jobDetails">
+	        <list>
+	            <ref bean="emailsJob" />
+	        </list>
+	    </property>
+	    <property name="triggers">
+	        <list>
+	            <ref bean="emailsTrigger" />
+	        </list>
+	    </property>
+	</bean>
 	
 
 </beans>
