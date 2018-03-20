@@ -19,9 +19,9 @@ import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.SendGrid;
 
-public class TasksService {
+public class EmailsService {
 	
-	final static Logger LOGGER = Logger.getLogger(TasksService.class);
+	final static Logger LOGGER = Logger.getLogger(EmailsService.class);
 
 	@Value("${jobs.enabled}")
 	private Boolean jobsEnabled;
@@ -35,7 +35,7 @@ public class TasksService {
 		clientesJob(turnosDelDia);
 	}
 	
-	public void  generateMailRequest(String email, String subject ,String message) {
+	private void  generateMailRequest(String email, String subject ,String message) {
 	    Email from = new Email(EMAILS_FROM);
 	    Email to = new Email(email);
 	    Content content = new Content(EMAILS_TYPE, message);
@@ -47,10 +47,10 @@ public class TasksService {
 	    sendMail(mail, sg, request);
 	  }
 	
-	public void empleadosJob(List<TurnoDTO> turnosDelDia) {
+	private void empleadosJob(List<TurnoDTO> turnosDelDia) {
 		LOGGER.info("Enviando los emails a los empleados");
 		List<Empleado> empleadosDisponibles = empleadosService.getEmpleadosDisponibles(new Date());
-		for (Empleado e : empleadosDisponibles) {
+		for (Empleado e : empleadosDisponibles) 
 			if (null != e.getEmail()) {
 				List<TurnoDTO> turnosEmpleado = turnosDelDia.stream().filter(t -> t.getEmpleado().equals(e)).collect(Collectors.toList());
 				String turnos ="";
@@ -58,27 +58,24 @@ public class TasksService {
 					String hora = formatHoraTurno(t);
 					String cliente = t.getCliente().getNombre() +" "+t.getCliente().getApellido(); 
 					String trabajos = t.getDescripcionTrabajos();
-					turnos = turnos.concat("<p>"+hora+" "+trabajos+" a "+cliente+"</p>");
+					turnos = turnos.concat(String.format(EMAILS_TURNO_FORMAT_EMPLEADO, hora,trabajos,cliente));
 				}
-				String email   = EMAILS_EMPLEADOS_TEMPLATE.replace("%name%", e.getNombre()).replace("%turnos%",turnos);
+				String email   = EMAILS_EMPLEADOS_TEMPLATE.replace(EMAILS_TAG_NAME, e.getNombre()).replace(EMAILS_TAG_TURNOS,turnos);
 				generateMailRequest(e.getEmail(), EMAILS_EMPLEADOS_ASUNTO, email);
 			}
-		}
 	}
-
 	
-	public void clientesJob(List<TurnoDTO> turnosDelDia) {
+	private void clientesJob(List<TurnoDTO> turnosDelDia) {
 		LOGGER.info("Enviando los emails a los clientes");
-		for(TurnoDTO t : turnosDelDia) {
+		for(TurnoDTO t : turnosDelDia) 
 			if (null != t.getCliente().getEmail()) {
 				String hora = formatHoraTurno(t);
 				String empleado = t.getEmpleado().getNombre() + " "+ t.getEmpleado().getApellido(); 
 				String trabajos = t.getDescripcionTrabajos();
-				String turno = ("<p>"+hora+" "+trabajos+" con "+empleado+"</p>");
-				String email   = EMAILS_CLIENTES_TEMPLATE.replace("%name%", t.getCliente().getNombre()).replace("%turnos%",turno);
+				String turno = String.format(EMAILS_TURNO_FORMAT_CLIENTE, hora,trabajos,empleado);
+				String email   = EMAILS_CLIENTES_TEMPLATE.replace(EMAILS_TAG_NAME, t.getCliente().getNombre()).replace(EMAILS_TAG_TURNOS,turno);
 				generateMailRequest(t.getCliente().getEmail(), EMAILS_CLIENTES_ASUNTO, email);
-			}
-		}
+			}	
 	}
 	
 	private void sendMail(Mail mail, SendGrid sg, Request request){
@@ -90,7 +87,6 @@ public class TasksService {
 		}
 	}
 	
-	
 	private String formatHoraTurno(TurnoDTO t) {
 		SimpleDateFormat sdf = new SimpleDateFormat(TIME_FORMAT); 
 		String desde = sdf.format(t.getDesde());
@@ -98,7 +94,6 @@ public class TasksService {
 		return desde+" - "+hasta;
 	}
 
-	
 	public void setTurnosService(TurnosService turnosService) {
 		this.turnosService = turnosService;
 	}

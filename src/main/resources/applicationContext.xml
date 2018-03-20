@@ -354,7 +354,9 @@
 	
 	
 	
-	<bean id="TasksService" class="com.figaro.service.TasksService">
+	
+	<!-- EMAILS !-->
+	<bean id="EmailsService" class="com.figaro.service.EmailsService">
 		<property name="turnosService">
 			<ref bean="TurnosServiceTransactional" />
 		</property>
@@ -365,7 +367,7 @@
 	</bean>
 	
 	<bean id="emailsJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-    	<property name="targetObject" ref="TasksService" />
+    	<property name="targetObject" ref="EmailsService" />
     	<property name="targetMethod" value="emailsJob" />
 	</bean>
 	
