@@ -61,8 +61,7 @@ public class TasksService {
 					turnos = turnos.concat("<p>"+hora+" "+trabajos+" a "+cliente+"</p>");
 				}
 				String email   = EMAILS_EMPLEADOS_TEMPLATE.replace("%name%", e.getNombre()).replace("%turnos%",turnos);
-				String subject = EMAILS_EMPLEADOS_ASUNTO;
-				generateMailRequest(e.getEmail(), subject, email);
+				generateMailRequest(e.getEmail(), EMAILS_EMPLEADOS_ASUNTO, email);
 			}
 		}
 	}
@@ -77,8 +76,7 @@ public class TasksService {
 				String trabajos = t.getDescripcionTrabajos();
 				String turno = ("<p>"+hora+" "+trabajos+" con "+empleado+"</p>");
 				String email   = EMAILS_CLIENTES_TEMPLATE.replace("%name%", t.getCliente().getNombre()).replace("%turnos%",turno);
-				String subject = EMAILS_CLIENTES_ASUNTO;
-				generateMailRequest(t.getCliente().getEmail(), subject, email);
+				generateMailRequest(t.getCliente().getEmail(), EMAILS_CLIENTES_ASUNTO, email);
 			}
 		}
 	}
