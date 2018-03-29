@@ -90,12 +90,36 @@ app.controller('empleadosController', function ($scope, $http) {
   
    
     //ACTUALIZAR SELECCION
-    $scope.actualizarSeleccion = function(position, empleados) {
-      angular.forEach(empleados, function(empleado, index) {
-      (position != index) ? empleado.checked = false : $scope.empleadoSelected = empleado;
-      });
+    $scope.actualizarSeleccion = function(empleado) {
+        $scope.empleadoSelected = empleado;
     }
 
+
+
+    
+    $scope.irTurnos = function() {
+        if(typeof $scope.empleadoSelected === "undefined")
+            alert('Seleccione un empleado');
+        else
+        window.location.href = "/turnos/empleados/"+$scope.empleadoSelected.id
+    };
+
+
+    $scope.irEditar = function() {
+        if(typeof $scope.empleadoSelected === "undefined")
+            alert('Seleccione un empleado');
+        else
+        $scope.detailEmpleado($scope.empleadoSelected.id)
+    };
+
+
+
+    $scope.irPagar = function() {
+        if(typeof $scope.empleadoSelected === "undefined")
+            alert('Seleccione un empleado');
+        else
+        window.location.href = "/turnos/empleados/"+$scope.empleadoSelected.id+"/sinpagar"
+    };
 
 
     //OBTENER LISTA DE EMPLEADOS

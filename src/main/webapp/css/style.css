@@ -302,6 +302,10 @@ li a:hover {
 }
 
 .empleado{
+    border-bottom-style: solid;
+    border-bottom-color: white;
+    border-bottom-width: 3px;
+    
     display: inline-block;
     cursor: pointer;
     width: 250px;
@@ -312,6 +316,11 @@ li a:hover {
     margin-right: 20px;
 }
 
+.empleado-selected{
+    border-bottom-style: solid;
+    border-bottom-color: #292961;
+    border-bottom-width: 3px;
+}
 .empleado-disponible, .empleado-indisponible{
     font-family: 'Material Icons';
     float: right;
@@ -321,11 +330,35 @@ li a:hover {
 }
 
 .empleado-disponible{
+    animation: glowdisponible .5s infinite alternate;
     color: #29d629;
 }
 
 .empleado-indisponible{
+    animation: glowindisponible .5s infinite alternate;
     color: red;
+}
+
+
+@keyframes glowdisponible {
+    to {
+        text-shadow: 0 0 10px #29d629;
+    }
+}
+
+@keyframes glowindisponible {
+    to {
+        text-shadow: 0 0 10px red;
+    }
+}
+
+
+.dias-disponible{
+    padding-left: 10px;
+}
+
+.dias-empleado{
+    margin-top: 50px;
 }
 
 
