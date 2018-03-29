@@ -50,9 +50,9 @@ public class EmailsService {
 	private void empleadosJob(List<TurnoDTO> turnosDelDia) {
 		LOGGER.info("Enviando los emails a los empleados");
 		List<Empleado> empleadosDisponibles = empleadosService.getEmpleadosDisponibles(new Date());
-		for (Empleado e : empleadosDisponibles) 
-			if (null != e.getEmail()) {
-				List<TurnoDTO> turnosEmpleado = turnosDelDia.stream().filter(t -> t.getEmpleado().equals(e)).collect(Collectors.toList());
+		for (Empleado e : empleadosDisponibles) { 
+			List<TurnoDTO> turnosEmpleado = turnosDelDia.stream().filter(t -> t.getEmpleado().equals(e)).collect(Collectors.toList());
+			if (null != e.getEmail() && !turnosEmpleado.isEmpty()) {
 				String turnos ="";
 				for(TurnoDTO t : turnosEmpleado) {
 					String hora = formatHoraTurno(t);
@@ -63,6 +63,7 @@ public class EmailsService {
 				String email   = EMAILS_EMPLEADOS_TEMPLATE.replace(EMAILS_TAG_NAME, e.getNombre()).replace(EMAILS_TAG_TURNOS,turnos);
 				generateMailRequest(e.getEmail(), EMAILS_EMPLEADOS_ASUNTO, email);
 			}
+		}
 	}
 	
 	private void clientesJob(List<TurnoDTO> turnosDelDia) {
