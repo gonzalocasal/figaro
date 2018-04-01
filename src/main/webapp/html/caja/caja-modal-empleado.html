@@ -25,7 +25,7 @@
           <th>DETALLE</th>
           <th>MONTO</th>
           <th>PORCENTAJE</th>
-          <th>COMISION</th>
+          <th>COMISI&Oacute;N</th>
       </tr>
     </thead>
     <tbody>
@@ -35,7 +35,7 @@
         <td data-id={{movimiento.id}}>{{movimiento.servicio.descripcion}}</td>
         <td data-id={{movimiento.id}}>{{movimiento.servicio.precio | currency}}</td>
         <td data-id={{movimiento.id}}>{{movimiento.comision}}%</td>
-        <td data-id={{movimiento.id}}>{{calculaComisionEmpleado(movimiento)}}</td>
+        <td data-id={{movimiento.id}}>{{calculaComisionEmpleado(movimiento) | currency}}</td>
     
       </tr>
     </tbody>

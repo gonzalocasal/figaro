@@ -76,6 +76,7 @@ function openModal(modal){
 	$('#'+modal).addClass("modal-on");
 	$('#content').addClass("blur");
 	$('#menu').addClass("blur");
+	$('#ver-mas').addClass("blur");
 	$('#'+modal+'-focus').focus();
 };
 
@@ -84,6 +85,7 @@ function closeModal(modal){
 	$('#'+modal).removeClass("modal-on-top");
 	$('#content').removeClass("blur");
 	$('#menu').removeClass("blur");
+	$('#ver-mas').removeClass("blur");
 };
 
 function logout(){

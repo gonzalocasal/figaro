@@ -20,9 +20,9 @@
       <tr ng-cloak id={{movimiento.id}} data-id={{movimiento.id}} class=data-row ng-repeat="movimiento in ngMovimientoVenta">
     
         <td data-id={{movimiento.id}}>{{movimiento.nombreProducto}}({{movimiento.descripcionProducto}})</td>
-        <td data-id={{movimiento.id}}>{{movimiento.precioUnitario}}</td>
+        <td data-id={{movimiento.id}}>{{movimiento.precioUnitario | currency}}</td>
         <td data-id={{movimiento.id}}>{{movimiento.cantidad}}</td>
-        <td data-id={{movimiento.id}}>{{movimiento.precioTotal}}</td>
+        <td data-id={{movimiento.id}}>{{movimiento.precioTotal | currency}}</td>
 
       </tr>
     </tbody>

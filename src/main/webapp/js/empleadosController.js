@@ -48,13 +48,14 @@ app.controller('empleadosController', function ($scope, $http) {
             turnos = response.data;
             Array.prototype.push.apply($scope.turnos, turnos);
             if ($scope.turnos.length > 0)
-                $scope.empleado = ($scope.turnos[0].empleado.nombre +' '+ $scope.turnos[0].empleado.apellido) 
+                $scope.empleado = ($scope.turnos[0].empleado) 
         });
     }    
 
 
     //GET TURNOS SIN PAGAR EMPLEADO
     $scope.getTurnosSinPagar = function(){
+    loading();
     url = '/rest/turnos/empleados/'+ $scope.empleadoId +'/sinpagar';
     $http.get(url)
         .then(function successCallback(response) {
