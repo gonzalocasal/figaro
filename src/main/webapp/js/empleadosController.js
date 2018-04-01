@@ -62,13 +62,20 @@ app.controller('empleadosController', function ($scope, $http) {
             $scope.loaded = true;
             turnos = response.data;
             Array.prototype.push.apply($scope.turnos, turnos);
-            if ( $scope.turnos.length > 0){
-                $scope.empleado = ($scope.turnos[0].empleado.nombre +' '+ $scope.turnos[0].empleado.apellido) 
-               
-            }
+            if ( $scope.turnos.length > 0)
+                $scope.empleado = ($scope.turnos[0].empleado) 
         });
     }
 
+
+    $scope.pagarTodos = function(){
+        $http.put('/rest/turnos/empleados/'+$scope.empleado.id+'/pagartodos').then(
+            function successCallback(response) {
+                location.reload();
+        }, function errorCallback(response) {
+            $scope.message=response.data.message;
+        });
+    }
 
     //GET CANTIDAD TURNOS EMPLEADO
     $scope.getCantidadTurnos = function(){
@@ -80,12 +87,9 @@ app.controller('empleadosController', function ($scope, $http) {
         });
     }   
 
-
-
-    //CALCULAR SI EL EMPLEADO TRABAJA HoY
+    //CALCULAR SI EL EMPLEADO TRABAJA HOY
     $scope.isDisponible = function(empleado) {
        return empleado.diasDisponible.indexOf(getDayOfWeek()) >-1;
-
     };
   
    
@@ -95,31 +99,29 @@ app.controller('empleadosController', function ($scope, $http) {
     }
 
 
-
-    
     $scope.irTurnos = function() {
-        if(typeof $scope.empleadoSelected === "undefined")
-            alert('Seleccione un empleado');
-        else
-        window.location.href = "/turnos/empleados/"+$scope.empleadoSelected.id
+        if($scope.isSelectedEmpleado())
+            window.location.href = "/turnos/empleados/"+$scope.empleadoSelected.id
     };
 
 
     $scope.irEditar = function() {
-        if(typeof $scope.empleadoSelected === "undefined")
-            alert('Seleccione un empleado');
-        else
-        $scope.detailEmpleado($scope.empleadoSelected.id)
+        if($scope.isSelectedEmpleado())
+            $scope.detailEmpleado($scope.empleadoSelected.id)  
     };
-
-
 
     $scope.irPagar = function() {
-        if(typeof $scope.empleadoSelected === "undefined")
-            alert('Seleccione un empleado');
-        else
-        window.location.href = "/turnos/empleados/"+$scope.empleadoSelected.id+"/sinpagar"
+        if($scope.isSelectedEmpleado())
+            window.location.href = "/turnos/empleados/"+$scope.empleadoSelected.id+"/sinpagar"  
     };
+
+    $scope.isSelectedEmpleado = function(){
+        if (typeof $scope.empleadoSelected === "undefined"){
+            alert('Seleccione un empleado')
+            return false
+        }
+        return true
+    }
 
 
     //OBTENER LISTA DE EMPLEADOS

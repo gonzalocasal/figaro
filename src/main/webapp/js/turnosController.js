@@ -343,7 +343,6 @@ app.controller('turnosController', function ($scope, $http) {
     
     //CONFIRMAR DESHACER COBRO
     $scope.toggleCobro = function (turno) {
-     
         $http.put('/rest/turnos/'+turno.id+'/cobrado/cancelar').then(
             function successCallback(response) {
                 closeModal("modal-cancelar-cobro");
@@ -353,8 +352,6 @@ app.controller('turnosController', function ($scope, $http) {
         });
 
     }
-
-
 
     //POP UP PAGADO
     $scope.setPagado = function (turno) {
@@ -396,6 +393,7 @@ app.controller('turnosController', function ($scope, $http) {
         });
     };
 
+    
 
     //OBTENER HORARIO
     $scope.getHorario = function() {

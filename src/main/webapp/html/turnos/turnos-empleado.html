@@ -9,11 +9,14 @@
   <div ng-controller=turnosController> 
   <div ng-cloak ng-if="turnos.length > 0" id=content class="content fade-in">
     <div ng-cloak class=banner>
-        <label class="banner-title"><i class="material-icons">person</i>Empleado: {{empleado}}</label>
+        <label class="banner-title"><i class="material-icons">person</i>Empleado: {{empleado.nombre}} {{empleado.apellido}}</label>
         <div class="separator"></div>
         <label  ><i class=material-icons >date_range</i>Turnos: {{sinPagar ? turnos.length : totalCantidadTurnos}}</label>
         <div class="separator"></div>
         <label  ><i class=material-icons >payment</i>Total pago: {{sinPagar ? calcularTotalPagoEmpleado(turnos) : totalPago | currency}}</label>
+        <div class="separator" ng-show="sinPagar"></div>
+        <label class=banner-button  ng-click="pagarTodos()" ng-show="sinPagar" ><i class=material-icons >payment</i>Pagar todo</label>
+
     </div>
     <table  ng-cloak id=table class="main-table banner">
         <thead>

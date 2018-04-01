@@ -64,6 +64,10 @@ public class TurnosControllerREST {
 		return new ResponseEntity<>(service.getTurnosEmpleadoSinPagar(empleadoId), HttpStatus.OK);
     }
 	
+	@PutMapping("turnos/empleados/{empleadoId}/pagartodos")
+    public ResponseEntity<List<Turno>> pagarTodos( @PathVariable int empleadoId) {
+		return new ResponseEntity<>(service.pagarTodos(empleadoId), HttpStatus.OK);
+    }
 	
 	@PutMapping("turnos/actualizar/{turnoId}")
     public ResponseEntity<Turno> updateTurno(@RequestBody Turno turno) {

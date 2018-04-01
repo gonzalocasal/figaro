@@ -123,7 +123,7 @@ public class TurnosRepository extends AbstractRepository{
 		return dtos;
 	}
 	
-	public List<TurnoDTO> getTurnosEmpleadoSinPagar(int empleadoId) {
+	public List<TurnoDTO> getTurnosEmpleadoSinPagarDTO(int empleadoId) {
 		List<Turno> turnos = getCurrentSession().createQuery( "FROM Turno AS t WHERE t.empleado.id = :empleadoId AND t.pagado = false ORDER BY t.desde DESC")
 				.setParameter("empleadoId", empleadoId)
 				.list();
@@ -131,6 +131,13 @@ public class TurnosRepository extends AbstractRepository{
 		for (Turno t : turnos)
 			dtos.add(new TurnoDTO(t));
 		return dtos;
+	}
+	
+	public List<Turno> getTurnosEmpleadoSinPagar(int empleadoId) {
+		List<Turno> turnos = getCurrentSession().createQuery( "FROM Turno AS t WHERE t.empleado.id = :empleadoId AND t.pagado = false ORDER BY t.desde DESC")
+				.setParameter("empleadoId", empleadoId)
+				.list();
+		return turnos;
 	}
 	
 	

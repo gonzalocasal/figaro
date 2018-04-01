@@ -17,7 +17,7 @@
       <label class="banner-button add" ng-click="irPagar()" ><i class="material-icons" >payment</i>Pagar</label>
     </div>
 
-    <div ng-cloak  ng-class="{'card':true ,'empleado':true,'fade-in':true, 'empleado-selected':(empleadoSelected.id == empleado.id)}" ng-repeat="empleado in empleados" ng-click="actualizarSeleccion(empleado)">
+    <div ng-cloak title="Seleccionar" ng-class="{'card':true ,'empleado':true,'fade-in':true, 'empleado-selected':(empleadoSelected.id == empleado.id)}" ng-repeat="empleado in empleados" ng-click="actualizarSeleccion(empleado)">
        
         <i ng-attr-title="{{isDisponible(empleado) ? 'Empleado disponible' : 'Empleado no disponible'}}" ng-class="isDisponible(empleado) ? 'empleado-disponible' : 'empleado-indisponible'" >lens</i>        
         

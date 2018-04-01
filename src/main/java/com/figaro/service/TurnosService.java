@@ -7,6 +7,7 @@ import static com.figaro.util.Constants.MSG_TURNO_OCUPADO_EMPLEADO;
 import static com.figaro.util.Constants.TIPO_PAGO_CONTADO;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -148,13 +149,10 @@ public class TurnosService {
 	
 	private void validateTurno(Turno nuevoTurno) {
 		LOGGER.info("Validando el Turno: " + nuevoTurno.getDesde() +" - " +nuevoTurno.getHasta() +" "+ nuevoTurno.getEmpleado() );
-		
 		isClienteDesconocido(nuevoTurno);
 		isHorarioInvalido(nuevoTurno);
-		
 		List<Turno> turnosDelDia = repository.searchTurno(nuevoTurno.getDesde());
 		turnosDelDia.remove(nuevoTurno);
-		
 		for(Turno turno : turnosDelDia) 
 			if( mismoCliente(nuevoTurno, turno)  && isHorarioOcucupado(nuevoTurno, turno))
 				throw new TurnoOcupadoException( MSG_TURNO_OCUPADO_CLIENTE );
@@ -169,7 +167,6 @@ public class TurnosService {
 				throw new TurnoOcupadoEmpleadoException( MSG_TURNO_OCUPADO_EMPLEADO);
 		return false;
 	}
-	
 
 	private void isHorarioInvalido(Turno nuevoTurno) {
 		if (nuevoTurno.getDesde().compareTo(nuevoTurno.getHasta()) >= 0)
@@ -226,13 +223,10 @@ public class TurnosService {
 			   turno.getHasta().equals(nuevoTurno.getHasta());
 	}
 	
-	
-	
 	public Turno getTurno(int turnoId) {
 		LOGGER.info("Obteniendo el turno con ID: " + turnoId);
 		return repository.getTurno(turnoId);
 	}
-	
 	
 	public List<TurnoDTO> getTurnosCliente(int clienteId) {
 		LOGGER.info("Obteniendo los turnos para el cliente con ID: " +  clienteId);
@@ -246,12 +240,21 @@ public class TurnosService {
 	
 	public List<TurnoDTO> getTurnosEmpleadoSinPagar(int empleadoId) {
 		LOGGER.info("Obteniendo los turnos sin pagar para el empleado con ID: " +  empleadoId);
-		return repository.getTurnosEmpleadoSinPagar(empleadoId);
+		return repository.getTurnosEmpleadoSinPagarDTO(empleadoId);
 	}
 	
 	public List<TurnoDTO> getTurnosDelDia(Date fecha) {
 		LOGGER.info("Obteniendo turnos del dia: " + fecha );
 		return searchTurno(fecha);
+	}
+	
+	public List<Turno> pagarTodos(int empleadoId) {
+		List<Turno> turnosPagados = new ArrayList<>();
+		List<Turno> turnosSinPagar = repository.getTurnosEmpleadoSinPagar(empleadoId);
+		LOGGER.info("Pagando todos los turnos pendientes del empleado: " +empleadoId);
+		for(Turno t : turnosSinPagar)
+			turnosPagados.add(pagar(t.getId()));
+		return turnosPagados;
 	}
 
 	public List<TurnoDTO> searchTurno(Date desde) {
@@ -277,5 +280,7 @@ public class TurnosService {
 	public void setClientesService(ClientesService clientesService) {
 		this.clientesService = clientesService;
 	}
+
+	
 
 }
