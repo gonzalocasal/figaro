@@ -704,7 +704,7 @@ li a:hover {
     max-width: 1300px;
 }
 
-.ciudades, .empleados, .categorias, .servicios, .horario{
+.ciudades, .empleados, .categorias, .servicios, .horario, .password{
     width: 360px;
     height: 230px;
     padding: 20px;

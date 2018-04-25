@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,14 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.figaro.model.Categoria;
 import com.figaro.model.Ciudad;
+import com.figaro.model.Credential;
 import com.figaro.model.Horario;
 import com.figaro.model.Servicio;
+import com.figaro.security.CredentialsService;
 import com.figaro.service.ConfiguracionService;
 
 @RestController
 @RequestMapping(value = "/rest/configuracion")
 public class ConfiguracionControllerREST {
 
+	@Autowired
+	private CredentialsService credentialsService;
+	
 	@Autowired
 	@Qualifier("ConfiguracionServiceTransactional")
 	private ConfiguracionService service;
@@ -110,6 +116,17 @@ public class ConfiguracionControllerREST {
     public ResponseEntity<Horario> updateHorario(@RequestBody Horario nuevoHorario) {
 		return new ResponseEntity<>(service.updateHorario(nuevoHorario), HttpStatus.OK);
 	}
+	
+	@PatchMapping("/pass")
+    public ResponseEntity<String> updatePasswoerd(@RequestBody Credential credential) {
+		return new ResponseEntity<>(credentialsService.updatePassword(credential.getPass()), HttpStatus.OK);
+	}
+
+	public void setCredentialsService(CredentialsService service) {
+		this.credentialsService = service;
+	}
+	
+	
 	
 	
 }
