@@ -181,4 +181,18 @@ app.controller('configuracionController', function ($scope, $http) {
       $http.patch('/rest/empleados/'+empleado.id+'/habilitar');
     };
 
+
+
+    //ACTUALIZAR CONTRASEÑA
+    $scope.updatePassword = function() {
+        $scope.ngCredential = {};
+        $scope.ngCredential.pass = $scope.ngNewPassword;
+        $http.patch('/rest/configuracion/pass', $scope.ngCredential)
+            .then(function successCallback(response) {
+                $scope.messagePassword='';
+              }, function errorCallback(response) {
+                $scope.messagePassword=response.data.message;
+            });
+    };
+
 });
