@@ -56,7 +56,7 @@ public class Constants{
 	public static final String FIGARO_API_AUTHORIZATION = "Authorization";
 	public static final String FIGARO_API_BEARER = "Bearer %s";
 	public static final String FIGARO_API_ACCEPT = "Accept";
-	public static final String APPLICATION_VND_HEROKU_JSON_VERSION_3 = "application/vnd.heroku+json; version=3";
+	public static final String FIGARO_API_CONTENT_TYPE = "application/vnd.heroku+json; version=3";
     
     
 }

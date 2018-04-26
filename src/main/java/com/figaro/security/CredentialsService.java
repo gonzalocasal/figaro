@@ -19,7 +19,7 @@ public class CredentialsService {
 	
 	final static Logger LOGGER = Logger.getLogger(ConfiguracionService.class);
 	
-	public String updatePassword (Credential credential) {
+	public void updatePassword (Credential credential) {
 		
 		LOGGER.info("Actualizando password");
 		
@@ -27,19 +27,15 @@ public class CredentialsService {
 		
         String appName = System.getenv(FIGARO_APP_NAME);
 	    String apikey  = System.getenv(FIGARO_API_KEY);
-	    
 	    String url = String.format(FIGADO_API_URL, appName) ;
 
         RestTemplate restTemplate = generateRestTemplate();
         HttpEntity<?> entity = new HttpEntity<>(generateBody(credential.getPass()), generateHeaders(apikey));
         restTemplate.exchange(url, HttpMethod.PATCH, entity, String.class);
-        
-        return null;
-	  
 	}
 
 	private void validate(Credential credential) {
-		if (!credential.getPass().equals(credential.getRepass()))
+		if (!credential.getPass().equals(credential.getRepass()) || null == System.getenv(FIGARO_PASS))
 			throw new RuntimeException(MSG_PASS_NO_COINCIDEN);
 	}
 
@@ -60,7 +56,7 @@ public class CredentialsService {
 
 	private MultiValueMap<String, String> generateHeaders(String apikey) {
 		MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();     
-        headers.add(FIGARO_API_ACCEPT, APPLICATION_VND_HEROKU_JSON_VERSION_3);
+        headers.add(FIGARO_API_ACCEPT, FIGARO_API_CONTENT_TYPE);
         headers.add(FIGARO_API_AUTHORIZATION, String.format(FIGARO_API_BEARER, apikey));
 		return headers;
 	}

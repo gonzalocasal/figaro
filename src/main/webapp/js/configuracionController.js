@@ -190,6 +190,8 @@ app.controller('configuracionController', function ($scope, $http) {
         $scope.ngCredential.repass = $scope.ngRePassword;
         $http.patch('/rest/configuracion/pass', $scope.ngCredential)
             .then(function successCallback(response) {
+                $scope.ngPassword='';
+                $scope.ngRePassword='';
                 $scope.messagePassword='';
               }, function errorCallback(response) {
                 $scope.messagePassword=response.data.message;

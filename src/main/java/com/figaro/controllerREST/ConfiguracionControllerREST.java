@@ -118,8 +118,9 @@ public class ConfiguracionControllerREST {
 	}
 	
 	@PatchMapping("/pass")
-    public ResponseEntity<String> updatePasswoerd(@RequestBody Credential credential) {
-		return new ResponseEntity<>(credentialsService.updatePassword(credential), HttpStatus.OK);
+    public ResponseEntity<Credential> updatePasswoerd(@RequestBody Credential credential) {
+		credentialsService.updatePassword(credential);
+		return new ResponseEntity<>(credential, HttpStatus.OK);
 	}
 
 	public void setCredentialsService(CredentialsService service) {
