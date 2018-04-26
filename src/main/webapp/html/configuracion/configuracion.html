@@ -132,11 +132,13 @@
 
 
      <div class="card password"> 
-      <div class=card-title><i class="material-icons">vpn_key </i><label class=card-title> CONTRASE&Ntilde;A</label></div>
+      <div class=card-title><i class="material-icons">vpn_key </i><label class=card-title>ACTUALIZAR CONTRASE&Ntilde;A</label></div>
       <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
-      <input type="password"  ng-model="ngPassword" maxlength="50" required><i class="material-icons">visibility</i><br>
+      
       <form ng-submit="updatePassword()">
-        <input type="password"  ng-model="ngNewPassword" placeholder="Nueva contrase&ntilde;a" maxlength="50" required><i class="material-icons">lock_outline</i><br>
+        <input type="password"  ng-model="ngPassword"   placeholder="Nueva contrase&ntilde;a" maxlength="30" required><br>
+        <input type="password"  ng-model="ngRePassword" placeholder="Repita su nueva contrase&ntilde;a" maxlength="30" required><br>
+        <button class="button accept" type="submit"></button>
         <label  ng-cloak class=form-message>{{messagePassword}}</label>
       </form>
     </div>

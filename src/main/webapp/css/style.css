@@ -747,7 +747,7 @@ li a:hover {
     margin-bottom: 20px;
 }
 
-.card.servicios button{
+.card.servicios button, .card.password button{
     display: none;
 }
 

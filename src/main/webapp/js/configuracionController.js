@@ -186,7 +186,8 @@ app.controller('configuracionController', function ($scope, $http) {
     //ACTUALIZAR CONTRASEÑA
     $scope.updatePassword = function() {
         $scope.ngCredential = {};
-        $scope.ngCredential.pass = $scope.ngNewPassword;
+        $scope.ngCredential.pass = $scope.ngPassword;
+        $scope.ngCredential.repass = $scope.ngRePassword;
         $http.patch('/rest/configuracion/pass', $scope.ngCredential)
             .then(function successCallback(response) {
                 $scope.messagePassword='';
