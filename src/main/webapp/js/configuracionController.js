@@ -193,6 +193,7 @@ app.controller('configuracionController', function ($scope, $http) {
                 $scope.ngPassword='';
                 $scope.ngRePassword='';
                 $scope.messagePassword='';
+                alert('Su contraseña se actualizó correctamente');
               }, function errorCallback(response) {
                 $scope.messagePassword=response.data.message;
             });

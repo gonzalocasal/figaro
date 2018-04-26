@@ -118,7 +118,7 @@ app.controller('empleadosController', function ($scope, $http) {
 
     $scope.isSelectedEmpleado = function(){
         if (typeof $scope.empleadoSelected === "undefined"){
-            alert('Seleccione un empleado')
+            alert('Seleccione un empleado');
             return false
         }
         return true
