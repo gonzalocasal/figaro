@@ -3,6 +3,7 @@
 <head>
 	<title>Clientes</title>
   <#include "/html/common/head.html">
+  
 </head>
 <body ng-app=figaro ng-controller=clientesController data-ng-init="init()" >
   <#include "/html/common/menu.html">
@@ -12,12 +13,15 @@
         <label class="banner-button add" ng-click="newClient()"><i class=material-icons  >person</i> Nuevo</label>
         <div class="separator"></div>
         
-
         <label class="banner-button add" ng-click="irTurnos()" ><i class="material-icons" >date_range</i> Turnos</label>   
+        <div class="separator"></div>
+
+        <label class="banner-button" id=export ><i class="material-icons" >description</i> Exportar</label>   
         <div class="separator"></div>
 
         <i class="material-icons search-input-icon ">search</i>
         <input class=input-banner type="text" placeholder="Buscar..." ng-model="search" ng-keyup="searchCliente()">
+
     </div>
     <table id=table class=main-table>
       <thead>

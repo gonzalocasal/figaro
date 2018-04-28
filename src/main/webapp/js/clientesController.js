@@ -125,4 +125,27 @@ app.controller('clientesController', function ($scope, $http) {
         }
     });
 
+
+    //EXPORTAR CLIENTES A PDF
+    document.getElementById('export').addEventListener('click',exportPDF);
+
+    var specialElementHandlers = {
+        '.no-export': function(element, renderer) {
+        return true;
+        }
+    };
+
+    function exportPDF() {
+        var columns = [
+            {title: "Nombre", dataKey: "nombre"}, 
+            {title: "Apellido", dataKey: "apellido"},
+            {title: "Teléfono", dataKey: "telefono"},
+            {title: "Email", dataKey: "email"},
+            {title: "Última Visita", dataKey: "ultimaVisita"},
+        ];
+        var doc = new jsPDF('p', 'pt');
+        doc.autoTable(columns, $scope.clientes,{headerStyles: {fillColor: [41,41,97]}});
+        doc.save('figaro-clientes.pdf');
+    }
+
 });
