@@ -125,6 +125,23 @@ app.controller('clientesController', function ($scope, $http) {
         }
     });
 
+    // LEER CLIENTES DESDE LA TABLA HTML
+    function leerClientes(){
+        var clientes = [];
+        var rows = document.querySelectorAll("table tr");
+        for (var i = 1; i < rows.length; i++) {
+            let cliente = {};
+            cols = rows[i].querySelectorAll("td, th");
+            cliente.nombre = cols[1].innerText;
+            cliente.apellido = cols[2].innerText;
+            cliente.telefono = cols[3].innerText;
+            cliente.email = cols[4].innerText;
+            cliente.ultimaVisita = cols[5].innerText;
+            clientes.push(cliente);
+        }
+        return clientes;
+    }
+
     //EXPORTAR A PDF
     $scope.exportPDF = function() {
         var columns = [
@@ -135,7 +152,8 @@ app.controller('clientesController', function ($scope, $http) {
             {title: "ÚLTIMA VISITA", dataKey: "ultimaVisita"}
         ];
         var doc = new jsPDF('p', 'pt');
-        doc.autoTable(columns, $scope.clientes,{headerStyles: {fillColor: [41,41,97]}});
+        var clientes = leerClientes();
+        doc.autoTable(columns, clientes,{headerStyles: {fillColor: [41,41,97]}});
         doc.save('figaro-clientes.pdf');
     }
 
