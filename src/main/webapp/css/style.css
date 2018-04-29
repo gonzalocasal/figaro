@@ -449,6 +449,14 @@ li a:hover {
     vertical-align: sub
 }
 
+.file-type-icon{
+    font-size: 18px;
+}
+
+.export{
+    float: right;
+}
+
 .modal {
     display: none
 }

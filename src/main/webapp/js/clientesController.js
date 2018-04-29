@@ -125,27 +125,43 @@ app.controller('clientesController', function ($scope, $http) {
         }
     });
 
-
-    //EXPORTAR CLIENTES A PDF
-    document.getElementById('export').addEventListener('click',exportPDF);
-
-    var specialElementHandlers = {
-        '.no-export': function(element, renderer) {
-        return true;
-        }
-    };
-
-    function exportPDF() {
+    //EXPORTAR A PDF
+    $scope.exportPDF = function() {
         var columns = [
-            {title: "Nombre", dataKey: "nombre"}, 
-            {title: "Apellido", dataKey: "apellido"},
-            {title: "Teléfono", dataKey: "telefono"},
-            {title: "Email", dataKey: "email"},
-            {title: "Última Visita", dataKey: "ultimaVisita"},
+            {title: "NOMBRE", dataKey: "nombre"}, 
+            {title: "APELLIDO", dataKey: "apellido"},
+            {title: "TELÉFONO", dataKey: "telefono"},
+            {title: "EMAIL", dataKey: "email"},
+            {title: "ÚLTIMA VISITA", dataKey: "ultimaVisita"}
         ];
         var doc = new jsPDF('p', 'pt');
         doc.autoTable(columns, $scope.clientes,{headerStyles: {fillColor: [41,41,97]}});
         doc.save('figaro-clientes.pdf');
     }
+
+
+    //EXPORTAR A EXCEL
+    $scope.exportExcel = function () {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+            //SE IGNORA LA PRIMER Y ULTIMA COLUMNA
+            for (var j = 1; j < cols.length-1; j++) 
+                row.push(cols[j].innerText);
+            csv.push(row.join(","));        
+        }
+        csv=csv.join("\n")
+        var csvFile = new Blob([csv], {type: "text/csv"});
+        var downloadLink = document.createElement("a");
+        downloadLink.download = 'figaro-clientes.csv';
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+    }
+
+
+   
 
 });
