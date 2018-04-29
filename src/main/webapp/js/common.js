@@ -116,5 +116,8 @@ function loadTurnosComplete(){
 	$('.loading-turnos').hide();
 }
 
+function imprimir() {
+    window.print();
+}
 
 var app = angular.module('figaro', []);

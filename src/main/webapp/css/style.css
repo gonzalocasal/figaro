@@ -452,9 +452,13 @@ li a:hover {
 .file-type-icon{
     font-size: 18px;
 }
-
 .export{
     float: right;
+}
+
+
+.export .material-icons{
+    margin-right: 0px;
 }
 
 .modal {

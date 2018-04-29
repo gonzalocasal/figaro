@@ -10,14 +10,16 @@
   <div id=content class="content fade-in" ng-cloak>
     <div class="banner">
         
-        <label class="banner-button add" ng-click="newClient()"><i class=material-icons  >person</i>Nuevo</label>
+        <label class=banner-button ng-click="newClient()"><i class=material-icons  >person</i>Nuevo</label>
         <div class="separator"></div>
-        <label class="banner-button add" ng-click="irTurnos()" ><i class="material-icons" >date_range</i>Turnos</label>   
+        <label class=banner-button ng-click="irTurnos()" ><i class=material-icons >date_range</i>Turnos</label>   
         <div class="separator"></div>
         <i class="material-icons search-input-icon ">search</i>
         <input class=input-banner type="text" placeholder="Buscar..." ng-model="search" ng-keyup="searchCliente()">
 
         <div class=export>
+          <label title="Imprimir" class="banner-button" onclick="imprimir()"><i class="material-icons">print</i></label>
+          <div class="separator"></div>
           <label title="Exportar a PDF" class="banner-button" id=export ng-click=exportPDF()><i class="far fa-file-pdf file-type-icon"></i></label>   
           <div class="separator"></div>
           <label title="Exportar a Excel" class="banner-button" id=export ng-click=exportExcel()><i class="far fa-file-excel file-type-icon"></i></label>
