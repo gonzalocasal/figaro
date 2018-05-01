@@ -8,13 +8,19 @@
   <#include "/html/common/menu.html">
   <div id=content class="content fade-in">
     <div class=banner>
-        <label class="banner-button add" ng-click="newTurno()" ><i class=material-icons>date_range</i> Nuevo</label>
+        <label class="banner-button" ng-click="newTurno()" ><i class=material-icons>date_range</i> Nuevo</label>
         <div class="separator"></div>
+        
+        <label class=banner-button ng-click="irBuscar()"><i class=material-icons  >search</i>Buscar</label>        
+        <div class="separator"></div>
+        
         <label class="banner-button" ng-click="getTurnosDiaAnterior()">Anterior</label>
         <label class="banner-button" ng-click="getTurnosHoy()">Hoy</label>
         <label class="banner-button" ng-click="getTurnosDiaSiguiente()">Siguiente</label>
+
         <div class="separator"></div>
         <label >Fecha: <input class=input-banner type=date  ng-model=ngDateTurno ng-focus="focus=true" ng-blur="focus=false" ng-change="getTurnos();getAllEmpleados()"></label>
+        
     </div>
   
     <table  ng-cloak ng-if="turnos.length > 0" id=table class=main-table>
@@ -56,6 +62,7 @@
   </div>
 
   <#include "/html/turnos/cobrar.html">
+  <#include "/html/turnos/buscar-modal.html">
   <#include "/html/turnos/deshacer-cobrado-pagado.html">
   <#include "/html/common/javascript.html">
   <#include "/html/common/confirm.html">

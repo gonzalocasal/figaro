@@ -30,7 +30,7 @@
     <table id=table class=main-table>
       <thead>
         <tr>
-            <th></th>
+            <th class=no-print></th>
             <th>NOMBRE</th>
             <th>APELLIDO</th>
             <th>EMAIL</th>
@@ -41,7 +41,7 @@
       </thead>
       <tbody>
         <tr id={{cliente.id}} data-id={{cliente.id}} class="data-row fade-in" ng-repeat="cliente in clientes"  >
-          <td><input ng-model="cliente.checked" ng-click="actualizarSeleccion($index, clientes)" type="checkbox" /></td>
+          <td class=no-print><input ng-model="cliente.checked" ng-click="actualizarSeleccion($index, clientes)" type="checkbox" /></td>
           <td ng-click="detailClient(cliente.id)">{{cliente.nombre}}</td>
           <td ng-click="detailClient(cliente.id)">{{cliente.apellido}}</td>
           <td ng-click="detailClient(cliente.id)">{{cliente.email}}</td>

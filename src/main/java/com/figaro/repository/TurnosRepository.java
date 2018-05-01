@@ -6,9 +6,12 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Hibernate;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.figaro.dto.TurnoDTO;
@@ -22,7 +25,6 @@ public class TurnosRepository extends AbstractRepository{
 	private Integer pageSize;
 
 	public Turno getTurno(int turnoId) {
-		
 		Turno turno = (Turno) getCurrentSession().get(Turno.class, turnoId);
 		Hibernate.initialize(turno.getTrabajos());
 		return turno;
@@ -143,6 +145,70 @@ public class TurnosRepository extends AbstractRepository{
 	
 	public void setPageSize(Integer pageSize) {
 		this.pageSize = pageSize;
+	}
+
+
+	public List<TurnoDTO> buscar(Integer clienteId, Integer empleadoId, String servicio, Boolean cobrado, Boolean pagado, Date desde, Date hasta) {
+
+		Map<String, Object> arguments = new HashMap<>();
+		
+		StringBuilder queryBuild = new StringBuilder();
+		queryBuild.append("FROM Turno as t WHERE 1=1");
+		
+		if (clienteId != null) {
+			queryBuild.append(" AND t.cliente.id = :clienteId");
+			arguments.put("clienteId", clienteId);
+		}
+		
+		if (empleadoId != null) {
+			queryBuild.append(" AND t.empleado.id = :empleadoId");
+			arguments.put("empleadoId", empleadoId);
+		}
+		
+		if (servicio != null) {
+			queryBuild.append(" AND t.descripcionTrabajos LIKE :servicio");
+			arguments.put("servicio", servicio);
+		}
+		
+		if (cobrado != null && cobrado) {
+			queryBuild.append(" AND t.cobro IS NOT NULL");
+		}
+		
+		if (cobrado != null && !cobrado) {
+			queryBuild.append(" AND t.cobro IS NULL");
+		}
+	
+		if (pagado != null && pagado) {
+			queryBuild.append(" AND t.pago IS NOT NULL");
+		}
+		
+		if (pagado != null && !pagado) {
+			queryBuild.append(" AND t.pago IS NULL");
+		}
+		
+		if (desde != null && hasta !=null) {
+			queryBuild.append(" AND t.desde BETWEEN :desde AND :hasta");
+			arguments.put("desde", desde);
+			arguments.put("hasta", hasta);
+		}
+		
+		Query<Turno> query = getCurrentSession().createQuery(queryBuild.toString());
+		for (String a : arguments.keySet()) {
+			query.setParameter(a, arguments.get(a));
+		}	
+				
+		
+		List<Turno> turnos = query.list();
+		List<TurnoDTO> dtos = new ArrayList<TurnoDTO>();
+		for (Turno t : turnos)
+			dtos.add(new TurnoDTO(t));
+		return dtos;
+			
+		
+
+
+		
+			
 	}
 
 	

@@ -1,0 +1,26 @@
+<div id=modal-buscar class=modalConf>
+    <div class=modal-content>
+      <form ng-submit="search()"> 
+        
+        <div class=form-field> <label>CLIENTE:</label>
+          <input id=modal-turnos-focus tipe="text" placeholder="Buscar cliente" ng-model="queryCliente" ng-model-options="{debounce:300}" ng-change="searchCliente()">
+        </div>
+
+        <div class="form-field" ng-hide=desconocido ng-click="setCliente(cliente)" ng-repeat="cliente in clientes" >
+          <input id={{trabajo.id}} type="checkbox"  ng-click="setCliente(cliente)" ng-model=cliente.selected> {{cliente.nombre}} {{cliente.apellido}}
+        </div>
+
+ 			  <div class=form-field><label>EMPLEADO:</label>
+          <select name=empleado  ng-model="empleado" ng-options="empleado as empleado.nombre + ' ' + empleado.apellido   for empleado in empleados">
+          <option></option>
+          </select>
+        </div>
+
+        <label class=form-message>{{message}}</label>
+    		<div class=buttons>
+          <button class="button cancel" type="button" ng-click="discardSearch()">CANCELAR</button>
+          <button class="button accept" type="submit">ACEPTAR</button>
+        </div>  
+      </form>
+    </div>
+</div>

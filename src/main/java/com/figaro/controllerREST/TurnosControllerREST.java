@@ -44,6 +44,8 @@ public class TurnosControllerREST {
 		return new ResponseEntity<>(service.isEmpleadoOcupado(turno), HttpStatus.OK);
 	}
 	
+	
+	
 	@GetMapping("turnos/{turnoId}")
     public ResponseEntity<Turno> getTurno( @PathVariable int turnoId) {
 		return new ResponseEntity<>(service.getTurno(turnoId), HttpStatus.OK);
@@ -63,6 +65,24 @@ public class TurnosControllerREST {
     public ResponseEntity<List<TurnoDTO>> getTurnosEmpleadoSinPagar( @PathVariable int empleadoId) {
 		return new ResponseEntity<>(service.getTurnosEmpleadoSinPagar(empleadoId), HttpStatus.OK);
     }
+	
+	@GetMapping("turnos")
+    public ResponseEntity<List<TurnoDTO>> getTurnosDelDia(@RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date fecha) {
+		return new ResponseEntity<>(service.getTurnosDelDia(fecha), HttpStatus.CREATED);
+	}
+	
+	
+	@GetMapping("turnos/buscar")
+    public ResponseEntity<List<TurnoDTO>> search(@RequestParam(required = false)  Integer clienteId,
+    											 @RequestParam(required = false)  Integer empleadoId,
+    											 @RequestParam(required = false)  String servicio,
+    											 @RequestParam(required = false)  Boolean cobrado,
+    											 @RequestParam(required = false)  Boolean pagado,
+    											 @RequestParam(required = false) @DateTimeFormat(pattern=DATE_FORMAT) Date desde,
+    											 @RequestParam(required = false) @DateTimeFormat(pattern=DATE_FORMAT) Date hasta) {
+		return new ResponseEntity<>(service.buscar(clienteId,empleadoId,servicio,cobrado,pagado,desde,hasta), HttpStatus.OK);
+	}
+	
 	
 	@PutMapping("turnos/empleados/{empleadoId}/pagartodos")
     public ResponseEntity<List<Turno>> pagarTodos( @PathVariable int empleadoId) {
@@ -90,10 +110,6 @@ public class TurnosControllerREST {
 		return new ResponseEntity<>(service.pagar(turnoId), HttpStatus.OK);
 	}
 	
-	@GetMapping("turnos")
-    public ResponseEntity<List<TurnoDTO>> getTurnosDelDia(@RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date fecha) {
-		return new ResponseEntity<>(service.getTurnosDelDia(fecha), HttpStatus.CREATED);
-	}
 	
 	@DeleteMapping("turnos/eliminar/{turnoId}")
     public ResponseEntity<Turno> deleteTurno(@PathVariable int turnoId) {

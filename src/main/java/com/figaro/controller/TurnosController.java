@@ -26,6 +26,11 @@ public class TurnosController {
 		return "html/turnos/turnos-empleado";
 	}
 
-	
+
+	@RequestMapping("/turnos/buscar")
+	public String turnosBuscar() {
+		return "html/turnos/buscar";
+	}
+
 	
 }

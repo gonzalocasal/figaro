@@ -10,6 +10,6 @@
 	box-shadow : none
 }
 
-.main-table input[type="checkbox"] {
-    display: none
+.no-print{
+	display: none;
 }

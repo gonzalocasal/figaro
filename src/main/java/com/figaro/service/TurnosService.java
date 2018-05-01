@@ -147,6 +147,13 @@ public class TurnosService {
 		return turno;
 	}
 	
+	public List<TurnoDTO> buscar(Integer clienteId, Integer empleadoId, String servicio, Boolean cobrado, Boolean pagado, Date fechaDesde, Date fechaHasta) {
+		return repository.buscar(clienteId,empleadoId,servicio,cobrado,pagado,fechaDesde,fechaHasta);
+	}
+
+	
+	
+	
 	private void validateTurno(Turno nuevoTurno) {
 		LOGGER.info("Validando el Turno: " + nuevoTurno.getDesde() +" - " +nuevoTurno.getHasta() +" "+ nuevoTurno.getEmpleado() );
 		isClienteDesconocido(nuevoTurno);

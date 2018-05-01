@@ -1,7 +1,5 @@
 app.controller('turnosController', function ($scope, $http) {
-    
-    $scope.horarios = ["08:00","08:15","08:30","08:45","09:00","09:15","09:30","09:45","10:00","10:15","10:30","10:45","11:00","11:15","11:30","11:45","12:00","12:15","12:30","12:45","13:00","13:15","13:30","13:45","14:00","14:15","14:30","14:45","15:00","15:15","15:30","15:45","16:00","16:15","16:30","16:45","17:00","17:15","17:30","17:45","18:00","18:15","18:30","18:45","19:00","19:15","19:30","19:45","20:00","20:15","20:30","20:45"];
-
+  
     //INIT TURNOS
     $scope.init = function(){
         $scope.ngDateTurno = stringToDate(getToday());
@@ -13,7 +11,7 @@ app.controller('turnosController', function ($scope, $http) {
         $scope.totalDiario=0;
         $scope.turnos={};
         $scope.ngTurno={};
-        $scope.clientes=[];       
+        $scope.clientes=[];  
     }
 
     //CLICK NUEVO TURNO
@@ -291,6 +289,7 @@ app.controller('turnosController', function ($scope, $http) {
     //SET CLIENTE
     $scope.setCliente = function (cliente) {
         $scope.ngTurno.cliente = cliente;
+        $scope.cliente = cliente;
         $scope.queryCliente=cliente.nombre+' '+cliente.apellido;
         $scope.clientes=[];
     }
@@ -393,14 +392,18 @@ app.controller('turnosController', function ($scope, $http) {
         });
     };
 
-    
-
     //OBTENER HORARIO
     $scope.getHorario = function() {
         $http.get("/rest/configuracion/horario").then(function (response) {
             $scope.horario = response.data;
             loadComplete();
         });
+    };
+
+  
+    //IR A BUSCAR
+    $scope.irBuscar = function() {
+        window.location.href = "/turnos/buscar";
     };
 
     //DESCARTAR FORMULARIO
@@ -426,8 +429,10 @@ app.controller('turnosController', function ($scope, $http) {
 
     //TECLADO 
     document.addEventListener('keyup', function(e) {
-        if (e.keyCode == 27) 
+        if (e.keyCode == 27) {
             $scope.discardTurno();
+            $scope.discardSearch();
+        }
         if ((e.keyCode == 39 || e.keyCode == 38) && !$scope.focus && !$(".modal-on")[0])
             $scope.getTurnosDiaSiguiente();
         if ((e.keyCode == 37 || e.keyCode == 40) && !$scope.focus && !$(".modal-on")[0])
