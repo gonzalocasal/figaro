@@ -80,9 +80,10 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
             turno.cliente = cols[1].innerText;
             turno.trabajos = cols[2].innerText;
             turno.precio = cols[3].innerText;
-            turno.empleado = cols[4].innerText;
-            turno.cobrado = (cols[5].children[0].checked) ? "Sí" : "No";
-            turno.pagado =  (cols[6].children[0].checked) ? "Sí" : "No";
+            turno.pago = cols[4].innerText;
+            turno.empleado = cols[5].innerText;
+            turno.cobrado = (cols[6].children[0].checked) ? "Sí" : "No";
+            turno.pagado =  (cols[7].children[0].checked) ? "Sí" : "No";
             turnos.push(turno);
         }
         return turnos;
@@ -95,6 +96,7 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
             {title: "CLIENTE", dataKey: "cliente"},
             {title: "TRABAJOS", dataKey: "trabajos"},
             {title: "PRECIO", dataKey: "precio"},
+            {title: "PAGO", dataKey: "pago"},
             {title: "EMPLEADO", dataKey: "empleado"},
             {title: "COBRADO", dataKey: "cobrado"},
             {title: "PAGADO", dataKey: "pagado"}
@@ -124,15 +126,16 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
             row.push(cols[1].innerText);
             row.push(cols[2].innerText);
             row.push("\""+cols[3].innerText+"\"");
-            row.push(cols[4].innerText);
-            row.push((cols[5].children[0].checked) ? "Sí" : "No");
+            row.push("\""+cols[4].innerText+"\"");
+            row.push(cols[5].innerText);
             row.push((cols[6].children[0].checked) ? "Sí" : "No");
+            row.push((cols[7].children[0].checked) ? "Sí" : "No");
             csv.push(row.join(","));        
         }
         csv=csv.join("\n")
         var csvFile = new Blob([csv], {type: "text/csv"});
         var downloadLink = document.createElement("a");
-        downloadLink.download = 'figaro-clientes.csv';
+        downloadLink.download = 'figaro-turnos.csv';
         downloadLink.href = window.URL.createObjectURL(csvFile);
         downloadLink.style.display = "none";
         document.body.appendChild(downloadLink);

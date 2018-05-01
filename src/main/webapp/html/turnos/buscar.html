@@ -13,7 +13,7 @@
         <label>Cliente: </label><select name=cliente ng-change="search()" ng-model="cliente" ng-options="cliente as cliente.nombre + ' ' + cliente.apellido   for cliente in clientes">
           <option></option>
         </select>
-        
+
         <div class="separator"></div>
         <label >Empleado: </label><select name=empleado ng-change="search()" ng-model="empleado" ng-options="empleado as empleado.nombre + ' ' + empleado.apellido   for empleado in empleados">
           <option></option>
@@ -65,6 +65,7 @@
           <th>CLIENTE</th>
           <th>TRABAJOS</th>
           <th>PRECIO</th>
+          <th>PAGO</th>
           <th>EMPLEADO</th>
           <th>COBRADO</th>
           <th>PAGADO</th>
@@ -76,6 +77,7 @@
       <td data-id={{turno.id}} ><a class=link ng-href="/turnos/cliente/{{turno.cliente.id}}">{{turno.cliente.nombre}} {{turno.cliente.apellido}} </a></td>
       <td data-id={{turno.id}} data-ng-click="detailTurno($event)">{{turno.descripcionTrabajos}}</td>
       <td data-id={{turno.id}} data-ng-click="detailTurno($event)">{{turno.montoCobro | currency}}</td>
+      <td data-id={{turno.id}} data-ng-click="detailTurno($event)">{{turno.montoPago | currency}}</td>
       <td data-id={{turno.id}} ><a class=link ng-href="/turnos/empleados/{{turno.empleado.id}}">{{turno.empleado.nombre}} {{turno.empleado.apellido}}</a></td>
       <td><input ng-model="turno.cobrado" type="checkbox" disabled></td>
       <td><input ng-model="turno.pagado"  type="checkbox" disabled></td>
