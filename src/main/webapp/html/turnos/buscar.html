@@ -85,7 +85,9 @@
       </tbody>
     </table>
     <div ng-cloak ng-if="turnos.length > 0" class=banner>
-        <label ><i class=material-icons >account_balance_wallet</i> Total: {{getTotal(turnos) | currency}}</label>
+        <label ><i class=material-icons >account_balance_wallet</i> Total Cobros: {{getTotal(turnos) | currency}}</label>
+        <div class="separator"></div>
+        <label ><i class=material-icons >payment</i> Total Pagos: {{getTotalPago(turnos) | currency}}</label>
         <div class="separator"></div>
         <label  ><i class=material-icons >date_range</i>Turnos: {{turnos.length}}</label>
     </div>

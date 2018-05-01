@@ -67,7 +67,13 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
     return total;
     };
 
-
+    //OBTENER TOTAL PAGO A EMPLEADO PENDIENTE
+    $scope.getTotalPago = function (turnos) {
+        var total = 0;
+        for(var i = 0; i < turnos.length; i++)
+            total += turnos[i].montoPago
+        return total;
+    };
 
 
     //CONFIRMAR COBRO

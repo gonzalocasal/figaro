@@ -13,7 +13,7 @@
         <div class="separator"></div>
         <label  ><i class=material-icons >date_range</i>Turnos: {{sinPagar ? turnos.length : totalCantidadTurnos}}</label>
         <div class="separator"></div>
-        <label  ><i class=material-icons >payment</i>Total pago: {{sinPagar ? calcularTotalPagoEmpleado(turnos) : totalPago | currency}}</label>
+        <label  ><i class=material-icons >payment</i>Total pago: {{sinPagar ? getTotalPago(turnos) : totalPago | currency}}</label>
         <div class="separator" ng-show="sinPagar"></div>
         <label class=banner-button  ng-click="pagarTodos()" ng-show="sinPagar" ><i class=material-icons >payment</i>Pagar todo</label>
 

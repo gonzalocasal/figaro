@@ -215,7 +215,7 @@ app.controller('turnosController', function ($scope, $http) {
     };
 
     //OBTENER TOTAL PAGO A EMPLEADO PENDIENTE
-    $scope.calcularTotalPagoEmpleado = function (turnos) {
+    $scope.getTotalPago = function (turnos) {
         var total = 0;
         for(var i = 0; i < turnos.length; i++)
             total += turnos[i].montoPago
