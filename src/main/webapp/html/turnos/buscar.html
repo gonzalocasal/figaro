@@ -3,6 +3,7 @@
 <head> 
   <title>Turnos</title>
   <#include "/html/common/head.html">
+
 </head>
 <body ng-app=figaro ng-controller=turnosBusquedaController  data-ng-init="init()" >
   <#include "/html/common/menu.html">
@@ -12,6 +13,7 @@
         <label>Cliente: </label><select name=cliente ng-change="search()" ng-model="cliente" ng-options="cliente as cliente.nombre + ' ' + cliente.apellido   for cliente in clientes">
           <option></option>
         </select>
+        
         <div class="separator"></div>
         <label >Empleado: </label><select name=empleado ng-change="search()" ng-model="empleado" ng-options="empleado as empleado.nombre + ' ' + empleado.apellido   for empleado in empleados">
           <option></option>
@@ -22,7 +24,6 @@
           <option></option>
         </select>
         
-
         <div class="separator"></div>
         <label >Cobrado: </label><select name=cobrado ng-change="search()" ng-model="cobrado">
           <option></option>
@@ -30,25 +31,19 @@
           <option value=false>No</option>
         </select>
         
-        
         <div class="separator"></div>
-
         <label >Pagado: </label><select name=pagado ng-change="search()" ng-model="pagado">
           <option></option>
           <option value=true >Sí</option>
           <option value=false>No</option>
         </select>
-        
-
-
+      
         <div class="separator"></div>
-        <label >Desde: </label><input class=input-banner type=date ng-change="search()" ng-model=desde ng-focus="focus=true" ng-blur="focus=false" ng-change="getTurnos();getAllEmpleados()">
+        <label >Desde: </label><input ng-change="search()" ng-model=desde type=date>
+      
         <div class="separator"></div>
-        <label >Hasta: </label><input class=input-banner type=date ng-change="search()"  ng-model=hasta ng-focus="focus=true" ng-blur="focus=false" ng-change="getTurnos();getAllEmpleados()">
+        <label >Hasta: </label><input ng-change="search()" ng-model=hasta type=date>
         
-
-
-
         <div class=export>
           <label title="Imprimir" class="banner-button" onclick="imprimir()"><i class="material-icons">print</i></label>
           <div class="separator"></div>
@@ -58,7 +53,10 @@
         </div>
 
     </div>
-  
+ 
+    <div class="loading-wrapper">
+      <div class=loading-turnos><img widh=25 height=25 src="/imgs/loading.gif"></div>
+    </div>
 
     <table  ng-cloak ng-if="turnos.length > 0" id=table class=main-table>
       <thead>
@@ -85,8 +83,12 @@
       </tbody>
     </table>
     <div ng-cloak ng-if="turnos.length > 0" class=banner>
-        <label ><i class=material-icons >account_balance_wallet</i> Total: {{getTotalDiario(turnos) | currency}}</label>
+        <label ><i class=material-icons >account_balance_wallet</i> Total: {{getTotal(turnos) | currency}}</label>
+        <div class="separator"></div>
+        <label  ><i class=material-icons >date_range</i>Turnos: {{turnos.length}}</label>
     </div>
+    
+        
 
   </div>
 
@@ -97,7 +99,8 @@
   <div ng-cloak ng-if="turnos.length < 1" class="message fade-in">
     <div class="message-content">No se encontraron turnos.</div>
   </div>
-   <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
+  
+
   
 
   

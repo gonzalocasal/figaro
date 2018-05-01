@@ -2,11 +2,12 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
 
     //INIT TURNOS
     $scope.init = function(){
-       $scope.cliente={};
-       $scope.empleado={};
-       $scope.getAllClientes();
-       $scope.getAllEmpleados();
-       $scope.getAllServicios();
+        $scope.activeTurnos = true;
+        $scope.cliente={};
+        $scope.empleado={};
+        $scope.getAllClientes();
+        $scope.getAllEmpleados();
+        $scope.getAllServicios();
     }
 
 
@@ -39,11 +40,16 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
 
     //BUSCAR
     $scope.search = function() {
-        loading();
         if($scope.cliente == null) $scope.cliente={};
         if($scope.empleado == null) $scope.empleado={};
         if($scope.servicio == null) $scope.servicio={};
-        
+
+        if($scope.cliente.id == null && $scope.empleado.id == null && $scope.servicio.descripcion == null && $scope.cobrado == null && $scope.pagado == null && $scope.desde == null  && $scope.hasta == null){
+            $scope.turnos = null;
+            return;
+        }
+        loading();
+               
 
         $http.get('/rest/turnos/buscar',{params: { clienteId: $scope.cliente.id , empleadoId : $scope.empleado.id, servicio: $scope.servicio.descripcion ,cobrado: $scope.cobrado, pagado: $scope.pagado ,desde: $scope.desde , hasta: $scope.hasta}})
         .then(function successCallback(response) {
@@ -51,6 +57,88 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
             loadComplete();
         });  
     };
+
+
+      //OBTENER TOTAL DIARIO
+    $scope.getTotal = function(turnos) {
+        var total = 0;
+        for(var i = 0; i < turnos.length; i++)
+            total += turnos[i].montoCobro;
+    return total;
+    };
+
+
+
+    // LEER TURNOS DESDE LA TABLA HTML
+    function leerTurnos(){
+        var turnos = [];
+        var rows = document.querySelectorAll("table tr");
+        for (var i = 1; i < rows.length; i++) {
+            let turno = {};
+            cols = rows[i].querySelectorAll("td, th");
+            turno.fecha = cols[0].innerText;
+            turno.cliente = cols[1].innerText;
+            turno.trabajos = cols[2].innerText;
+            turno.precio = cols[3].innerText;
+            turno.empleado = cols[4].innerText;
+            turno.cobrado = (cols[5].children[0].checked) ? "Sí" : "No";
+            turno.pagado =  (cols[6].children[0].checked) ? "Sí" : "No";
+            turnos.push(turno);
+        }
+        return turnos;
+    }
+
+    //EXPORTAR A PDF
+    $scope.exportPDF = function() {
+        var columns = [
+            {title: "FECHA", dataKey: "fecha"}, 
+            {title: "CLIENTE", dataKey: "cliente"},
+            {title: "TRABAJOS", dataKey: "trabajos"},
+            {title: "PRECIO", dataKey: "precio"},
+            {title: "EMPLEADO", dataKey: "empleado"},
+            {title: "COBRADO", dataKey: "cobrado"},
+            {title: "PAGADO", dataKey: "pagado"}
+        ];
+        var doc = new jsPDF('p', 'pt');
+        var turnos = leerTurnos();
+        doc.autoTable(columns, turnos,{headerStyles: {fillColor: [41,41,97]}});
+        doc.save('figaro-turnos.pdf');
+    }
+
+
+    //EXPORTAR A EXCEL
+    $scope.exportExcel = function () {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
+        var cols = rows[0].querySelectorAll("td, th");
+        //HEADER
+        var row = [];
+        for (var j = 0; j < cols.length; j++){       
+            row.push(cols[j].innerText);
+        }
+        csv.push(row.join(","));
+        //BODY
+        for (var i = 1; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+            row.push(cols[0].innerText);
+            row.push(cols[1].innerText);
+            row.push(cols[2].innerText);
+            row.push("\""+cols[3].innerText+"\"");
+            row.push(cols[4].innerText);
+            row.push((cols[5].children[0].checked) ? "Sí" : "No");
+            row.push((cols[6].children[0].checked) ? "Sí" : "No");
+            csv.push(row.join(","));        
+        }
+        csv=csv.join("\n")
+        var csvFile = new Blob([csv], {type: "text/csv"});
+        var downloadLink = document.createElement("a");
+        downloadLink.download = 'figaro-clientes.csv';
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+    }
+
 
 
 });

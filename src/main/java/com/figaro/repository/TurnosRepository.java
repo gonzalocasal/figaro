@@ -192,6 +192,18 @@ public class TurnosRepository extends AbstractRepository{
 			arguments.put("hasta", hasta);
 		}
 		
+		if (desde != null && hasta ==null) {
+			queryBuild.append(" AND t.desde >= :desde");
+			arguments.put("desde", desde);
+		}
+		
+		if (desde == null && hasta !=null) {
+			queryBuild.append(" AND t.desde <= :hasta");
+			arguments.put("hasta", hasta);
+		}
+		
+		queryBuild.append(" ORDER BY t.desde DESC");
+		
 		Query<Turno> query = getCurrentSession().createQuery(queryBuild.toString());
 		for (String a : arguments.keySet()) {
 			query.setParameter(a, arguments.get(a));

@@ -96,25 +96,22 @@ function logout(){
 
 
 function loadComplete(loaded){
+	$('.loading-wrapper').hide();
 	$('.loading').hide();
 	$('.page-loading').hide();
 	$('.ver-mas').show();
+	$('.loading-turnos').hide();
 	loaded = true;
 }
 
 
 function loading(){
+	$('.loading-wrapper').show();
 	$('.loading').show();
 	$('.ver-mas').hide();
-}
-
-function loadingTurnos(){
 	$('.loading-turnos').show();
 }
 
-function loadTurnosComplete(){
-	$('.loading-turnos').hide();
-}
 
 function imprimir() {
     window.print();
