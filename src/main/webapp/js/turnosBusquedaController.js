@@ -69,6 +69,76 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
 
 
 
+
+    //CONFIRMAR COBRO
+    $scope.cobrar = function(turno){
+        $http.put('/rest/turnos/'+turno.id+'/cobrado', $scope.ngMovimiento).then(
+            function successCallback(response) {
+                closeModal("modal-cobrar");
+                $scope.initMovimiento();
+          }, function errorCallback(response) {
+                $scope.message=response.data.message;
+        });
+    };
+
+    //POP UP COBRADO
+    $scope.setCobrado = function (turno) {
+        $scope.turnoTarget = turno;
+        if(turno.cobrado)
+            openModal("modal-cobrar");
+        else
+            openModal("modal-cancelar-cobro");
+    }
+
+    //CANCELAR COBRO
+    $scope.discardCobro = function(turno){
+        turno.cobrado = false;
+        closeModal("modal-cobrar");
+        $scope.initMovimiento();
+    };
+  
+   //CANCELAR DESHACER COBRO
+    $scope.discardCancelarCobro = function(turno){
+        turno.cobrado = true;
+        closeModal("modal-cancelar-cobro");
+    };
+    
+    //CONFIRMAR DESHACER COBRO
+    $scope.toggleCobro = function (turno) {
+        $http.put('/rest/turnos/'+turno.id+'/cobrado/cancelar').then(
+            function successCallback(response) {
+                closeModal("modal-cancelar-cobro");
+                $scope.initMovimiento();
+          }, function errorCallback(response) {
+                $scope.message=response.data.message;
+        });
+
+    }
+
+    //POP UP PAGADO
+    $scope.setPagado = function (turno) {
+        $scope.turnoTarget = turno;
+        if(!turno.pagado)
+            openModal("modal-cancelar-pago");
+        else
+            $scope.togglePago(turno);
+    }
+
+   //CANCELAR DESHACER PAGO
+    $scope.discardCancelarPago = function(turno){
+        turno.pagado = true;
+        closeModal("modal-cancelar-pago");
+    };
+
+    //CONFIRMAR PAGO
+    $scope.togglePago = function (turno) {
+        closeModal("modal-cancelar-pago");
+        $http.put('/rest/turnos/'+turno.id+'/pagar');
+    }
+
+
+
+
     // LEER TURNOS DESDE LA TABLA HTML
     function leerTurnos(){
         var turnos = [];

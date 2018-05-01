@@ -79,8 +79,8 @@
       <td data-id={{turno.id}} data-ng-click="detailTurno($event)">{{turno.montoCobro | currency}}</td>
       <td data-id={{turno.id}} data-ng-click="detailTurno($event)">{{turno.montoPago | currency}}</td>
       <td data-id={{turno.id}} ><a class=link ng-href="/turnos/empleados/{{turno.empleado.id}}">{{turno.empleado.nombre}} {{turno.empleado.apellido}}</a></td>
-      <td><input ng-model="turno.cobrado" type="checkbox" disabled></td>
-      <td><input ng-model="turno.pagado"  type="checkbox" disabled></td>
+      <td><input ng-model="turno.cobrado" ng-click="setCobrado(turno)" type="checkbox" ></td>
+      <td><input ng-model="turno.pagado"  ng-click="setPagado(turno)"  type="checkbox" ></td>
      
       </tbody>
     </table>
@@ -102,15 +102,11 @@
     <div class="message-content">No se encontraron turnos.</div>
   </div>
   
-
-  
-
-  
-  
   </div>
 
+  <#include "/html/turnos/cobrar.html">
+  <#include "/html/turnos/deshacer-cobrado-pagado.html">
   <#include "/html/common/javascript.html">
-
   <script src="/js/turnosBusquedaController.js" ></script>
 </body>
 </html>
