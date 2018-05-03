@@ -187,18 +187,18 @@ public class TurnosRepository extends AbstractRepository{
 		}
 		
 		if (desde != null && hasta !=null) {
-			queryBuild.append(" AND t.desde BETWEEN :desde AND :hasta");
+			queryBuild.append(" AND DATE(t.desde) BETWEEN :desde AND :hasta");
 			arguments.put("desde", desde);
 			arguments.put("hasta", hasta);
 		}
 		
 		if (desde != null && hasta ==null) {
-			queryBuild.append(" AND t.desde >= :desde");
+			queryBuild.append(" AND DATE(t.desde) >= :desde");
 			arguments.put("desde", desde);
 		}
 		
 		if (desde == null && hasta !=null) {
-			queryBuild.append(" AND t.desde <= :hasta");
+			queryBuild.append(" AND DATE(t.desde) <= :hasta");
 			arguments.put("hasta", hasta);
 		}
 		
