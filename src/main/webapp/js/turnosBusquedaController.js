@@ -8,6 +8,12 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
         $scope.getAllClientes();
         $scope.getAllEmpleados();
         $scope.getAllServicios();
+        $scope.criterios = true;
+        let date = new Date();
+        $scope.desde = new Date(date.getFullYear(), date.getMonth(), 1);
+        $scope.hasta = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        $scope.search();
+
     }
 
 
@@ -45,6 +51,7 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
         if($scope.servicio == null) $scope.servicio={};
 
         if($scope.cliente.id == null && $scope.empleado.id == null && $scope.servicio.descripcion == null && $scope.cobrado == null && $scope.pagado == null && $scope.desde == null  && $scope.hasta == null){
+            $scope.criterios = null;
             $scope.turnos = null;
             return;
         }
