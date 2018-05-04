@@ -3,7 +3,7 @@ body{
     margin-left: 0px;
     margin-top: 0px;
     font-family: 'Roboto', sans-serif;
-    font-size: 12px
+    font-size: 0.8rem
 }
 .fail-login{
     display: none;
@@ -233,7 +233,6 @@ table {
 .main-table{
     text-align: left;
     background-color: white;
-    font-size: 13px;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12)
 }
 
