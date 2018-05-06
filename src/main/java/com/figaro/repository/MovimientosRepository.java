@@ -1,6 +1,7 @@
 package com.figaro.repository;
 
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class MovimientosRepository extends AbstractRepository{
 	
 
 	private static String QUERY_GET_MOVIMIENTOS = "FROM Movimiento m WHERE (m.fecha BETWEEN ?1 AND ?2)";
-	private static String QUERY_CATEGORIA = " AND (m.categoria = ?3)";
+	private static String QUERY_CATEGORIA = " AND (?3)";
 	
 	final static Logger LOGGER = Logger.getLogger(MovimientosService.class);
 	
@@ -49,13 +50,25 @@ public class MovimientosRepository extends AbstractRepository{
 	}
 
 	public List<Movimiento> searchBetweenWithCategory(Date from, Date to, String category) {
-		String querySql = QUERY_GET_MOVIMIENTOS + QUERY_CATEGORIA;
+		
+		String listaCategoria = "";
+		String listaBusqueda = category;
+		List<String> elephantList = Arrays.asList(listaBusqueda.split(","));
+		for (String categoria : elephantList) {
+			if (listaCategoria == "") {
+				listaCategoria = "AND (m.categoria ='" +categoria +"'";
+			} else {						
+				listaCategoria = listaCategoria + " OR m.categoria ='" +categoria +"'";
+			}			
+		}		
+		listaCategoria = listaCategoria + ")";	
+		String querySql = QUERY_GET_MOVIMIENTOS + listaCategoria;
 		Query<Movimiento> query = getCurrentSession().createQuery(querySql);
 	    query.setParameter(1, from);
-	    query.setParameter(2, to);
-	    query.setParameter(3, category);
+	    query.setParameter(2, to);	    
+	    //query.setParameter(3, category);
 	    return query.getResultList();
-	}	
+	}		
 		
 	public Venta getVentaId(Integer id) {		
 		

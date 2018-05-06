@@ -10,45 +10,33 @@
   <div class=banner>
       <label class="banner-button add" ng-click="newMovimiento()"><i class="material-icons" >attach_money</i>Nuevo</label>   
       <div class="separator"></div>
-      <label class=banner-button ng-click="ShowHideDia()"><i class=material-icons>search</i> D&iacute;a </label>    
-      <label class=banner-button ng-click="ShowHideEntreDia()"><i class=material-icons >search</i> Semana </label>
-      <label class=banner-button ng-click="ShowHideMes()"><i class=material-icons >search</i> Mes </label>
+      <label class=banner-button ng-click="ShowHideDia()"><i class=material-icons>search</i> D&iacute;as </label>
       <div class="separator"></div>
-      <label class=banner-button><i class=material-icons >label_outline</i>Categor&Iacute;a: 
-      <select   class="input-banner" ng-model="searchC" ng-change="searchCategoria()" ng-click="limpiarSelect()" ng-cloak>
-            <option value = "Turnos">Turnos</option>
-            <option value = "Empleados">Empleados</option>
-            <option value = "Ventas">Ventas</option>
-            <option value="{{categoria.nombre}}" ng-repeat="categoria in categorias">{{categoria.nombre}}</option>
-      </select>
-      </label>
-      <i class=material-icons ng-click="limpiaCategoria()" >clear</i></label>
+      <label class=banner-button ng-click="ShowHideCategoria()"><i class=material-icons>search</i> Categor&iacute;a </label>
   </div>
 
   
-<div class=banner-busqueda ng-hide = "IsHiddenDia" ng-cloak>
+  <div class=banner-busqueda ng-hide = "IsHiddenDia" ng-cloak>
     <div>       
       <label class=banner-label-busqueda ng-click="ShowHideDia()"><i class=material-icons >clear</i></label>
-      <label class=banner-label-busqueda> B&Uacute;squeda por D&iacute;a: </label>    
-        <input class=banner-label-busqueda type="date" ng-model="search" ng-change="searchMovimientoDia()"></input> 
+      <label class=banner-label-busqueda> Desde: </label>    
+        <input class=banner-label-busqueda type="date" ng-model="searchInicio"></input>
+      <label class=banner-label-busqueda> Hasta: </label>    
+        <input class=banner-label-busqueda type="date" ng-model="searchFin"></input> 
+      <label class=button-estadisticas ng-click="searchMovimientoDia()"><i class=material-icons  >search</i> </label>
     </div>
-</div>
+  </div>
 
-<div class=banner-busqueda ng-hide = "IsHiddenEntreDia" ng-cloak>
+  <div class=banner-busqueda ng-hide = "IsHiddenCategoria" ng-cloak>
     <div>       
-      <label class=banner-label-busqueda ng-click="ShowHideEntreDia()"><i class=material-icons >clear</i></label>
-      <label class=banner-label-busqueda> Buscar Semana:</label>    
-        <input class=banner-label-busqueda type="week" ng-model="search" ng-change="searchMovimientoSem()"></input>
-    </div>
-</div>
+      <label class=banner-label-busqueda-cat ng-click="ShowHideCategoria()"><i class=material-icons >clear</i></label> 
+        <label ng-repeat="categoria in categoriasLista">
+          <input class=banner-label-busqueda-cat ng-model="categoria.checked" type="checkbox">{{categoria.nombre}}
+        </label>
 
-<div class=banner-busqueda ng-hide = "IsHiddenMes" ng-cloak>
-  <div>       
-      <label class=banner-label-busqueda ng-click="ShowHideMes()"><i class=material-icons >clear</i></label>
-      <label class=banner-label-busqueda> B&uacute;squeda por mes: </label>     
-        <input class=banner-label-busqueda type="month" ng-model="search" ng-change="searchMovimientoMes()"></input>
-    </div>  
-</div>
+      <label class=button-estadisticas ng-click="checkItems()"><i class=material-icons  >search</i> </label>
+    </div>
+  </div>
   
   <table ng-cloak ng-if="movimientos.length > 0" id=table class=main-table>
 

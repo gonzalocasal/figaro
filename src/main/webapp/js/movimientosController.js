@@ -160,6 +160,7 @@ app.controller('movimientosController', function ($scope, $http) {
 	    //OBTENER LISTA DE CATEGORIAS
 	    $scope.getAllCategorias = function() {
 	        $http.get("/rest/configuracion/categorias").then(function (response) {
+	        	$scope.categorias = {};
 	            $scope.categorias = response.data;
 	        });
 	    };
@@ -358,33 +359,21 @@ app.controller('movimientosController', function ($scope, $http) {
 	    
 	  //FILTRO DIA
 	    $scope.searchMovimientoDia = function() {	    
-		    $scope.busqueda.fechaInicio = getStringDate(new Date($scope.search));
-		    $scope.busqueda.fechaFin = getStringDate(new Date($scope.search));
+		    $scope.busqueda.fechaInicio = getStringDate(new Date($scope.searchInicio));
+		    $scope.busqueda.fechaFin = getStringDate(new Date($scope.searchFin));
 		    $scope.searchMovimiento();
 	    } 
-	    
-	  //FILTRO SEMANA
-	    $scope.searchMovimientoSem = function() {
-	    	var semana = getSemana($scope.search);
-	    	$scope.busqueda.fechaInicio = getStringDate(semana.dStart);
-		    $scope.busqueda.fechaFin = getStringDate(semana.dEnd);
-		    $scope.searchMovimiento();
-	    }
-	    
-	  //FILTRO MES
-	    $scope.searchMovimientoMes = function() {	
-	    	var mes = getMes($scope.search);
-	    	$scope.busqueda.fechaInicio = getStringDate(mes.dStart);
-		    $scope.busqueda.fechaFin = getStringDate(mes.dEnd);
-		    $scope.searchMovimiento();
-	    }
+
 
 	  //FILTRO CATEGORIA    
 	    $scope.searchCategoria = function() {
-	    	$scope.busqueda.categoria = $scope.searchC;
+	    	$scope.busqueda.categoria = $scope.categoriasBusqueda;
 	    	$scope.searchMovimiento();
-	    }
-	    
+	    }	    
+
+
+
+
 	  //FILTRO TOTAL
 	    $scope.searchMovimiento = function() {
 	    	loading();
@@ -408,38 +397,55 @@ app.controller('movimientosController', function ($scope, $http) {
 
 	    //MOSTRAR O NO MOSTRAR DIV DE BUSQUEDA
 	    $scope.IsHiddenDia = true;
-	    $scope.IsHiddenEntreDia = true;
-	    $scope.IsHiddenMes = true;
+	    $scope.IsHiddenCategoria = true;
+
 	    
         $scope.ShowHideDia = function () {
-        	$scope.IsHiddenEntreDia = true;
-        	$scope.IsHiddenMes = true;
-            $scope.IsHiddenDia = $scope.IsHiddenDia ? false : true;        	
+        	$scope.IsHiddenCategoria = true;
+            $scope.IsHiddenDia = $scope.IsHiddenDia ? false : true;
+            let date = new Date();
+            $scope.searchInicio = new Date(date.getFullYear(), date.getMonth(), 1);
+        	$scope.searchFin = new Date(date.getFullYear(), date.getMonth() + 1, 0);        	
             if($scope.IsHiddenDia === true){
             	$scope.limpiaFecha();
+            	$scope.limpiaCategoria();
             	$scope.getAll();	                    	
 	        }
         }        
         
-        $scope.ShowHideEntreDia = function () {         
+        $scope.ShowHideCategoria = function () {         
         	$scope.IsHiddenDia = true;
-        	$scope.IsHiddenMes = true;
-            $scope.IsHiddenEntreDia = $scope.IsHiddenEntreDia ? false : true;        	
-            if($scope.IsHiddenEntreDia === true){
+            $scope.IsHiddenCategoria = $scope.IsHiddenCategoria ? false : true;  
+            $scope.getAllCategorias();           
+			$scope.categorias.push({id:$scope.categorias.length + 1, nombre:'Turnos'});
+			$scope.categorias.push({id:$scope.categorias.length + 1, nombre:'Empleados'});
+			$scope.categorias.push({id:$scope.categorias.length + 1, nombre:'Ventas'});			
+			$scope.categoriasLista = [];
+			for (var i = 0; i < $scope.categorias.length; i++) {
+				$scope.categoriasLista.push({nombre: $scope.categorias[i].nombre, checked:'false'});
+			}
+            if($scope.IsHiddenCategoria === true){
+            	$scope.getAllCategorias();
             	$scope.limpiaFecha();
+            	$scope.limpiaCategoria();
             	$scope.getAll();
 	        }
         }        
-        
-        $scope.ShowHideMes = function () {  
-        	$scope.IsHiddenDia = true;
-        	$scope.IsHiddenEntreDia = true;
-            $scope.IsHiddenMes = $scope.IsHiddenMes ? false : true;        	
-            if($scope.IsHiddenMes === true){
-            	$scope.limpiaFecha();
-            	$scope.getAll();
-	        }
-        }
+
+        $scope.checkItems = function () {
+        	$scope.categoriasBusqueda = '';
+			for (var i = 0; i < $scope.categoriasLista.length; i++) {
+					var prueba = $scope.categoriasLista[i];
+                    if (prueba.checked === true) {  
+                        if ($scope.categoriasBusqueda == ''){
+							$scope.categoriasBusqueda = $scope.categoriasLista[i].nombre;
+                        } else {
+                        	$scope.categoriasBusqueda = $scope.categoriasBusqueda + "," + $scope.categoriasLista[i].nombre;
+                        }                  
+                    }
+            }
+            $scope.searchCategoria();
+		};
 
         $scope.ShowMas = function () {
         	$scope.IsHiddenMenos = false;
@@ -460,6 +466,7 @@ app.controller('movimientosController', function ($scope, $http) {
 	    $scope.activeCaja = true;
 	    $scope.search = '';
 	    $scope.busqueda = {};
+	    $scope.categoriasLista = [];
 	    $scope.busqueda.fechaInicio = getDateFormated();
 	    $scope.busqueda.fechaFin = getDateFormated();
 	    $scope.busqueda.categoria = '';
