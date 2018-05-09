@@ -1,5 +1,11 @@
 <ul id=menu class=menu>
-	<img class=logo width=160 src="/imgs/logo.png">
+	<img class=logo width=100 src="/imgs/logo2.png">
+    
+    <span ng-cloak class="cantidad-notificaciones notificaciones" ng-controller=notificacionesController data-ng-init="cantidad()" >{{cantidadNotificaciones}}</span>
+    
+    <li class=notificaciones ng-class="activeNotificaciones ? 'active' : 'inactive'"><a href="/notificaciones"><i class="material-icons">notifications</i><span class="link-label"> NOTIFICACIONES</span></a></li>
+    
+
     <li ng-class="activeTurnos ? 'active' : 'inactive'"><a href="/"><i class="material-icons">date_range</i><span class="link-label"> TURNOS</span></a></li>
     <li ng-class="activeCaja ? 'active' : 'inactive'"><a href="/caja"><i class="material-icons">attach_money</i><span class="link-label"> CAJA</span></a></li>
     <li ng-class="activeVenta ? 'active' : 'inactive'"><a href="/venta"><i class="material-icons">local_grocery_store</i><span class="link-label"> VENTAS</span></a></li>

@@ -6,7 +6,7 @@
 </head>
 <body ng-app=figaro ng-controller=empleadosController data-ng-init="init()" >
   <#include "/html/common/menu.html">
-  <div id=content class="content fade-in">     
+  <div ng-cloak id=content class="content fade-in">     
      <div class=banner>
       <label class="banner-button add" ng-click="newEmpleado()"><i class="material-icons" >assignment_ind</i>Nuevo</label>
       <div class="separator"></div>
@@ -25,7 +25,6 @@
         <label><i class=material-icons >event</i> Ingreso: {{empleado.fechaIngreso | date}}</label><br> 
         <label><i class=material-icons >call</i> Tel&eacute;fono: {{empleado.telefono}}</label><br>  
         <label><i class=material-icons >mail_outline</i> Email: {{empleado.email}}</label><br>
-        
     </div>
   
   </div>

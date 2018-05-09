@@ -1,4 +1,4 @@
-var app = angular.module('figaro', []);
+
 app.controller('stockController', function ($scope, $http) {
     
     //OBTENER LISTA DE PRODUCTOS

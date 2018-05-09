@@ -20,7 +20,6 @@ public class MovimientosRepository extends AbstractRepository{
 	
 
 	private static String QUERY_GET_MOVIMIENTOS = "FROM Movimiento m WHERE (m.fecha BETWEEN ?1 AND ?2)";
-	private static String QUERY_CATEGORIA = " AND (?3)";
 	
 	final static Logger LOGGER = Logger.getLogger(MovimientosService.class);
 	

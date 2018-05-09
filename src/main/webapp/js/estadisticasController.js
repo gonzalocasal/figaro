@@ -1,4 +1,4 @@
-var app = angular.module('figaro', ['chart.js']);
+
 app.controller('estadisticasController', function ($scope, $http) {
 		
 	$scope.activeEstadisticas = true;
