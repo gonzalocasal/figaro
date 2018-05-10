@@ -4,12 +4,9 @@
         
         <div class=form-field ng-hide=desconocido>
           <label>CLIENTE:</label>
-          <input id=modal-turnos-focus tipe="text" placeholder="Buscar cliente" ng-model="queryCliente" ng-model-options="{debounce:300}" ng-change="searchCliente()">
-          <i class="material-icons add" ng-controller=clientesController ng-init="isModalOpen=true" ng-click="newClient()" >person_add</i>
-        </div>
-        
-        <div class="form-field" ng-hide=desconocido ng-click="setCliente(cliente)" ng-repeat="cliente in clientes" >
-          <input id={{trabajo.id}} type="checkbox"  ng-click="setCliente(cliente)" ng-model=cliente.selected> {{cliente.nombre}} {{cliente.apellido}}
+          <select name=cliente ng-change="search()" ng-model="ngTurno.cliente" ng-options="cliente as cliente.nombre + ' ' + cliente.apellido   for cliente in clientes">
+            <option></option>
+          </select>
         </div>
 
         <input  type="checkbox" class="form-field" ng-click="setClienteDesconocido()"  ng-model=desconocido> Cliente Desconocido

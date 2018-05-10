@@ -3,6 +3,7 @@ package com.figaro.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.figaro.exception.DescuentoInvalidoException;
 
 
@@ -10,6 +11,8 @@ public class Movimiento {
 
 	
 	private Integer id;
+	@JsonIgnore
+	private Turno turno;
 	private String categoria;
 	private BigDecimal precio;
 	private BigDecimal descuento;
@@ -24,7 +27,8 @@ public class Movimiento {
 		this.descuento = new BigDecimal(0);
 	}
 
-	public void update(Movimiento movimiento) {		
+	public void update(Movimiento movimiento) {
+		this.setTurno(movimiento.getTurno());
 		this.setCategoria(movimiento.getCategoria());
 		this.setDetalle(movimiento.getDetalle());
 		this.setFecha(movimiento.getFecha());
@@ -115,6 +119,14 @@ public class Movimiento {
 	@Override
 	public String toString() {
 		return "Movimiento [id=" + id + ", categoria=" + categoria + ", precio=" + precio + ", fecha=" + fecha + ", detalle=" + detalle + ", isGasto=" + isGasto + ", tipoPago=" + tipoPago + ", cuotas=" + cuotas + ", descuento=" + descuento + "]";
+	}
+
+	public Turno getTurno() {
+		return turno;
+	}
+
+	public void setTurno(Turno turno) {
+		this.turno = turno;
 	}
 
 

@@ -15,6 +15,9 @@
 	 	<property name="cuotas" 		column="CUOTAS"  	type="int"/>
 	 	<property name="descuento" 		column="DESCUENTO"  type="big_decimal"/>	 	 
 	 	
+	 	<many-to-one name="turno" unique="true" class="com.figaro.model.Turno" lazy="false"  fetch="select">
+            <column name="ID_TURNO" />
+        </many-to-one>
      	
 	</class>
 </hibernate-mapping>

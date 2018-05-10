@@ -1,21 +1,24 @@
 app.controller('turnosController', function ($scope, $http) {
-  
+   
+    const clienteDesconocido= "Cliente Desconocido";
+
     //INIT TURNOS
     $scope.init = function(){
         $scope.ngDateTurno = stringToDate(getToday());
         $scope.getTurnos();
         $scope.getHorario();
+        $scope.getClientes();
         $scope.activeTurnos = true;
         $scope.queryCliente ='';
         $scope.trabajosSeleccionados=[];
         $scope.totalDiario=0;
         $scope.turnos={};
         $scope.ngTurno={};
-        $scope.clientes=[];  
     }
 
     //CLICK NUEVO TURNO
     $scope.newTurno = function() {
+        
         $scope.ngTurno = {};
         $scope.totalTrabajosSeleccionados=0;
         $scope.trabajosEmpleado = [];
@@ -24,53 +27,6 @@ app.controller('turnosController', function ($scope, $http) {
         openModal("modal-turnos");
     };
 
-
-
-
-    //OBTENER TURNO
-    $scope.getTurno = function(turnoId) {
-     
-        $http.get('/rest/turnos/'+turnoId)
-        .then(function successCallback(response) {
-            $scope.ngTurno = response.data;
-            
-        
-        $scope.startHour = $scope.ngTurno.desde.split(' ')[1];
-        $scope.endHour = $scope.ngTurno.hasta.split(' ')[1];
-        
-        //BIND CLIENTE
-        if ("Cliente" == $scope.ngTurno.cliente.nombre && "Desconocido" == $scope.ngTurno.cliente.apellido)
-            $scope.desconocido = true;
-        else
-            $scope.queryCliente = $scope.ngTurno.cliente.nombre+' '+$scope.ngTurno.cliente.apellido;
-
-        //BIND EMPLEADO 
-        if($scope.ngTurno.empleado.habilitado){
-            for(var i = 0; i < $scope.empleados.length; i++)
-            if($scope.ngTurno.empleado.id == $scope.empleados[i].id)
-                $scope.empleado = $scope.empleados[i];
-        }else{
-            $scope.empleados.push($scope.empleado);
-        }
-        
-        //BIND FORMULARIO TRABAJOS EN TURNO CHECKS
-        $scope.trabajosSeleccionados = $scope.ngTurno.trabajos;
-        $scope.totalTrabajosSeleccionados = $scope.getTotalTurno($scope.trabajosSeleccionados);
-        $scope.trabajosEmpleado=[];
-        $scope.ngTurno.trabajos.forEach(function(trabajo) {
-            trabajo.selected = true;
-            $scope.trabajosEmpleado.push(trabajo);
-        });
-        
-        //BIND TRABAJOS EN FORMULARIO 
-        $scope.ngTurno.empleado.trabajos.forEach(function(trabajo) {
-            for(var i = 0; i < $scope.ngTurno.empleado.trabajos.length; i++)
-                if(!isInListaTrabajos(trabajo))
-                $scope.trabajosEmpleado.push(trabajo);
-        });  
-        openModal("modal-turnos");
-        });
-    };
 
 
     //CLICK FILA TURNO
@@ -82,6 +38,66 @@ app.controller('turnosController', function ($scope, $http) {
     };
 
 
+
+    //OBTENER TURNO
+    $scope.getTurno = function(turnoId) {
+     
+        $http.get('/rest/turnos/'+turnoId)
+        .then(function successCallback(response) {
+            $scope.ngTurno = response.data;
+            
+        bindCliente();
+        bindEmpleado();
+        bindTrabajosTurno();
+        bindTrabajosEmpleado();
+
+        $scope.startHour = $scope.ngTurno.desde.split(' ')[1];
+        $scope.endHour = $scope.ngTurno.hasta.split(' ')[1];
+        
+        openModal("modal-turnos");
+        });
+    };
+
+    //BIND CLIENTE
+    function bindCliente(){
+        if (clienteDesconocido == $scope.ngTurno.cliente.nombre +" "+$scope.ngTurno.cliente.apellido)
+            $scope.desconocido = true;
+       else
+            for(var i = 0; i < $scope.clientes.length; i++)
+            if($scope.ngTurno.cliente.id == $scope.clientes[i].id)
+                $scope.ngTurno.cliente = $scope.clientes[i];
+    }
+
+    //BIND EMPLEADO 
+    function bindEmpleado(){
+        if($scope.ngTurno.empleado.habilitado){
+            for(var i = 0; i < $scope.empleados.length; i++)
+            if($scope.ngTurno.empleado.id == $scope.empleados[i].id)
+                $scope.empleado = $scope.empleados[i];
+        }else{
+            $scope.empleados.push($scope.empleado);
+        }
+    }
+
+    //BIND TRABAJOS TURNO
+    function bindTrabajosTurno(){
+        $scope.trabajosSeleccionados = $scope.ngTurno.trabajos;
+        $scope.totalTrabajosSeleccionados = $scope.getTotalTurno($scope.trabajosSeleccionados);
+        $scope.trabajosEmpleado=[];
+        $scope.ngTurno.trabajos.forEach(function(trabajo) {
+            trabajo.selected = true;
+            $scope.trabajosEmpleado.push(trabajo);
+        });
+    }
+
+    //BIND TRABAJOS EMPLEADO
+    function bindTrabajosEmpleado(){
+         $scope.ngTurno.empleado.trabajos.forEach(function(trabajo) {
+            for(var i = 0; i < $scope.ngTurno.empleado.trabajos.length; i++)
+                if(!isInListaTrabajos(trabajo))
+                $scope.trabajosEmpleado.push(trabajo);
+        });  
+    }
 
     //BUSCA TRABAJO EN EMPLEADO
     function isInListaTrabajos(trabajo){
@@ -286,14 +302,7 @@ app.controller('turnosController', function ($scope, $http) {
         return false;
     };
 
-    //SET CLIENTE
-    $scope.setCliente = function (cliente) {
-        $scope.ngTurno.cliente = cliente;
-        $scope.cliente = cliente;
-        $scope.queryCliente=cliente.nombre+' '+cliente.apellido;
-        $scope.clientes=[];
-    }
-    
+   
     //SET CLIENTE
     $scope.setClienteDesconocido = function (cliente) {
         $scope.ngTurno.cliente = null;
@@ -373,12 +382,9 @@ app.controller('turnosController', function ($scope, $http) {
         $http.put('/rest/turnos/'+turno.id+'/pagar');
     }
 
-    //BUSCAR CLIENTE
-    $scope.searchCliente = function() {
-        if ($scope.queryCliente.length < 2) 
-            return $scope.clientes=[];       
-        $http.get('/rest/clientes/buscar',{params: { search: $scope.queryCliente }})
-        .then(function successCallback(response) {
+    //OBTENER CLIENTES
+    $scope.getClientes = function() {
+        $http.get('/rest/clientes').then(function successCallback(response) {
             $scope.clientes = response.data; 
         });  
     };
@@ -415,7 +421,6 @@ app.controller('turnosController', function ($scope, $http) {
         $scope.startHour= null;
         $scope.endHour = null; 
         $scope.empleado = {};
-        $scope.clientes=[];
         $scope.trabajos=[];
         $scope.trabajosSeleccionados=[];      
         $scope.queryCliente ='';
@@ -429,10 +434,8 @@ app.controller('turnosController', function ($scope, $http) {
 
     //TECLADO 
     document.addEventListener('keyup', function(e) {
-        if (e.keyCode == 27) {
-            $scope.discardTurno();
-            $scope.discardSearch();
-        }
+        if (e.keyCode == 27) 
+            $scope.discardTurno();        
         if ((e.keyCode == 39 || e.keyCode == 38) && !$scope.focus && !$(".modal-on")[0])
             $scope.getTurnosDiaSiguiente();
         if ((e.keyCode == 37 || e.keyCode == 40) && !$scope.focus && !$(".modal-on")[0])
