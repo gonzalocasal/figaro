@@ -27,8 +27,6 @@ app.controller('turnosController', function ($scope, $http) {
         openModal("modal-turnos");
     };
 
-
-
     //CLICK FILA TURNO
     $scope.detailTurno = function(event){
         $scope.update=true;
@@ -36,8 +34,6 @@ app.controller('turnosController', function ($scope, $http) {
         $scope.turnoId = event.currentTarget.getAttribute("data-id");
         $scope.getTurno($scope.turnoId);
     };
-
-
 
     //OBTENER TURNO
     $scope.getTurno = function(turnoId) {
@@ -119,7 +115,6 @@ app.controller('turnosController', function ($scope, $http) {
             }
     };
 
-
     //CLICK ACEPTAR FORMULARIO
     $scope.sendTurno = function() {
         $scope.ngTurno.desde = getStringDate($scope.ngDateTurno)+" "+$scope.startHour;
@@ -161,9 +156,6 @@ app.controller('turnosController', function ($scope, $http) {
         });
     };
 
-
-
-
     //VALIDAR SI EMPLEADO YA TIENE UN TURNO
     $scope.isEmpleadoOcupado = function() {
         $scope.ngTurno.desde = getStringDate($scope.ngDateTurno)+" "+$scope.startHour;
@@ -179,10 +171,6 @@ app.controller('turnosController', function ($scope, $http) {
         }     
     };
 
-
-
-
- 
     //OBTENER TURNOS DIA ANTERIOR
     $scope.getTurnosDiaAnterior = function() {
         var date = new Date($scope.ngDateTurno.getTime());
@@ -198,7 +186,6 @@ app.controller('turnosController', function ($scope, $http) {
         $scope.ngDateTurno = date;
         $scope.getTurnos();
     };
-
    
     //OBTENER TURNOS Hoy
     $scope.getTurnosHoy = function() {
@@ -301,7 +288,6 @@ app.controller('turnosController', function ($scope, $http) {
             return true;
         return false;
     };
-
    
     //SET CLIENTE
     $scope.setClienteDesconocido = function (cliente) {
@@ -343,7 +329,7 @@ app.controller('turnosController', function ($scope, $http) {
         $scope.initMovimiento();
     };
   
-   //CANCELAR DESHACER COBRO
+    //CANCELAR DESHACER COBRO
     $scope.discardCancelarCobro = function(turno){
         turno.cobrado = true;
         closeModal("modal-cancelar-cobro");
@@ -358,7 +344,6 @@ app.controller('turnosController', function ($scope, $http) {
           }, function errorCallback(response) {
                 $scope.message=response.data.message;
         });
-
     }
 
     //POP UP PAGADO
@@ -406,7 +391,6 @@ app.controller('turnosController', function ($scope, $http) {
         });
     };
 
-  
     //IR A BUSCAR
     $scope.irBuscar = function() {
         window.location.href = "/turnos/buscar";
@@ -414,17 +398,11 @@ app.controller('turnosController', function ($scope, $http) {
 
     //DESCARTAR FORMULARIO
     $scope.discardTurno = function(event){
-        if ($scope.empleado !=null && !$scope.empleado.habilitado){
-            let index = $scope.empleados.indexOf($scope.empleado);
-            $scope.empleados.splice((index), 1);
-        }
         $scope.startHour= null;
         $scope.endHour = null; 
         $scope.empleado = {};
         $scope.trabajos=[];
         $scope.trabajosSeleccionados=[];      
-        $scope.queryCliente ='';
-        $scope.queryTrabajo ='';
         $scope.desconocido =false;
         $scope.message='';
         $scope.warnmessage='';
