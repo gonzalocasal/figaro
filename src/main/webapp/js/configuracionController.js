@@ -8,6 +8,7 @@ app.controller('configuracionController', function ($scope, $http) {
         $scope.getAllCiudades();
         $scope.getAllCategorias();
         $scope.getAllEmpleados();
+        $scope.getEmail();
         $scope.getHorario();
         $scope.ngCiudad={};
         $scope.ngServicio={};
@@ -192,11 +193,30 @@ app.controller('configuracionController', function ($scope, $http) {
             .then(function successCallback(response) {
                 $scope.ngPassword='';
                 $scope.ngRePassword='';
-                $scope.messagePassword='';
+                $scope.messageCredentials='';
                 alert('Su contraseña se actualizó correctamente');
               }, function errorCallback(response) {
-                $scope.messagePassword=response.data.message;
+                $scope.messageCredentials=response.data.message;
             });
     };
+
+    //ACTUALIZAR EMAIL
+    $scope.updateEmail = function() {
+        $http.patch('/rest/configuracion/email', $scope.ngEmail)
+            .then(function successCallback(response) {
+                $scope.messageCredentials='';
+                alert('Su Email se actualizó correctamente');
+              }, function errorCallback(response) {
+                $scope.messageCredentials=response.data.message;
+            });
+    };
+
+    //OBTENER EMAIL
+    $scope.getEmail = function() {
+        $http.get("/rest/configuracion/email").then(function (response) {
+            $scope.ngEmail = response.data;
+        });
+    };
+
 
 });

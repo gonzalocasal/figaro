@@ -50,6 +50,7 @@ public class Constants{
     public static final String MSG_PASS_NO_COINCIDEN =  "Error: Las Contraseñas no coinciden";
 
     public static final String FIGARO_PASS = "FIGARO_PASS";
+    public static final String FIGARO_EMAIL = "FIGARO_EMAIL";
     public static final String FIGARO_APP_NAME = "FIGARO_APP_NAME";
     public static final String FIGARO_API_KEY = "FIGARO_API_KEY";
 	public static final String FIGADO_API_URL = "https://api.heroku.com/apps/%s/config-vars";
