@@ -482,6 +482,11 @@ li a:hover {
     margin-right: 0px;
 }
 
+.nota-modal-turno{
+    color: #484747;
+}
+
+
 .modal {
     display: none
 }

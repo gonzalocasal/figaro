@@ -8,7 +8,7 @@
             <option></option>
           </select>
         </div>
-
+        <div class="form-field nota-modal-turno">{{ngTurno.cliente.notas}}</div>
         <input  type="checkbox" class="form-field" ng-click="setClienteDesconocido()"  ng-model=desconocido> Cliente Desconocido
 
         <div class=form-field><label>FECHA: </label><input type="date" ng-model="ngDateTurno" ng-change="getAllEmpleados()" required></input></div>
@@ -42,6 +42,8 @@
           </tbody>
           </table>
         </div>
+        <div class=form-field></div>
+        <div class=form-field><label>NOTAS:</label><input type="text" ng-model="ngTurno.notas"></div>
 
         <hr class=resume noshade>
         <div class="form-field"  ng-repeat="trabajo in trabajosSeleccionados" >
@@ -52,7 +54,7 @@
 
         <div class="form-field"><i class=material-icons >account_balance_wallet</i>PRECIO: <span >{{totalTrabajosSeleccionados | currency}}</span></div>
         
-        <label>{{ngTurno.cliente.notas}}</label>
+       
         
         <div class=buttons>
           <button class="button cancel" type="button" ng-click="discardTurno()">CANCELAR</button>
