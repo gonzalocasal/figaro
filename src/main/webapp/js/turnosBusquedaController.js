@@ -14,7 +14,7 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
         let date = new Date();
         $scope.desde = new Date(date.getFullYear(), date.getMonth(), 1);
         $scope.hasta = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-        $scope.search(url);
+        $scope.URLsearch(url);
     }
 
 
@@ -38,7 +38,7 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
     //OBTENER LISTA DE EMPLEADOS
     $scope.getAllEmpleados = function(url) {
         fecha = ($scope.ngDateTurno==null) ? getToday() : getStringDate($scope.ngDateTurno);        
-        $http.get("/rest/empleados/disponibles",{params:{fecha: fecha}}).then(function (response) {
+        $http.get("/rest/empleados",{params:{fecha: fecha}}).then(function (response) {
             $scope.empleados = response.data;
             bindEmpleado(url);
         });
@@ -59,17 +59,18 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
         });
     };
 
-
-
-    //BUSCAR
-    $scope.search = function(url) {
-        if($scope.cliente == null) $scope.cliente={};
-        if($scope.empleado == null) $scope.empleado={};
-        if($scope.servicio == null) $scope.servicio={};
-
+     $scope.URLsearch = function(url) {
         $scope.cliente.id = url.searchParams.get("cliente");
         $scope.empleado.id = url.searchParams.get("empleado");
         $scope.pagado = url.searchParams.get("pagado");
+        $scope.search();
+    }
+
+    //BUSCAR
+    $scope.search = function() {
+        if($scope.cliente == null) $scope.cliente={};
+        if($scope.empleado == null) $scope.empleado={};
+        if($scope.servicio == null) $scope.servicio={};
 
         if($scope.cliente.id == null && $scope.empleado.id == null && $scope.servicio.descripcion == null && $scope.cobrado == null && $scope.pagado == null && $scope.desde == null  && $scope.hasta == null){
             $scope.criterios = null;
