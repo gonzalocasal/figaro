@@ -66,6 +66,11 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
         $scope.search();
     }
 
+    $scope.selectSearch = function(){
+        window.history.pushState('', '', '/turnos/buscar');
+        $scope.search();
+    }
+
     //BUSCAR
     $scope.search = function() {
         if($scope.cliente == null) $scope.cliente={};

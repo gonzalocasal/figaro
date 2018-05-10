@@ -10,39 +10,39 @@
   <div id=content class="content fade-in">
     <div class=banner>
 
-        <label>Cliente: </label><select name=cliente ng-change="search()" ng-model="cliente" ng-options="cliente as cliente.nombre + ' ' + cliente.apellido   for cliente in clientes">
+        <label>Cliente: </label><select name=cliente ng-change="selectSearch()" ng-model="cliente" ng-options="cliente as cliente.nombre + ' ' + cliente.apellido   for cliente in clientes">
           <option></option>
         </select>
 
         <div class="separator"></div>
-        <label >Empleado: </label><select name=empleado ng-change="search()" ng-model="empleado" ng-options="empleado as empleado.nombre + ' ' + empleado.apellido   for empleado in empleados">
+        <label >Empleado: </label><select name=empleado ng-change="selectSearch()" ng-model="empleado" ng-options="empleado as empleado.nombre + ' ' + empleado.apellido   for empleado in empleados">
           <option></option>
         </select>
         
         <div class="separator"></div>
-        <label >Servicio: </label><select name=servicio ng-change="search()" ng-model="servicio" ng-options="servicio as servicio.descripcion for servicio in servicios">
+        <label >Servicio: </label><select name=servicio ng-change="selectSearch()" ng-model="servicio" ng-options="servicio as servicio.descripcion for servicio in servicios">
           <option></option>
         </select>
         
         <div class="separator"></div>
-        <label >Cobrado: </label><select name=cobrado ng-change="search()" ng-model="cobrado">
+        <label >Cobrado: </label><select name=cobrado ng-change="selectSearch()" ng-model="cobrado">
           <option></option>
           <option value=true >Sí</option>
           <option value=false>No</option>
         </select>
         
         <div class="separator"></div>
-        <label >Pagado: </label><select name=pagado ng-change="search()" ng-model="pagado">
+        <label >Pagado: </label><select name=pagado ng-change="selectSearch()" ng-model="pagado">
           <option></option>
           <option value=true >Sí</option>
           <option value=false>No</option>
         </select>
       
         <div class="separator"></div>
-        <label >Desde: </label><input ng-change="search()" ng-model=desde type=date>
+        <label >Desde: </label><input ng-change="selectSearch()" ng-model=desde type=date>
       
         <div class="separator"></div>
-        <label >Hasta: </label><input ng-change="search()" ng-model=hasta type=date>
+        <label >Hasta: </label><input ng-change="selectSearch()" ng-model=hasta type=date>
         
         <div class=export>
           <label title="Imprimir" class="banner-button" onclick="imprimir()"><i class="material-icons">print</i></label>
