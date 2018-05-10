@@ -18,8 +18,10 @@ public class CredentialsService {
 	
 	final static Logger LOGGER = Logger.getLogger(ConfiguracionService.class);
 
-	public String getEmail() {
-		return System.getenv(FIGARO_API_KEY);
+	public Credential getEmail() {
+		Credential credential = new Credential();
+		credential.setEmail(System.getenv(FIGARO_EMAIL));
+		return credential;
 	}
 	
 	public void updateEmail(String email) {

@@ -130,7 +130,7 @@ public class ConfiguracionControllerREST {
 	}
 
 	@GetMapping("/email")
-    public ResponseEntity<String> getEmail() {
+    public ResponseEntity<Credential> getEmail() {
 		return new ResponseEntity<>(credentialsService.getEmail(), HttpStatus.OK);
 	}
 	

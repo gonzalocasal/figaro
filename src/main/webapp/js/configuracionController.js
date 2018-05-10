@@ -214,7 +214,7 @@ app.controller('configuracionController', function ($scope, $http) {
     //OBTENER EMAIL
     $scope.getEmail = function() {
         $http.get("/rest/configuracion/email").then(function (response) {
-            $scope.ngEmail = response.data;
+            $scope.ngEmail = response.data.email;
         });
     };
 
