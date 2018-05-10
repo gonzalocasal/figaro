@@ -97,7 +97,7 @@ app.controller('clientesController', function ($scope, $http) {
         if(typeof $scope.clienteSelected === "undefined")
             alert('Seleccione un cliente');
         else
-           window.location.href = "/turnos/cliente/"+$scope.clienteSelected.id
+           window.location.href = "/turnos/buscar?cliente="+$scope.clienteSelected.id
     };
    
 

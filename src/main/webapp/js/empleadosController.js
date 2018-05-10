@@ -102,7 +102,7 @@ app.controller('empleadosController', function ($scope, $http) {
 
     $scope.irTurnos = function() {
         if($scope.isSelectedEmpleado())
-            window.location.href = "/turnos/empleados/"+$scope.empleadoSelected.id
+            window.location.href = "/turnos/buscar?empleado="+$scope.empleadoSelected.id
     };
 
 
@@ -113,7 +113,7 @@ app.controller('empleadosController', function ($scope, $http) {
 
     $scope.irPagar = function() {
         if($scope.isSelectedEmpleado())
-            window.location.href = "/turnos/empleados/"+$scope.empleadoSelected.id+"/sinpagar"  
+            window.location.href = "/turnos/buscar?empleado="+$scope.empleadoSelected.id+"&pagado=false"  
     };
 
     $scope.isSelectedEmpleado = function(){

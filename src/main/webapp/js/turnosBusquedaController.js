@@ -2,38 +2,55 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
 
     //INIT TURNOS
     $scope.init = function(){
+        let url = new URL(window.location.href);
         $scope.activeTurnos = true;
         $scope.cliente={};
         $scope.empleado={};
-        $scope.getAllClientes();
-        $scope.getAllEmpleados();
+        $scope.getAllClientes(url);
+        $scope.getAllEmpleados(url);
         $scope.getAllServicios();
         $scope.criterios = true;
+    
         let date = new Date();
         $scope.desde = new Date(date.getFullYear(), date.getMonth(), 1);
         $scope.hasta = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-        $scope.search();
-
+        $scope.search(url);
     }
 
 
 
     //OBTENER LISTA DE CLIENTES
-    $scope.getAllClientes = function() {
+    $scope.getAllClientes = function(url) {
         $http.get("/rest/clientes").then(function (response) {
             $scope.clientes = response.data;
+            bindCliente(url);
         });
     };
 
+    //BIND CLIENTE
+    function bindCliente(url){
+        let cliente = url.searchParams.get("cliente");
+        for(let i = 0; i < $scope.clientes.length; i++)
+            if(cliente== $scope.clientes[i].id)
+                $scope.cliente = $scope.clientes[i];
+    }
 
     //OBTENER LISTA DE EMPLEADOS
-    $scope.getAllEmpleados = function() {
+    $scope.getAllEmpleados = function(url) {
         fecha = ($scope.ngDateTurno==null) ? getToday() : getStringDate($scope.ngDateTurno);        
         $http.get("/rest/empleados/disponibles",{params:{fecha: fecha}}).then(function (response) {
             $scope.empleados = response.data;
+            bindEmpleado(url);
         });
     };
 
+    //BIND EMPLEADO
+    function bindEmpleado(url){
+        let empleado = url.searchParams.get("empleado");
+        for(let i = 0; i < $scope.empleados.length; i++)
+            if(empleado== $scope.empleados[i].id)
+                $scope.empleado = $scope.empleados[i];
+    }
 
     //OBTENER LISTA DE SERVICIOS
     $scope.getAllServicios = function() {
@@ -45,10 +62,14 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
 
 
     //BUSCAR
-    $scope.search = function() {
+    $scope.search = function(url) {
         if($scope.cliente == null) $scope.cliente={};
         if($scope.empleado == null) $scope.empleado={};
         if($scope.servicio == null) $scope.servicio={};
+
+        $scope.cliente.id = url.searchParams.get("cliente");
+        $scope.empleado.id = url.searchParams.get("empleado");
+        $scope.pagado = url.searchParams.get("pagado");
 
         if($scope.cliente.id == null && $scope.empleado.id == null && $scope.servicio.descripcion == null && $scope.cobrado == null && $scope.pagado == null && $scope.desde == null  && $scope.hasta == null){
             $scope.criterios = null;
