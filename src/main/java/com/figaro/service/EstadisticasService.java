@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -24,6 +25,10 @@ import com.figaro.repository.EstadisticasRepository;
 public class EstadisticasService {
 
 	final static Logger LOGGER = Logger.getLogger(EstadisticasService.class);
+	public static final String MES_RANGO_DEFAULT = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31";
+	public static final String SEMANA_RANGO_DEFAULT = "Domingo Lunes Martes Miercoles Jueves Viernes Sabado";
+	public static final String WEEK_RANGO_DEFAULT = "1 2 3 4 5 6 7";
+	
 	
 	private EstadisticasRepository repository;
 	private ClientesService clientesService;
@@ -171,6 +176,74 @@ public class EstadisticasService {
 		} else {
 			return String.valueOf(tiempo);
 		}		
+	}
+	
+	public TreeMap<String, Integer> buscarTurnoMes(Date from, Date to) {
+		
+		List<Turno> searchTurnos = repository.searchBetween (from,to);
+		Map<String, Integer> mapTurnos = new HashMap<>();		
+		
+		for (String dia :  MES_RANGO_DEFAULT.split(" ")) {				
+			mapTurnos.put(dia, 0);			
+		}		
+		
+		for (Turno turno : searchTurnos) {
+			
+			Date desde = turno.getDesde();
+			Calendar calendarDesde = Calendar.getInstance();
+			calendarDesde.setTime(desde);			
+			int horaDesde = calendarDesde.get(Calendar.DAY_OF_MONTH);		
+			String diaDesde = String.valueOf(horaDesde);
+				
+			Integer cantidadTurnos = mapTurnos.get(diaDesde);
+			cantidadTurnos ++;
+			mapTurnos.put(diaDesde, cantidadTurnos);		
+		
+		}
+		//Ordenar
+		TreeMap<String, Integer> sorted = new TreeMap<>();		 
+	    sorted.putAll(mapTurnos);
+	    for (@SuppressWarnings("unused") Map.Entry<String, Integer> entry : sorted.entrySet()) ;
+	
+		return sorted;
+	}	
+	
+	public LinkedHashMap<String,Integer> buscarTurnoSemana(Date from, Date to) {
+		
+		List<Turno> searchTurnos = repository.searchBetween (from,to);
+		Map<String, Integer> mapTurnos = new HashMap<>();		
+		
+		for (String dia :  WEEK_RANGO_DEFAULT.split(" ")) {				
+			mapTurnos.put(dia, 0);			
+		}		
+		
+		for (Turno turno : searchTurnos) {
+			
+			Date desde = turno.getDesde();
+			Calendar calendarDesde = Calendar.getInstance();
+			calendarDesde.setTime(desde);			
+			int horaDesde = calendarDesde.get(Calendar.DAY_OF_WEEK);		
+			String diaDesde = String.valueOf(horaDesde);
+			
+			Integer cantidadTurnos = mapTurnos.get(diaDesde);
+			cantidadTurnos ++;
+			mapTurnos.put(diaDesde, cantidadTurnos);		
+		
+		}
+		int i=0;
+		for (String dia :  SEMANA_RANGO_DEFAULT.split(" ")) {
+			i++;
+			String iaux = String.valueOf(i);
+			mapTurnos.put(dia,mapTurnos.remove(iaux));
+		}	
+		//Ordenar
+		LinkedHashMap<String, Integer> sorted = new LinkedHashMap<String, Integer>();
+	    for (String dia :  SEMANA_RANGO_DEFAULT.split(" ")) {				
+	    	sorted.put(dia, mapTurnos.get(dia));	
+	    	
+		}	
+	    
+		return sorted;
 	}
 	
 	public EstadisticasRepository getRepository() {
