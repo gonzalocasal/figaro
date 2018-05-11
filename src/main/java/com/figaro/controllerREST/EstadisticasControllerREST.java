@@ -4,6 +4,7 @@ import static com.figaro.util.Constants.DATE_FORMAT;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -61,7 +62,17 @@ public class EstadisticasControllerREST {
     public ResponseEntity<TreeMap<String, Integer>> buscarTurnoMasSolicitado(@RequestParam  @DateTimeFormat(pattern=DATE_FORMAT) Date from, @RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date to) {		
         return new ResponseEntity<>(service.buscarTurnoMasSolicitado(from,to), HttpStatus.OK);
     }
+	
+	@GetMapping("estadisticas/turnos/turnomes")
+    public ResponseEntity<TreeMap<String, Integer>> buscarTurnoMes(@RequestParam  @DateTimeFormat(pattern=DATE_FORMAT) Date from, @RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date to) {		
+        return new ResponseEntity<>(service.buscarTurnoMes(from,to), HttpStatus.OK);
+    }
 
+	@GetMapping("estadisticas/turnos/turnosemana")
+    public ResponseEntity<LinkedHashMap<String,Integer>> buscarTurnoSemana(@RequestParam  @DateTimeFormat(pattern=DATE_FORMAT) Date from, @RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date to) {		
+        return new ResponseEntity<>(service.buscarTurnoSemana(from,to), HttpStatus.OK);
+    }
+	
 	public EstadisticasService getService() {
 		return service;
 	}
