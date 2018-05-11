@@ -53,22 +53,6 @@ app.controller('empleadosController', function ($scope, $http) {
     }    
 
 
-    //GET TURNOS SIN PAGAR EMPLEADO
-    $scope.getTurnosSinPagar = function(){
-    loading();
-    url = '/rest/turnos/empleados/'+ $scope.empleadoId +'/sinpagar';
-    $http.get(url)
-        .then(function successCallback(response) {
-            loadComplete();
-            $scope.loaded = true;
-            turnos = response.data;
-            Array.prototype.push.apply($scope.turnos, turnos);
-            if ( $scope.turnos.length > 0)
-                $scope.empleado = ($scope.turnos[0].empleado) 
-        });
-    }
-
-
     $scope.pagarTodos = function(){
         $http.put('/rest/turnos/empleados/'+$scope.empleado.id+'/pagartodos').then(
             function successCallback(response) {
@@ -78,15 +62,6 @@ app.controller('empleadosController', function ($scope, $http) {
         });
     }
 
-    //GET CANTIDAD TURNOS EMPLEADO
-    $scope.getCantidadTurnos = function(){
-        url = '/rest/empleados/'+ $scope.empleadoId+'/totales';
-        $http.get(url,{params: {index: $scope.index}})
-        .then(function successCallback(response) {
-            $scope.totalCantidadTurnos = response.data.turnos;
-            $scope.totalPago = response.data.pago;
-        });
-    }   
 
     //CALCULAR SI EL EMPLEADO TRABAJA HOY
     $scope.isDisponible = function(empleado) {
@@ -150,6 +125,7 @@ app.controller('empleadosController', function ($scope, $http) {
         $scope.empleadoId = idEmpleado;
         $http.get('/rest/empleados/'+$scope.empleadoId).then(function (response) {
             $scope.ngEmpleado = response.data;
+            $scope.ngEmpleado.nacimiento=stringToDate($scope.ngEmpleado.nacimiento);
             $scope.servicios.forEach(function(trabajo) {
                 trabajo.selected = $scope.isInEmpleado(trabajo);
             });

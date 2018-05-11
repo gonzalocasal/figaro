@@ -43,7 +43,7 @@ app.controller('clientesController', function ($scope, $http) {
     }
 
 
-        //DESCARTAR FORMULARIO
+    //DESCARTAR FORMULARIO
     $scope.discardClient = function(event){
         $scope.update = null;
         $scope.ngCliente = {};
@@ -58,6 +58,7 @@ app.controller('clientesController', function ($scope, $http) {
         $scope.clienteID = idCliente;
         $http.get('/rest/clientes/'+$scope.clienteID).then(function (response) {
             $scope.ngCliente = response.data;
+            $scope.ngCliente.nacimiento=stringToDate($scope.ngCliente.nacimiento);
             openModal("modal-clientes");
 	    });
     };

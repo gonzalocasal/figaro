@@ -9,6 +9,7 @@
       </div>
       <div class=form-field><label>TELEFONO:</label><input type="text"  maxlength="25" ng-model="ngCliente.telefono" ></div>
       <div class=form-field><label>EMAIL:</label><input type="email"    maxlength="35" ng-model="ngCliente.email" ></div>
+      <div class=form-field><label>NACIMIENTO: </label><input type="date" ng-model="ngCliente.nacimiento"></input></div>
       <div class=form-field><label>CIUDAD:</label>
         <select ng-model="ngCliente.dirCiudad">
           <option value="{{ciudad.nombre}}" ng-repeat="ciudad in ciudades">{{ciudad.nombre}}</option>

@@ -7,6 +7,7 @@
           <select name=cliente ng-change="search()" ng-model="ngTurno.cliente" ng-options="cliente as cliente.nombre + ' ' + cliente.apellido   for cliente in clientes">
             <option></option>
           </select>
+          <i class="material-icons add" ng-controller=clientesController ng-init="isModalOpen=true" ng-click="newClient()" >person_add</i>
         </div>
         <div class="form-field nota-modal-turno">{{ngTurno.cliente.notas}}</div>
         <input  type="checkbox" class="form-field" ng-click="setClienteDesconocido()"  ng-model=desconocido> Cliente Desconocido

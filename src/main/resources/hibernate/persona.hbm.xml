@@ -11,6 +11,7 @@
 	 	<property name="email" 			column="EMAIL"    type="string"/>
 	 	<property name="sexo" 			column="SEXO" 	  type="string"/>
 		<property name="telefono" 		column="TELEFONO" type="string"/>
+		<property name="nacimiento" 	column="NACIMIENTO"  type="date"/>
 		<property name="fechaIngreso" 	column="INGRESO"  type="date"/>
 	    <property name="dirCiudad" 		column="CIUDAD"   type="string"/>
 	    <property name="dirCalle" 	    column="CALLE"    type="string"/> 	
