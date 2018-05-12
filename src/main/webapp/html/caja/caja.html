@@ -20,10 +20,9 @@
     <div>       
       <label class=banner-label-busqueda ng-click="ShowHideDia()"><i class=material-icons >clear</i></label>
       <label class=banner-label-busqueda> Desde: </label>    
-        <input class=banner-label-busqueda type="date" ng-model="searchInicio"></input>
+        <input class=banner-label-busqueda type="date" ng-model="searchInicio" ng-change="searchMovimientoDia()"></input>
       <label class=banner-label-busqueda> Hasta: </label>    
-        <input class=banner-label-busqueda type="date" ng-model="searchFin"></input> 
-      <label class=button-estadisticas ng-click="searchMovimientoDia()"><i class=material-icons  >search</i> </label>
+        <input class=banner-label-busqueda type="date" ng-model="searchFin" ng-change="searchMovimientoDia()"></input> 
     </div>
   </div>
 
@@ -31,10 +30,8 @@
     <div>       
       <label class=banner-label-busqueda-cat ng-click="ShowHideCategoria()"><i class=material-icons >clear</i></label> 
         <label ng-repeat="categoria in categoriasLista">
-          <input class=banner-label-busqueda-cat ng-model="categoria.checked" type="checkbox">{{categoria.nombre}}
+          <input class=banner-label-busqueda-cat ng-model="categoria.checked" type="checkbox" ng-change="searchCategoriaPrevio()" >{{categoria.nombre}}
         </label>
-
-      <label class=button-estadisticas ng-click="checkItems()"><i class=material-icons  >search</i> </label>
     </div>
   </div>
   

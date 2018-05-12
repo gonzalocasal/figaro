@@ -403,11 +403,12 @@ app.controller('movimientosController', function ($scope, $http) {
         $scope.ShowHideDia = function () {
         	$scope.IsHiddenCategoria = true;
             $scope.IsHiddenDia = $scope.IsHiddenDia ? false : true;
-            let date = new Date();
-            $scope.searchInicio = new Date(date.getFullYear(), date.getMonth(), 1);
-        	$scope.searchFin = new Date(date.getFullYear(), date.getMonth() + 1, 0);        	
+            
+            $scope.searchMovimientoDia();
             if($scope.IsHiddenDia === true){
             	$scope.limpiaFecha();
+            	$scope.searchInicio = new Date(date.getFullYear(), date.getMonth(), 1);
+        		$scope.searchFin = new Date(date.getFullYear(), date.getMonth() + 1, 0);  
             	$scope.limpiaCategoria();
             	$scope.getAll();	                    	
 	        }
@@ -419,10 +420,13 @@ app.controller('movimientosController', function ($scope, $http) {
             $scope.getAllCategorias();           
 			$scope.categorias.push({id:$scope.categorias.length + 1, nombre:'Turnos'});
 			$scope.categorias.push({id:$scope.categorias.length + 1, nombre:'Empleados'});
-			$scope.categorias.push({id:$scope.categorias.length + 1, nombre:'Ventas'});			
-			$scope.categoriasLista = [];
-			for (var i = 0; i < $scope.categorias.length; i++) {
-				$scope.categoriasLista.push({nombre: $scope.categorias[i].nombre, checked:'false'});
+			$scope.categorias.push({id:$scope.categorias.length + 1, nombre:'Ventas'});		
+			$scope.searchCategoriaPrevio();
+			if ($scope.listavacia){
+				$scope.categoriasLista = [];			
+				for (var i = 0; i < $scope.categorias.length; i++) {
+					$scope.categoriasLista.push({nombre: $scope.categorias[i].nombre, checked:'false'});
+				}
 			}
             if($scope.IsHiddenCategoria === true){
             	$scope.getAllCategorias();
@@ -432,11 +436,13 @@ app.controller('movimientosController', function ($scope, $http) {
 	        }
         }        
 
-        $scope.checkItems = function () {
+        $scope.searchCategoriaPrevio = function () {
         	$scope.categoriasBusqueda = '';
+        	$scope.listavacia=true
 			for (var i = 0; i < $scope.categoriasLista.length; i++) {
 					var prueba = $scope.categoriasLista[i];
                     if (prueba.checked === true) {  
+                    	$scope.listavacia=false
                         if ($scope.categoriasBusqueda == ''){
 							$scope.categoriasBusqueda = $scope.categoriasLista[i].nombre;
                         } else {
@@ -469,6 +475,9 @@ app.controller('movimientosController', function ($scope, $http) {
 	    $scope.categoriasLista = [];
 	    $scope.busqueda.fechaInicio = getDateFormated();
 	    $scope.busqueda.fechaFin = getDateFormated();
+	    let date = new Date();
+	    $scope.searchInicio = new Date(date.getFullYear(), date.getMonth(), 1);
+        $scope.searchFin = new Date(date.getFullYear(), date.getMonth() + 1, 0); 
 	    $scope.busqueda.categoria = '';
 	    $scope.ngMovimiento = {};
 	    $scope.getAllCategorias();

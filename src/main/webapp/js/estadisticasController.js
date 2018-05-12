@@ -83,19 +83,19 @@ app.controller('estadisticasController', function ($scope, $http) {
 
 		//OBTENER LISTA DE Turno por sexo por mes
 		    $scope.getTurnoSexoMes = function() {
-		        $http.get("/rest/estadisticas/turnos/turnomes",{params: { from: $scope.fechaInicio, to: $scope.fechaFin}}).then(function (response) {
+		        $http.get("/rest/estadisticas/turnos/turnosexomes",{params: { from: $scope.fechaInicio, to: $scope.fechaFin}}).then(function (response) {
 		            $scope.turnosexomes = response.data;			            
 		            seleccionado = $scope.turnosexomes;
-                	$scope.generarSeleccionado2();             	            
+                	$scope.generarSeleccionadoConTresDatos();             	            
 		        });			      
 		    };	
 
 		//OBTENER LISTA DE Turno por sexo por mes
 		    $scope.getTurnoSexoSemana = function() {
-		        $http.get("/rest/estadisticas/turnos/turnosemana",{params: { from: $scope.fechaInicio, to: $scope.fechaFin}}).then(function (response) {
+		        $http.get("/rest/estadisticas/turnos/turnosexosemana",{params: { from: $scope.fechaInicio, to: $scope.fechaFin}}).then(function (response) {
 		            $scope.turnosexosemana = response.data;			            
 		            seleccionado = $scope.turnosexosemana;
-                	$scope.generarSeleccionado3();             	            
+                	$scope.generarSeleccionadoConTresDatos();             	            
 		        });			      
 		    };	
      
@@ -199,7 +199,16 @@ app.controller('estadisticasController', function ($scope, $http) {
 		    $scope.generarSeleccionado = function(seleccionado) {		    	
 		    	arregloColumnaBar = [] ;
 				arregloLabelBar = [] ;
-				arregloDataBar = [] ;		    	
+				arregloDataBar = [] ;
+                arregloColumnaBar1 = [] ;
+                arregloLabelBar1 = [] ;
+                arregloDataBar1 = [] ;   
+                arregloColumnaBar2 = [] ;
+                arregloLabelBar2 = [] ;
+                arregloDataBar2 = [] ;   
+                arregloColumnaBar3 = [] ;
+                arregloLabelBar3 = [] ;
+                arregloDataBar3 = [] ;  		    	
 
 				for (var key in seleccionado) {
     				arregloColumnaBar.push(key);
@@ -212,11 +221,76 @@ app.controller('estadisticasController', function ($scope, $http) {
 			  
 
 		
-	   // GENERAR GRAFICOS DE BARRA 1
+	   // GENERAR GRAFICOS DE BARRA
 			$scope.generarGraficoBarra1 = function(){					
 				data1 = { labels: arregloColumnaBar, datasets: [{ label: arregloLabelBar, backgroundColor: color11, borderColor: color14, borderWidth: 2, hoverBackgroundColor: color14, hoverBorderColor: color14, data: arregloDataBar}]}; 
 			    grafico1 = new Chart(ctx1, { type: tipos, data: data1, options: options	});
 			}
+
+            $scope.generarSeleccionadoConTresDatos = function() {   
+
+                arregloColumnaBar = [] ;
+                arregloLabelBar = [] ;
+                arregloDataBar = [] ;               
+                arregloColumnaBar1 = [] ;
+                arregloLabelBar1 = [] ;
+                arregloDataBar1 = [] ;   
+                arregloColumnaBar2 = [] ;
+                arregloLabelBar2 = [] ;
+                arregloDataBar2 = [] ;   
+                arregloColumnaBar3 = [] ;
+                arregloLabelBar3 = [] ;
+                arregloDataBar3 = [] ;   
+
+                lista1 = seleccionado[0];
+                lista2 = seleccionado[1];
+                lista3 = seleccionado[2];
+
+                for (var key in lista1) {
+                    arregloColumnaBar1.push(key);
+                    arregloDataBar1.push(lista1[key]);
+                }
+
+                for (var key in lista2) {
+                    arregloColumnaBar2.push(key);
+                    arregloDataBar2.push(lista2[key]);
+                }
+
+                for (var key in lista3) {
+                    arregloColumnaBar3.push(key);
+                    arregloDataBar3.push(lista3[key]);
+                }
+
+                arregloLabelBar = 'Total' ;             
+                grafico1.destroy();  
+
+                grafico1 = new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        datasets: [{
+                            label: 'Mujer',
+                            data: arregloDataBar3,
+                            backgroundColor: color21, 
+                            borderColor: color24
+
+                        }, {
+                            label: 'Hombre',
+                            data: arregloDataBar2,
+                            backgroundColor: color11, 
+                            borderColor: color14
+
+                        }, {
+                            label: 'Total',
+                            data: arregloDataBar1,          
+                            backgroundColor: color31,
+                            borderColor: color34,                            
+                            type: 'line'
+                        }],
+                        labels: arregloColumnaBar1
+                    },
+                    options: options
+                });
+            }
  
 		//OPTIONS
 		    var options = '';
@@ -224,57 +298,52 @@ app.controller('estadisticasController', function ($scope, $http) {
 
 		    var color11 = 'rgba(41,41,97,0.1)';
 		    var color14 = 'rgba(41,41,97,0.4)';
-
+            var color21 = 'rgba(255,99,132,0.1)';
+            var color24 = 'rgba(255,99,132,0.4)';
+            var color31 = 'rgba(70,191,189,0.1)';
+            var color34 = 'rgba(70,191,189,0.4)';
+      
 		var canvas1 = document.getElementById("grafico1");
 		var ctx1 = canvas1.getContext('2d');
 			    
 		var arregloColumnaBar = [] ;
 		var arregloLabelBar = [] ;
 		var arregloDataBar = [] ;
+        var arregloColumnaBar1 = [] ;
+        var arregloLabelBar1 = [] ;
+        var arregloDataBar1 = [] ;   
+        var arregloColumnaBar2 = [] ;
+        var arregloLabelBar2 = [] ;
+        var arregloDataBar2 = [] ;   
+        var arregloColumnaBar3 = [] ;
+        var arregloLabelBar3 = [] ;
+        var arregloDataBar3 = [] ;  
 		$scope.muestra = false;
 		$scope.generarGraficoBarra1();	
-
+        let date = new Date();
+        $scope.searchFrom = new Date(date.getFullYear(), date.getMonth(), 1);
+        $scope.searchTo = new Date(date.getFullYear(), date.getMonth() + 1, 0); 
 	    $scope.fechaInicio = getToday();
 	    $scope.fechaFin = getToday();
-	    $scope.searchFrom = getDateFormated();
-	    $scope.searchTo = getDateFormated();
 		$scope.getClientesCiudad();
 		$scope.getClientesSexo();
 
 
-$scope.generarSeleccionado2 = function() {	
 
-grafico1 = new Chart(ctx1, {
-  type: 'bar',
-  data: {
-    datasets: [{
-          label: 'Bar Dataset',
-          data: [10, 20, 30, 40],
-          backgroundColor: color11, 
-          borderColor: color14
 
-        }, {
-          label: 'Bar Dataset',
-          data: [10, 20, 30, 40],
-          backgroundColor: color11, 
-          borderColor: color14
 
-        }, {
-          label: 'Line Dataset',
-          data: [50, 50, 50, 50],
-          
-          backgroundColor: "rgba(255,99,132,0.4)",
-          borderColor: "rgba(255,99,132,1)",
-          // Changes this dataset to become a line
-          type: 'line'
-        }],
-    labels: ['January', 'February', 'March', 'April']
-  },
-  options: options
-});
-}
 
-$scope.generarSeleccionado3 = function() {	
+
+
+
+
+
+
+
+
+
+
+$scope.generarSeleccionadoConDosDatos = function() {	
 
 grafico1 = new Chart(ctx1, {
     type: 'line',

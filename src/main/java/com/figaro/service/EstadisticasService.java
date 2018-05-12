@@ -4,6 +4,7 @@ import static com.figaro.util.Constants.HORARIO_RANGO_DEFAULT;
 import static com.figaro.util.Constants.SIN_CIUDAD;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -206,7 +207,78 @@ public class EstadisticasService {
 	    for (@SuppressWarnings("unused") Map.Entry<String, Integer> entry : sorted.entrySet()) ;
 	
 		return sorted;
-	}	
+	}
+	
+	public List<TreeMap<String, Integer>> buscarTurnoSexoMes(Date from, Date to) {
+		
+		List<Turno> searchTurnos = repository.searchBetween (from,to);
+		Map<String, Integer> mapTotal = new HashMap<>();
+		Map<String, Integer> mapM = new HashMap<>();
+		Map<String, Integer> mapH = new HashMap<>();	
+		List<TreeMap<String,Integer>> resultado = new ArrayList<TreeMap<String,Integer>>();
+		
+		for (String dia :  MES_RANGO_DEFAULT.split(" ")) {				
+			mapTotal.put(dia, 0);
+			mapM.put(dia, 0);
+			mapH.put(dia, 0);
+		}		
+						
+		for (Turno turno : searchTurnos) {
+			
+			Date desde = turno.getDesde();
+			Calendar calendarDesde = Calendar.getInstance();
+			calendarDesde.setTime(desde);			
+			int intDesde = calendarDesde.get(Calendar.DAY_OF_MONTH);		
+			String diaDesde = String.valueOf(intDesde);
+			//String diaDesde = (intDesde < 10 ? "0" : "") + intDesde;
+			
+			Integer cantidadTotal = mapTotal.get(diaDesde);
+			cantidadTotal ++;
+			mapTotal.put(diaDesde, cantidadTotal);			
+			
+			String sexo = turno.getCliente().getSexo();
+			//String sexoCompara = "hombre";
+			if (sexo.compareTo("hombre") == 0) {
+				Integer cantidadH = mapH.get(diaDesde);
+				cantidadH ++;
+				mapH.put(diaDesde, cantidadH);
+			} else {
+				Integer cantidadM = mapM.get(diaDesde);
+				cantidadM ++;
+				mapM.put(diaDesde, cantidadM);
+			}		
+		}
+		//Ordenar
+		TreeMap<String, Integer> sortedTotal = new TreeMap<>();		 
+		sortedTotal.putAll(mapTotal);
+	    //for (@SuppressWarnings("unused") Map.Entry<String, Integer> entry : sortedTotal.entrySet()) ;	    
+	    for (String dia :  MES_RANGO_DEFAULT.split(" ")) {				
+	    	sortedTotal.put(dia, mapTotal.get(dia));	
+	    	
+		}
+	
+	    TreeMap<String, Integer> sortedH = new TreeMap<>();		 
+	    sortedH.putAll(mapH);
+	    //for (@SuppressWarnings("unused") Map.Entry<String, Integer> entry : sortedH.entrySet()) ;
+	    for (String dia :  MES_RANGO_DEFAULT.split(" ")) {				
+	    	sortedH.put(dia, mapH.get(dia));	
+	    	
+		}
+	    
+	    TreeMap<String, Integer> sortedM = new TreeMap<>();		 
+	    sortedM.putAll(mapM);
+	    //for (@SuppressWarnings("unused") Map.Entry<String, Integer> entry : sortedM.entrySet()) ;
+	    for (String dia :  MES_RANGO_DEFAULT.split(" ")) {				
+	    	sortedM.put(dia, mapM.get(dia));	
+	    	
+		}
+	    
+	    resultado.add(sortedTotal);
+	    resultado.add(sortedH);
+	    resultado.add(sortedM);
+	    
+		return resultado;
+	}
 	
 	public LinkedHashMap<String,Integer> buscarTurnoSemana(Date from, Date to) {
 		
@@ -244,6 +316,78 @@ public class EstadisticasService {
 		}	
 	    
 		return sorted;
+	}
+	
+	public List<LinkedHashMap<String, Integer>> buscarTurnoSexoSemana(Date from, Date to) {
+		
+		List<Turno> searchTurnos = repository.searchBetween (from,to);
+		Map<String, Integer> mapTotal = new HashMap<>();
+		Map<String, Integer> mapM = new HashMap<>();
+		Map<String, Integer> mapH = new HashMap<>();	
+		List<LinkedHashMap<String, Integer>> resultado = new ArrayList<LinkedHashMap<String, Integer>>();
+		
+		for (String dia :  WEEK_RANGO_DEFAULT.split(" ")) {				
+			mapTotal.put(dia, 0);
+			mapM.put(dia, 0);
+			mapH.put(dia, 0);
+		}		
+						
+		for (Turno turno : searchTurnos) {
+			
+			Date desde = turno.getDesde();
+			Calendar calendarDesde = Calendar.getInstance();
+			calendarDesde.setTime(desde);			
+			int intDesde = calendarDesde.get(Calendar.DAY_OF_WEEK);		
+			String diaDesde = String.valueOf(intDesde);
+						
+			Integer cantidadTotal = mapTotal.get(diaDesde);
+			cantidadTotal ++;
+			mapTotal.put(diaDesde, cantidadTotal);			
+			
+			String sexo = turno.getCliente().getSexo();
+			//String sexoCompara = "hombre";
+			if (sexo.compareTo("hombre") == 0) {
+				Integer cantidadH = mapH.get(diaDesde);
+				cantidadH ++;
+				mapH.put(diaDesde, cantidadH);
+			} else {
+				Integer cantidadM = mapM.get(diaDesde);
+				cantidadM ++;
+				mapM.put(diaDesde, cantidadM);
+			}		
+		}
+		
+		int i=0;
+		for (String dia :  SEMANA_RANGO_DEFAULT.split(" ")) {
+			i++;
+			String iaux = String.valueOf(i);
+			mapTotal.put(dia,mapTotal.remove(iaux));
+			mapH.put(dia,mapH.remove(iaux));
+			mapM.put(dia,mapM.remove(iaux));
+		}	
+		
+		//Ordenar
+		LinkedHashMap<String, Integer> sortedTotal = new LinkedHashMap<String, Integer>();
+	    for (String dia :  SEMANA_RANGO_DEFAULT.split(" ")) {				
+	    	sortedTotal.put(dia, mapTotal.get(dia));	
+	    	
+		}	
+	    LinkedHashMap<String, Integer> sortedH = new LinkedHashMap<String, Integer>();
+	    for (String dia :  SEMANA_RANGO_DEFAULT.split(" ")) {				
+	    	sortedH.put(dia, mapH.get(dia));	
+	    	
+		}	
+	    LinkedHashMap<String, Integer> sortedM = new LinkedHashMap<String, Integer>();
+	    for (String dia :  SEMANA_RANGO_DEFAULT.split(" ")) {				
+	    	sortedM.put(dia, mapM.get(dia));	
+	    	
+		}	
+	    
+	    resultado.add(sortedTotal);
+	    resultado.add(sortedH);
+	    resultado.add(sortedM);
+	    
+		return resultado;
 	}
 	
 	public EstadisticasRepository getRepository() {
