@@ -3,6 +3,7 @@
 <head>
 	<title>Empleados</title>
   <#include "/html/common/head.html">
+  <link rel="stylesheet" type="text/css" href="/css/empleados.css">
 </head>
 <body ng-app=figaro ng-controller=empleadosController data-ng-init="init()" >
   <#include "/html/common/menu.html">
@@ -28,7 +29,7 @@
     </div>
   
   </div>
-  <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
+  <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
   <#include "/html/empleados/empleados-modal.html">
   <#include "/html/common/javascript.html">
   <script src="js/empleadosController.js" ></script>

@@ -82,9 +82,8 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
             $scope.turnos = null;
             return;
         }
-        loading();
-               
 
+        loading();
         $http.get('/rest/turnos/buscar',{params: { clienteId: $scope.cliente.id , empleadoId : $scope.empleado.id, servicio: $scope.servicio.descripcion ,cobrado: $scope.cobrado, pagado: $scope.pagado ,desde: $scope.desde , hasta: $scope.hasta}})
         .then(function successCallback(response) {
             $scope.turnos = response.data;

@@ -227,10 +227,6 @@ app.controller('turnosController', function ($scope, $http) {
 
     //VALIDAR FORMULARIO
     $scope.validateTurno = function() {
-        if ($scope.ngTurno.cliente === null && !$scope.desconocido ){
-            $scope.message="Seleccione un cliente.";
-            return false
-        }
         if (!($scope.trabajosSeleccionados.length > 0)){
             $scope.message="Seleccione al menos un trabajo.";
             return false
