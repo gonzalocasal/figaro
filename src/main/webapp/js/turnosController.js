@@ -342,27 +342,7 @@ app.controller('turnosController', function ($scope, $http) {
         });
     }
 
-    //POP UP PAGADO
-    $scope.setPagado = function (turno) {
-        $scope.turnoTarget = turno;
-        if(!turno.pagado)
-            openModal("modal-cancelar-pago");
-        else
-            $scope.togglePago(turno);
-    }
-
-   //CANCELAR DESHACER PAGO
-    $scope.discardCancelarPago = function(turno){
-        turno.pagado = true;
-        closeModal("modal-cancelar-pago");
-    };
-
-    //CONFIRMAR PAGO
-    $scope.togglePago = function (turno) {
-        closeModal("modal-cancelar-pago");
-        $http.put('/rest/turnos/'+turno.id+'/pagar');
-    }
-
+   
     //OBTENER CLIENTES
     $scope.getClientes = function() {
         $http.get('/rest/clientes').then(function successCallback(response) {
