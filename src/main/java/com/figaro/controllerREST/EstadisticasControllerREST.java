@@ -84,6 +84,11 @@ public class EstadisticasControllerREST {
         return new ResponseEntity<>(service.buscarTurnoSexoSemana(from,to), HttpStatus.OK);
     }
 	
+	@GetMapping("estadisticas/turnos/trabajomasrequerido")
+    public ResponseEntity<Map<String, Integer>> buscarTrabajoMasRequerido(@RequestParam  @DateTimeFormat(pattern=DATE_FORMAT) Date from, @RequestParam @DateTimeFormat(pattern=DATE_FORMAT) Date to) {		
+        return new ResponseEntity<>(service.buscarTrabajoMasRequerido(from,to), HttpStatus.OK);
+    }
+	
 	public EstadisticasService getService() {
 		return service;
 	}

@@ -27,7 +27,7 @@ public class EstadisticasService {
 
 	final static Logger LOGGER = Logger.getLogger(EstadisticasService.class);
 	public static final String MES_RANGO_DEFAULT = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31";
-	public static final String SEMANA_RANGO_DEFAULT = "Domingo Lunes Martes Miercoles Jueves Viernes Sabado";
+	public static final String SEMANA_RANGO_DEFAULT = "Lunes Martes Miercoles Jueves Viernes Sabado Domingo";
 	public static final String WEEK_RANGO_DEFAULT = "1 2 3 4 5 6 7";
 	
 	
@@ -294,7 +294,13 @@ public class EstadisticasService {
 			Date desde = turno.getDesde();
 			Calendar calendarDesde = Calendar.getInstance();
 			calendarDesde.setTime(desde);			
-			int horaDesde = calendarDesde.get(Calendar.DAY_OF_WEEK);		
+			int horaDesde = calendarDesde.get(Calendar.DAY_OF_WEEK);	
+			if (horaDesde == 1) {
+				horaDesde = 7;
+			} else {				
+				horaDesde = horaDesde -1;
+			}
+				
 			String diaDesde = String.valueOf(horaDesde);
 			
 			Integer cantidadTurnos = mapTurnos.get(diaDesde);
@@ -337,9 +343,14 @@ public class EstadisticasService {
 			Date desde = turno.getDesde();
 			Calendar calendarDesde = Calendar.getInstance();
 			calendarDesde.setTime(desde);			
-			int intDesde = calendarDesde.get(Calendar.DAY_OF_WEEK);		
+			int intDesde = calendarDesde.get(Calendar.DAY_OF_WEEK);					
+			if (intDesde == 1) {
+				intDesde = 7;
+			} else {				
+				intDesde = intDesde -1;
+			}
 			String diaDesde = String.valueOf(intDesde);
-						
+			
 			Integer cantidadTotal = mapTotal.get(diaDesde);
 			cantidadTotal ++;
 			mapTotal.put(diaDesde, cantidadTotal);			
@@ -388,6 +399,19 @@ public class EstadisticasService {
 	    resultado.add(sortedM);
 	    
 		return resultado;
+	}
+	
+	public Map<String, Integer> buscarTrabajoMasRequerido(Date from, Date to) {
+		List<Turno> searchTurnos = repository.searchBetween (from,to);
+		Map<String, Integer> mapTurnos = new HashMap<>();
+		for (Turno turno : searchTurnos) {
+			String trabajos = turno.getDescripcionTrabajos();
+			for (String trabajo :  trabajos.split(" ")) {				
+		    	Integer cantidadTrabajaos = mapTurnos.get(trabajo);
+		    	mapTurnos.put(trabajo, (null == cantidadTrabajaos) ? 1 : cantidadTrabajaos + 1);
+			}
+		}
+		return mapTurnos;
 	}
 	
 	public EstadisticasRepository getRepository() {

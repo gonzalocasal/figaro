@@ -52,23 +52,34 @@
     <tr ng-cloak id={{movimiento.id}} data-id={{movimiento.id}} class="data-row fade-in" ng-repeat="movimiento in movimientos | orderBy : sortFecha : true">
     
         <td data-id={{movimiento.id}} data-ng-click="detailMovimiento($event)" ng-if="movimiento.categoria != 'Turnos' && movimiento.categoria != 'Empleados' && movimiento.categoria != 'Ventas'">{{movimiento.fecha | date }}</td>
-        <td data-id={{movimiento.id}} ng-if="movimiento.categoria == 'Turnos' || movimiento.categoria == 'Empleados' || movimiento.categoria == 'Ventas'">{{movimiento.fecha | date }}</td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimientoEmpleado($event)" ng-if="movimiento.categoria == 'Empleados'">{{movimiento.fecha | date }}</td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimientoVenta($event)" ng-if="movimiento.categoria == 'Ventas'">{{movimiento.fecha | date }}</td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimientoTurno($event)" ng-if="movimiento.categoria == 'Turnos'">{{movimiento.fecha | date }}</td>
         
         <td data-id={{movimiento.id}} data-ng-click="detailMovimiento($event)" ng-if="movimiento.categoria != 'Turnos' && movimiento.categoria != 'Empleados' && movimiento.categoria != 'Ventas'">{{movimiento.categoria}}</td>
-        <td data-id={{movimiento.id}} ng-if="movimiento.categoria == 'Turnos' || movimiento.categoria == 'Empleados' || movimiento.categoria == 'Ventas'">{{movimiento.categoria}}</td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimientoEmpleado($event)" ng-if="movimiento.categoria == 'Empleados'">{{movimiento.categoria}}</td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimientoVenta($event)" ng-if="movimiento.categoria == 'Ventas'">{{movimiento.categoria}}</td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimientoTurno($event)" ng-if="movimiento.categoria == 'Turnos'">{{movimiento.categoria}}</td>
         
         <td data-id={{movimiento.id}} data-ng-click="detailMovimiento($event)" ng-if="movimiento.categoria != 'Turnos' && movimiento.categoria != 'Empleados' && movimiento.categoria != 'Ventas'"> <font ng-class='{green : !movimiento.isGasto, red: movimiento.isGasto}'>{{movimiento.precio | currency }}</font></td>
-        <td data-id={{movimiento.id}} ng-if="movimiento.categoria == 'Turnos' || movimiento.categoria == 'Empleados' || movimiento.categoria == 'Ventas'"> <font ng-class='{green : !movimiento.isGasto, red: movimiento.isGasto}'>{{movimiento.precio | currency}}</font></td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimientoEmpleado($event)" ng-if="movimiento.categoria == 'Empleados'"><font ng-class='{green : !movimiento.isGasto, red: movimiento.isGasto}'>{{movimiento.precio | currency }}</font></td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimientoVenta($event)" ng-if="movimiento.categoria == 'Ventas'"><font ng-class='{green : !movimiento.isGasto, red: movimiento.isGasto}'>{{movimiento.precio | currency }}</font></td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimientoTurno($event)" ng-if="movimiento.categoria == 'Turnos'"><font ng-class='{green : !movimiento.isGasto, red: movimiento.isGasto}'>{{movimiento.precio | currency }}</font></td>
       
         <td data-id={{movimiento.id}} data-ng-click="detailMovimiento($event)" ng-if="(movimiento.categoria != 'Turnos' && movimiento.categoria != 'Empleados' && movimiento.categoria != 'Ventas') && movimiento.tipoPago == 'contado'">{{mostrarDescuento(movimiento)}}</td>
-        <td data-id={{movimiento.id}} ng-if="(movimiento.categoria == 'Turnos' || movimiento.categoria == 'Empleados' || movimiento.categoria == 'Ventas') && movimiento.tipoPago == 'contado'">{{mostrarDescuento(movimiento)}}</td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimientoEmpleado($event)" ng-if="movimiento.categoria == 'Empleados' && movimiento.tipoPago == 'contado'">{{mostrarDescuento(movimiento)}}</td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimientoVenta($event)" ng-if="movimiento.categoria == 'Ventas' && movimiento.tipoPago == 'contado'">{{mostrarDescuento(movimiento)}}</td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimientoTurno($event)" ng-if="movimiento.categoria == 'Turnos' && movimiento.tipoPago == 'contado'">{{mostrarDescuento(movimiento)}}</td>
+
         <td data-id={{movimiento.id}} data-ng-click="detailMovimiento($event)" ng-if="(movimiento.categoria != 'Turnos' && movimiento.categoria != 'Empleados' && movimiento.categoria != 'Ventas') && movimiento.tipoPago != 'contado'"><i class=material-icons>credit_card</i>{{mostrarDescuento(movimiento)}}</td>
-        <td data-id={{movimiento.id}} ng-if="(movimiento.categoria == 'Turnos' || movimiento.categoria == 'Empleados' || movimiento.categoria == 'Ventas') && movimiento.tipoPago != 'contado'"><i class=material-icons >credit_card</i>{{mostrarDescuento(movimiento)}}</td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimientoEmpleado($event)" ng-if="movimiento.categoria == 'Empleados' && movimiento.tipoPago != 'contado'"><i class=material-icons>credit_card</i>{{mostrarDescuento(movimiento)}}</td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimientoVenta($event)" ng-if="movimiento.categoria == 'Ventas' && movimiento.tipoPago != 'contado'"><i class=material-icons>credit_card</i>{{mostrarDescuento(movimiento)}}</td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimientoTurno($event)" ng-if="movimiento.categoria == 'Turnos' && movimiento.tipoPago != 'contado'"><i class=material-icons>credit_card</i>{{mostrarDescuento(movimiento)}}</td>
 
         <td data-id={{movimiento.id}} data-ng-click="detailMovimiento($event)" ng-if="movimiento.categoria != 'Turnos' && movimiento.categoria != 'Empleados' && movimiento.categoria != 'Ventas'">{{movimiento.detalle}}</td>        
-        <td class=link data-id={{movimiento.id}} data-ng-click="detailMovimientoEmpleado($event)" ng-if="movimiento.categoria == 'Empleados'">Ver Detalle</td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimientoEmpleado($event)" ng-if="movimiento.categoria == 'Empleados'">{{movimiento.detalle}}</td>
         <td class=link data-id={{movimiento.id}} data-ng-click="detailMovimientoVenta($event)" ng-if="movimiento.categoria == 'Ventas'">Ver Detalle</td>
-        <td class=link data-id={{movimiento.id}} data-ng-click="detailMovimientoTurno($event)" ng-if="movimiento.categoria == 'Turnos'">Ver Detalle</td>
+        <td data-id={{movimiento.id}} data-ng-click="detailMovimientoTurno($event)" ng-if="movimiento.categoria == 'Turnos'">{{movimiento.detalle}}</td>
                   
         <td class="tachotd" id={{movimiento.id}} data-id={{movimiento.id}} data-ng-click="confirmDelete(movimiento.id)" ng-if="movimiento.categoria != 'Turnos' && movimiento.categoria != 'Empleados' && movimiento.categoria != 'Ventas'"><label><i class="material-icons tachoi" >clear</i></label></td>
         <td class="tachotd" ng-if="movimiento.categoria == 'Turnos' || movimiento.categoria == 'Empleados' || movimiento.categoria == 'Ventas'"></td>

@@ -52,3 +52,15 @@
     border-radius: 2px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, .6)
 }
+
+.addEstadistica{
+    display: flex;
+}
+
+.divBusqueda{
+    padding-top: 9px;
+}
+
+.divBusquedaMargin{
+    margin-top: 9px;
+}
