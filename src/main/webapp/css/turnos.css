@@ -1,0 +1,29 @@
+
+.trabajos-empleado{
+    height: 150px;
+    overflow: auto;
+}
+
+.disabled{
+	color:grey;
+}
+
+.separator{
+	vertical-align: middle;
+}
+
+.fas{
+	vertical-align: text-top;
+    margin-left: 5px;
+}
+
+
+.trabajos-list tr:nth-child(odd) ,.dias-disponible-list tr:nth-child(odd) {
+    background-color: #FFF
+}
+
+.trabajos-list tr:hover td , .dias-disponible-list tr:hover td{
+    background-color: white;
+    color: inherit;
+    cursor: inherit;
+}

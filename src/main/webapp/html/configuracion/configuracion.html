@@ -3,6 +3,7 @@
 <head>
   <title>Configuraci&oacute;n</title>
   <#include "/html/common/head.html">
+  <link rel="stylesheet" type="text/css" href="/css/configuracion.css">
 </head>
 <body ng-app=figaro ng-controller=configuracionController data-ng-init="init()">
 <#include "/html/common/menu.html">
@@ -16,7 +17,7 @@
         <input tipe="text" placeholder="Descripci&oacute;n" ng-model="ngServicio.descripcion" maxlength="25" pattern="^[^\s].*([A-zÀ-ž\s]){2,25}" ng-pattern-restrict required>
         <input type="number" placeholder="Precio" ng-model="ngServicio.precio" step="0.01" required>
         <button class="button accept" type="submit"></button>
-        <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
+        <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
         <table id=table>
           <tbody>
           <tr ng-cloak id={{servicio.id}}  class="data-row fade-in"  ng-repeat="servicio in servicios" >
@@ -36,7 +37,7 @@
       <form ng-submit="addCiudad()">
       
         <div class=card-title><i class="material-icons">query_builder </i><label class=card-title> HORARIO</label></div>
-        <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
+        <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
         <table id=table >
           <tbody>
           <tr ng-cloak  class="data-row fade-in" ><td>
@@ -81,7 +82,7 @@
 
     <div class="card empleados"> 
         <div class=card-title><i class="material-icons">assignment_ind </i><label class=card-title> EMPLEADOS HABILITADOS</label></div>
-        <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
+        <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
         <table id=table >
           <tbody>
           <tr ng-cloak id={{ciudad.id}} class="data-row fade-in" ng-repeat="empleado in empleados" >
@@ -97,7 +98,7 @@
       <form ng-submit="addCategoria()">
         <div class=card-title><i class="material-icons">label_outline</i><label class=card-title>CATEGOR&Iacute;AS DE CAJA</label></div>
         <input type="text" placeholder="Nombre" ng-model="ngCategoria.nombre" maxlength="25" pattern="^[^\s].*([A-zÀ-ž\s]){2,25}" ng-pattern-restrict required>
-        <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
+        <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
         <table id=table>
           <tbody>
           <tr ng-cloak id={{categoria.id}} class="data-row fade-in" ng-repeat="categoria in categorias" >
@@ -117,7 +118,7 @@
       <form ng-submit="addCiudad()">
         <div class=card-title><i class="material-icons">place </i><label class=card-title> CIUDADES</label></div>
         <input type="text" placeholder="Ciudad" ng-model="ngCiudad.nombre"  maxlength="25" pattern="^[^\s].*([A-zÀ-ž\s]){2,25}" ng-pattern-restrict required>
-        <div class=loading><img widh=25 height=25 src="/imgs/loading.gif"></div>
+        <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
         <table id=table >
           <tbody>
           <tr ng-cloak id={{ciudad.id}} class="data-row fade-in" ng-repeat="ciudad in ciudades" >
