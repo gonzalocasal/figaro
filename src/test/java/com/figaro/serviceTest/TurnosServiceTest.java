@@ -1,4 +1,4 @@
-package com.figaro.service;
+package com.figaro.serviceTest;
 
 import org.junit.Before;
 
@@ -17,6 +17,8 @@ import com.figaro.model.Servicio;
 import com.figaro.model.Trabajo;
 import com.figaro.model.Turno;
 import com.figaro.repository.TurnosRepository;
+import com.figaro.service.ClientesService;
+import com.figaro.service.TurnosService;
 
 
 public class TurnosServiceTest {
