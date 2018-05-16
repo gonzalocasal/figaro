@@ -34,7 +34,7 @@ public class TurnosService {
 	public Turno saveTurno(Turno turno) {
 		LOGGER.info("Guardando un nuevo turno: " + turno.toString());
 		validateTurno(turno);
-		turno.generateTurnoInfo();
+		turno.calculateMontosTurno();
 		int newID = repository.saveTurno(turno);
 		turno.setId(newID);
 		return turno ;  
@@ -51,10 +51,8 @@ public class TurnosService {
 		return updated;
 	}
 
-	public Turno pagar(int turnoId){
-		Turno turno = getTurno(turnoId);
-		return (turno.getPagado()) ?  cancelPago(turnoId) : setPagado(turnoId);
-	}
+	
+	
 	
 	public Turno setPagado(int turnoId) {
 		Turno turno = getTurno(turnoId);
@@ -66,30 +64,6 @@ public class TurnosService {
 		return turno;
 	}
 
-	
-	public Turno setCobrado(int turnoId, Movimiento cobro) {
-		Turno turno = getTurno(turnoId);
-		LOGGER.info("Cobrando el Turno: " + turno.toString() + " Con el movimiento: " + cobro.toString());
-		turno.setCobrado(true);
-		Movimiento nuevoCobro = generateCobro(turno,cobro);
-		turno.setCobro(nuevoCobro);
-		repository.updateTurnoCobro(turno);
-		Cliente cliente = turno.getCliente();
-		cliente.setUltimaVisita(turno.getDesde());
-		clientesService.updateCliente(cliente);
-		return turno;
-	}
-	
-	public Turno cancelCobro(int turnoId) {
-		Turno turno = getTurno(turnoId);
-		LOGGER.info("Cancelando el cobro del Turno: " + turno.toString());
-		turno.setCobrado(false);
-		turno.setCobro(null);
-		turno.generateTurnoInfo();
-		repository.updateTurnoCobro(turno);
-		return turno;
-	}
-	
 	public Turno cancelPago(int turnoId) {
 		Turno turno = getTurno(turnoId);
 		LOGGER.info("Cancelando el pago del Turno: " + turno.toString());
@@ -99,7 +73,33 @@ public class TurnosService {
 		return turno;
 	}
 	
+	
+	
+	
+	public Turno setCobrado(int turnoId, Movimiento cobro) {
+		Turno turno = getTurno(turnoId);
+		LOGGER.info("Cobrando el Turno: " + turno.toString() + " Con el movimiento: " + cobro.toString());
+		turno.setCobrado(true);
+		Movimiento nuevoCobro = generateCobro(turno,cobro);
+		turno.setCobro(nuevoCobro);
+		repository.updateTurnoCobro(turno);
+		
+		updateUltimaVisitaCliente(turno);
+		return turno;
+	}
 
+	public Turno cancelCobro(int turnoId) {
+		Turno turno = getTurno(turnoId);
+		LOGGER.info("Cancelando el cobro del Turno: " + turno.toString());
+		turno.setCobrado(false);
+		turno.setCobro(null);
+		repository.updateTurnoCobro(turno);
+		return turno;
+	}
+	
+
+
+	
 	private Movimiento generateCobro(Turno turno,Movimiento cobro) {
 		Movimiento movimiento = new Movimiento();
 		movimiento.setCategoria(CATEGORIA_TURNOS);
@@ -139,7 +139,7 @@ public class TurnosService {
 	private void updatePago(Turno turno) {
 		if (turno.getPagado())
 		    turno.setPago(generatePago(turno));	
-		}
+	}
 	
 	
 	public Turno deleteTurno(int turnoId) {
@@ -153,8 +153,6 @@ public class TurnosService {
 		return repository.buscar(clienteId,empleadoId,servicio,cobrado,pagado,fechaDesde,fechaHasta);
 	}
 
-	
-	
 	
 	private void validateTurno(Turno nuevoTurno) {
 		LOGGER.info("Validando el Turno: " + nuevoTurno.getDesde() +" - " +nuevoTurno.getHasta() +" "+ nuevoTurno.getEmpleado() );
@@ -232,6 +230,13 @@ public class TurnosService {
 			   turno.getHasta().equals(nuevoTurno.getHasta());
 	}
 	
+	private void updateUltimaVisitaCliente(Turno turno) {
+		Cliente cliente = turno.getCliente();
+		cliente.setUltimaVisita(turno.getDesde());
+		clientesService.updateCliente(cliente);
+	}
+	
+	
 	public Turno getTurno(int turnoId) {
 		LOGGER.info("Obteniendo el turno con ID: " + turnoId);
 		return repository.getTurno(turnoId);
@@ -262,9 +267,10 @@ public class TurnosService {
 		List<Turno> turnosSinPagar = repository.getTurnosEmpleadoSinPagar(empleadoId);
 		LOGGER.info("Pagando todos los turnos pendientes del empleado: " +empleadoId);
 		for(Turno t : turnosSinPagar)
-			turnosPagados.add(pagar(t.getId()));
+			turnosPagados.add(setPagado(t.getId()));
 		return turnosPagados;
 	}
+	
 
 	public List<TurnoDTO> searchTurno(Date desde) {
 		return repository.searchTurnoDTO(desde);

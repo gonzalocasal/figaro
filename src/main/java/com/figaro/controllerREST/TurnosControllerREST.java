@@ -107,7 +107,12 @@ public class TurnosControllerREST {
 	
 	@PutMapping("turnos/{turnoId}/pagar")
     public ResponseEntity<Turno> pago( @PathVariable int turnoId) {
-		return new ResponseEntity<>(service.pagar(turnoId), HttpStatus.OK);
+		return new ResponseEntity<>(service.setPagado(turnoId), HttpStatus.OK);
+	}
+	
+	@PutMapping("turnos/{turnoId}/pagar/cancelar")
+    public ResponseEntity<Turno> cancelPago( @PathVariable int turnoId) {
+		return new ResponseEntity<>(service.cancelPago(turnoId), HttpStatus.OK);
 	}
 	
 	

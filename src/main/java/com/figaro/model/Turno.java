@@ -49,7 +49,7 @@ public class Turno {
 		this.trabajos.removeAll(new ArrayList<Trabajo>(this.trabajos));
 		this.trabajos.addAll(turno.getTrabajos());
 		
-		generateTurnoInfo();
+		calculateMontosTurno();
 		
 		this.cobro = turno.getCobro();
 		this.pago =  turno.getPago();
@@ -85,7 +85,7 @@ public class Turno {
 
 	
 
-	public void generateTurnoInfo() {
+	public void calculateMontosTurno() {
 		this.montoCobro = calculatePrecio();
 		this.montoPago  = calculatePrecioPago();
 		this.descripcionTrabajos = generateDescripcionTrabajos();
