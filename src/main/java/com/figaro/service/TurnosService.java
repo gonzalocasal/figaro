@@ -103,7 +103,7 @@ public class TurnosService {
 	private Movimiento generateCobro(Turno turno,Movimiento cobro) {
 		Movimiento movimiento = new Movimiento();
 		movimiento.setCategoria(CATEGORIA_TURNOS);
-		movimiento.setTurno(turno);
+		movimiento.setTurnoId(turno.getId());
 		movimiento.setIsGasto(false);
 		movimiento.setFecha(turno.getHasta());
 		movimiento.setTipoPago(cobro.getTipoPago());
@@ -119,8 +119,8 @@ public class TurnosService {
 	private Movimiento generatePago(Turno turno) {
 		BigDecimal montoTotal = turno.calculatePrecioPago();
 		Movimiento movimiento = new Movimiento();
+		movimiento.setTurnoId(turno.getId());
 		movimiento.setCategoria(CATEGORIA_EMPLEADOS);
-		movimiento.setTurno(turno);
 		movimiento.setCuotas(0);
 		movimiento.setFecha(new Date());
 		movimiento.setIsGasto(true);

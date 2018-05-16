@@ -45,46 +45,20 @@ app.controller('movimientosController', function ($scope, $http) {
 	            
 		    });
 	    };	  
-
-	    //CLICK DETALLE TURNO
-	    $scope.detailMovimientoTurno = function(event){
+ 		
+ 		//CLICK DETALLE TURNO
+	    $scope.detailTurno = function(movimiento,modal){
 	        $scope.message='';
-	        $scope.isNuevoMovimiento = false
-	        $scope.movimientoID = event.currentTarget.getAttribute("data-id");
-	        $http.get('/rest/movimientos/'+$scope.movimientoID).then(function (response) {
-	            $scope.ngMovimiento = response.data;
-	            $scope.ngMovimiento.fecha = new Date($scope.ngMovimiento.fecha);
-	            $scope.ngturno = $scope.ngMovimiento.id_turno;
-	            $http.get("/rest/movimientos/turno",{params: { id: $scope.ngturno}}).then(function (response) {
-	            	$scope.ngMovimientoTurno = response.data;
-	            	$http.get("/rest/movimientos/setDeTrabajos",{params: { id: $scope.ngturno}}).then(function (response) {
-	            		$scope.ngMovimientoSetTrabajos = response.data;	            	
-	            	});
-	               	openModal("modal-caja-turno");
-	            });                    
-	            
-		    });
+	        $scope.isNuevoMovimiento = false;
+	        $scope.ngDescuento = movimiento.descuento;
+            $http.get("/rest/turnos/"+movimiento.turnoId).then(function (response) {
+            	$scope.ngMovimientoTurno = response.data;
+            	$scope.ngMovimientoSetTrabajos = response.data.trabajos;
+               	openModal(modal);
+            });                    
 	    };
 
-	    //CLICK DETALLE EMPLEADO
-	    $scope.detailMovimientoEmpleado = function(event){
-	        $scope.message='';
-	        $scope.isNuevoMovimiento = false
-	        $scope.movimientoID = event.currentTarget.getAttribute("data-id");
-	        $http.get('/rest/movimientos/'+$scope.movimientoID).then(function (response) {
-	            $scope.ngMovimiento = response.data;
-	            $scope.ngMovimiento.fecha = new Date($scope.ngMovimiento.fecha);
-	            $scope.ngturno = $scope.ngMovimiento.id_turno;
-	            $http.get("/rest/movimientos/turno",{params: { id: $scope.ngturno}}).then(function (response) {
-	            	$scope.ngMovimientoTurno = response.data;
-	            	$http.get("/rest/movimientos/setDeTrabajos",{params: { id: $scope.ngturno}}).then(function (response) {
-	            		$scope.ngMovimientoSetTrabajos = response.data;	            	
-	            	});
-	               	openModal("modal-caja-empleado");
-	            });                    
-	            
-		    });
-	    };
+	
 
 	    $scope.calculaTotalVenta = function(){
 	        var total = 0;

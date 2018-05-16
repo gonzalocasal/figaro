@@ -42,7 +42,7 @@
   </table>
 
      <div class=banner ng-cloak>
-      <label class=banner-label ><i class=material-icons >account_balance_wallet</i> Total: <font ng-cloak ng-class=green>{{ calculaTotalEmpleado() | currency }}</font></label>  
+      <label class=banner-label ><i class=material-icons >account_balance_wallet</i> Total: <font ng-cloak ng-class=green>{{ ngMovimientoTurno.montoPago - ngMovimientoTurno.descuento | currency }}</font></label>  
   
   </div>
        <div class=buttons>

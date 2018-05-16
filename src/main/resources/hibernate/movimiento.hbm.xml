@@ -14,10 +14,7 @@
 	 	<property name="tipoPago" 		column="TIPOPAGO"  	type="string"/>
 	 	<property name="cuotas" 		column="CUOTAS"  	type="int"/>
 	 	<property name="descuento" 		column="DESCUENTO"  type="big_decimal"/>	 	 
+	 	<property name="turnoId" 		column="ID_TURNO"  	type="int"/>
 	 	
-	 	<many-to-one name="turno" unique="true" class="com.figaro.model.Turno" lazy="false"  fetch="select">
-            <column name="ID_TURNO" />
-        </many-to-one>
-     	
 	</class>
 </hibernate-mapping>
