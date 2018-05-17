@@ -8,8 +8,29 @@
 <body ng-app=figaro ng-controller=turnosBusquedaController  data-ng-init="init()" >
   <#include "/html/common/menu.html">
   <div id=content class="content fade-in">
+
     <div class=banner>
 
+        <label class=banner-button  ng-click="filtros=!filtros"  ng-click="ShowHideDia()"><i class="material-icons">tune</i> Filtros </label>
+        <div class="separator"></div>
+        <i class="material-icons">event</i>
+        <label >Desde: </label><input ng-change="selectSearch()" ng-model=desde type=date>
+        <div class="separator"></div>
+        <i class="material-icons">event</i>
+        <label >Hasta: </label><input ng-change="selectSearch()" ng-model=hasta type=date>
+
+        <div class=export>
+          <label title="Imprimir" class="banner-button" onclick="imprimir()"><i class="material-icons">print</i></label>
+          <div class="separator"></div>
+          <label title="Exportar a PDF" class="banner-button" id=export ng-click=exportPDF()><i class="far fa-file-pdf file-type-icon"></i></label>   
+          <div class="separator"></div>
+          <label title="Exportar a Excel" class="banner-button" id=export ng-click=exportExcel()><i class="far fa-file-excel file-type-icon"></i></label>
+        </div>
+
+    </div>
+
+    <div ng-show=filtros class=banner>
+     
         <label>Cliente: </label><select name=cliente ng-change="selectSearch()" ng-model="cliente" ng-options="cliente as cliente.nombre + ' ' + cliente.apellido   for cliente in clientes">
           <option></option>
         </select>
@@ -37,21 +58,7 @@
           <option value=true >Sí</option>
           <option value=false>No</option>
         </select>
-      
-        <div class="separator"></div>
-        <label >Desde: </label><input ng-change="selectSearch()" ng-model=desde type=date>
-      
-        <div class="separator"></div>
-        <label >Hasta: </label><input ng-change="selectSearch()" ng-model=hasta type=date>
         
-        <div class=export>
-          <label title="Imprimir" class="banner-button" onclick="imprimir()"><i class="material-icons">print</i></label>
-          <div class="separator"></div>
-          <label title="Exportar a PDF" class="banner-button" id=export ng-click=exportPDF()><i class="far fa-file-pdf file-type-icon"></i></label>   
-          <div class="separator"></div>
-          <label title="Exportar a Excel" class="banner-button" id=export ng-click=exportExcel()><i class="far fa-file-excel file-type-icon"></i></label>
-        </div>
-
     </div>
  
     <div class="loading-wrapper">

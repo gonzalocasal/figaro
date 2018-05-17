@@ -65,7 +65,7 @@ body{
 }
 
 .content {
-    margin-left: 250px
+    margin-left: 210px
 }
 
 @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
@@ -292,10 +292,8 @@ ul {
     list-style-type: none;
     margin: 0;
     top: 0;
-    margin-right: 300px;
     background-color:  #292961;
     padding: 0;
-    width: 200px;
     height: 100%;
     position: fixed; 
     overflow: auto;
