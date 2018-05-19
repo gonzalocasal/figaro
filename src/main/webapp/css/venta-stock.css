@@ -23,6 +23,19 @@
 }
 
 
+form input:focus, form select:focus {
+    outline: none !important;
+    border: unset;
+}
+
+.form-message, .form-message-ok{
+    margin-top: 20px;
+}
+
+form input{
+    width: 40px;
+}
+
 .card.venta button{
     cursor: pointer;
     font-weight: 500;

@@ -28,7 +28,10 @@ public class Constants{
 	public static final String CATEGORIA_TURNOS = "Turnos";
 	public static final String CATEGORIA_EMPLEADOS = "Empleados";
 	public static final String CATEGORIA_VENTAS = "Ventas";
-
+	
+	public static final String CATEGORIA_NOTIFICACION_STOCK = "STOCK";
+	
+	
 	public static final String TIPO_PAGO_DEBITO  ="debito";
 	public static final String TIPO_PAGO_CREDITO ="credito";
 	public static final String TIPO_PAGO_CONTADO ="contado";

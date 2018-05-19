@@ -1,8 +1,10 @@
 package com.figaro.service;
 
-import static com.figaro.util.Constants.CATEGORIA_VENTAS;
+import static com.figaro.util.Constants.*;
+
 import java.util.Date;
 import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import com.figaro.dto.VentaDTO;
@@ -10,11 +12,7 @@ import com.figaro.model.Item;
 import com.figaro.model.Movimiento;
 import com.figaro.model.Producto;
 import com.figaro.model.Venta;
-import com.figaro.repository.MovimientosRepository;
 import com.figaro.repository.VentaRepository;
-import com.figaro.service.ProductosService;
-
-
 
 public class VentaService {
 
@@ -22,7 +20,7 @@ public class VentaService {
 	
 	private VentaRepository repository;
 	private ProductosService productosService;
-	private MovimientosRepository movimientosRepository;	
+	private NotificacionesService notificacionesService;
 	
 	public Venta getVenta(int ventaID) {
 		LOGGER.debug("Obteniendo la Venta con ID: " + ventaID);
@@ -31,10 +29,10 @@ public class VentaService {
 	
 	public Venta saveVenta (VentaDTO dto) {
 		LOGGER.info("Guardando la Venta: " + dto.getVenta().toString());
+		actualizarStock(dto.getVenta().getItems());
 		Integer newId = repository.saveVenta(dto.getVenta());
 		dto.getVenta().setId(newId);
 		LOGGER.info("La venta se guardó correctamente");
-		actualizarStock(dto.getVenta().getItems());
 		dto.getVenta().setCobroVenta(generarCobroVenta(dto));
 		return dto.getVenta();
 	}
@@ -43,9 +41,17 @@ public class VentaService {
 		LOGGER.info("Actualizando stock...");
 		for(Item item : items) {
 	        Producto p = productosService.buscarDesdeVenta(item.getNombreProducto(), item.getDescripcionProducto());
-	        productosService.updateCantidad(p.getId(), p.getCantidad()-item.getCantidad());
+	        int stockActualizado = p.getCantidad()-item.getCantidad();
+	        validarCantidadMinima(p,stockActualizado);
+			productosService.updateCantidad(p.getId(), stockActualizado);
 		}	
 	}
+
+	private void validarCantidadMinima(Producto producto, int stockActualizado) {
+		if (producto.getCantidadMinima() >= stockActualizado)
+			notificacionesService.generarNotificacionStockMinimo(producto);
+	}
+
 
 	private Movimiento generarCobroVenta(VentaDTO dto) {
 		Movimiento movimiento = new Movimiento();
@@ -82,28 +88,14 @@ public class VentaService {
 		return repository.getAll();
 	}	
 	
-	public VentaRepository getRepository() {
-		return repository;
-	}
-	
 	public void setRepository(VentaRepository repository) {
 		this.repository = repository;
 	}
-
-	public ProductosService getProductosService() {
-		return productosService;
-	}
-
 	public void setProductosService(ProductosService productosService) {
 		this.productosService = productosService;
 	}
-
-	public MovimientosRepository getMovimientosRepository() {
-		return movimientosRepository;
-	}
-
-	public void setMovimientosRepository(MovimientosRepository movimientosRepository) {
-		this.movimientosRepository = movimientosRepository;
+	public void setNotificacionesService(NotificacionesService notificacionesService) {
+		this.notificacionesService = notificacionesService;
 	}
 	
 }

@@ -92,16 +92,16 @@ body{
   animation-delay: 0s;
 }
 
-.cantidad-notificaciones{
+.menu-notificaciones{
+    color: white;
+    text-align: center;
+    width: 15px;
+    position: fixed;
+    left: 27px;
     background-color: red;
-    color:white;
-    border: 2px solid red;
-    border-radius: 25px;
+    border-radius: 25px;   
 }
 
-.notificaciones{
-    display: none;
-}
 
 .banner-title{
     text-align: right;

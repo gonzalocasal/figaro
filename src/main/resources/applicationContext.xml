@@ -32,6 +32,7 @@
 			<list>
   				<value>hibernate/categoria.hbm.xml</value>
   				<value>hibernate/ciudad.hbm.xml</value>
+  				<value>hibernate/notificacion.hbm.xml</value>
   				<value>hibernate/movimiento.hbm.xml</value>
   				<value>hibernate/persona.hbm.xml</value>
   				<value>hibernate/proveedor.hbm.xml</value>
@@ -138,14 +139,15 @@
 			<ref bean="VentaRepository" />
 		</property>
 		
+		<property name="notificacionesService">
+			<ref bean="NotificacionesServiceTransactional" />
+		</property>
+		
 		<property name="productosService">
 			<ref bean="ProductosServiceTransactional" />
 		</property>
 		
-		<property name="movimientosRepository">
-			<ref bean="MovimientosRepository" />
-		</property>
-		
+	
 	</bean>
 
 	<bean id="VentaRepository"	class="com.figaro.repository.VentaRepository">
@@ -347,6 +349,36 @@
 	
 
 	<bean id="EstadisticasRepository"	class="com.figaro.repository.EstadisticasRepository">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	
+	<!-- NOTIFIACIONES !-->
+	<bean id="NotificacionesServiceTransactional" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="NotificacionesService" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="NotificacionesService" class="com.figaro.service.NotificacionesService">
+		<property name="repository">
+			<ref bean="NotificacionesRepository" />
+		</property>
+		
+	</bean>
+	
+
+	<bean id="NotificacionesRepository"	class="com.figaro.repository.NotificacionesRepository">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>

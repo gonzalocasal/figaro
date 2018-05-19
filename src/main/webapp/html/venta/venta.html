@@ -73,8 +73,8 @@
             <label class=banner-label title="Total a pagar"><i class=material-icons >account_balance_wallet</i> Total: {{ ngTotalVenta | currency }}</font></label>
           </div>
           <button type="submit" title="Vender productos" >VENDER</button>
-          <div>
-              <label ng-class="messageError ? 'form-message' : 'form-message-ok'">{{message}}</label>
+          <div ng-class="messageError ? 'form-message' : 'form-message-ok'">
+              <label >{{message}}</label>
           </div>
 
         </form>
