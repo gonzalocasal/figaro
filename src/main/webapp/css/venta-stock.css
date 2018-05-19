@@ -24,16 +24,33 @@
 
 
 form input:focus, form select:focus {
-    outline: none !important;
-    border: unset;
+    font-family: 'Roboto', sans-serif;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-left-width: 0px;
+    border-bottom-width: 2px;
+    border-bottom-color: #EEE;
+    display: inline-block;
+    background: transparent;
 }
 
 .form-message, .form-message-ok{
     margin-top: 20px;
 }
 
-form input{
+.venta form input{
     width: 40px;
+}
+
+.productos{
+    font-family: 'Roboto', sans-serif;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-left-width: 0px;
+    border-bottom-width: 2px;
+    border-bottom-color: #EEE;
+    display: inline-block;
+    background: transparent;
 }
 
 .card.venta button{

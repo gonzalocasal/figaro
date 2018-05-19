@@ -5,9 +5,9 @@
   <#include "/html/common/head.html">
   <link rel="stylesheet" type="text/css" href="/css/notificaciones.css">
 </head>
-<body ng-app=figaro ng-controller=notificacionesController  data-ng-init="init()" >
+<body  ng-app=figaro ng-controller=notificacionesController  data-ng-init="init()" >
   <#include "/html/common/menu.html">
-  <div id=content class="content fade-in">
+  <div ng-cloak id=content class="content fade-in">
   
   <div ng-cloak ng-if="!notificacion.leida" ng-class="notificacion.leida ? 'leida' : ''" class="notificacion fade-in" ng-repeat="notificacion in notificaciones | orderBy:'notificacion.fecha'">
     
@@ -27,7 +27,7 @@
     <label>{{notificacion.detalle}}</label>
   </div>
  
-  <div class=ver-mas id=ver-mas  ng-cloak ng-hide = "(notificaciones.length >= cantidadTotal) || sinPagar">
+  <div class=ver-mas id=ver-mas  ng-cloak ng-show = "(notificaciones.length < cantidadTotal)">
         <label  ng-click=verMas() > VER M&Aacute;S</label>
   </div>
 

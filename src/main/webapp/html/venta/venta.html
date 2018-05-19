@@ -24,7 +24,7 @@
             
           <div class=card-title><i class="material-icons">add_shopping_cart</i><label>Productos</label></div>
           <div class=form-field title=""><label>Seleccionar producto: </label>
-            <select name="producto" placeholder="Productos" ng-model="producto" ng-change="verProducto(producto)">
+            <select name="producto" class=productos ng-model="producto" ng-change="verProducto(producto)">
               <option value="{{producto.id}}" ng-repeat= "producto in productos" ng-disabled="producto.cantidad<1" >{{producto.nombre}} ({{producto.descripcion}})</option>
             </select>
           </div>
