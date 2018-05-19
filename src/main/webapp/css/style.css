@@ -198,13 +198,12 @@ body{
 }
 
 .fa-3x{
-    font-size: 2em;
+    font-size: 1.5em;
 }
 
 .loading{
-    display: none;
-    position:fixed; 
-    left: 50%;
+    text-align: center;
+    width: 100%;
 }
 
 .menu{
