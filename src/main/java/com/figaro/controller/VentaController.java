@@ -8,12 +8,12 @@ public class VentaController {
 	
 	@RequestMapping("/venta")
 	public String venta() {
-		return "html/venta/venta";
+		return "venta/venta";
 	}
 
 	@RequestMapping("/venta/historial-venta")
 	public String historialVenta() {
-		return "html/venta/historial-venta";
+		return "venta/historial-venta";
 	}
 
 }

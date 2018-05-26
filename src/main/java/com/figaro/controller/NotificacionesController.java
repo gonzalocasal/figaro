@@ -8,6 +8,6 @@ public class NotificacionesController {
 	
 	@RequestMapping("/notificaciones")
 	public String turnos() {
-		return "html/notificaciones/notificaciones";
+		return "notificaciones/notificaciones";
 	}
 }

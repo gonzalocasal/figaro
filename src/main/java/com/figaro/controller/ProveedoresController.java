@@ -8,7 +8,7 @@ public class ProveedoresController {
 	
 	@RequestMapping("/proveedores")
 	public String cliente() {
-		return "html/proveedores/proveedores";
+		return "proveedores/proveedores";
 	}
 
 }

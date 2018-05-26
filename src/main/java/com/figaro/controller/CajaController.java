@@ -8,7 +8,7 @@ public class CajaController {
 	
 	@RequestMapping("/caja")
 	public String caja() {
-		return "html/caja/caja";
+		return "caja/caja";
 	}
 
 }

@@ -8,7 +8,7 @@ public class ClientesController {
 	
 	@RequestMapping("/clientes")
 	public String cliente() {
-		return "html/clientes/clientes";
+		return "clientes/clientes";
 	}
 
 }

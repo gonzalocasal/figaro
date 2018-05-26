@@ -8,13 +8,13 @@ public class TurnosController {
 
 	@RequestMapping("/")
 	public String turnos() {
-		return "html/turnos/turnos";
+		return "turnos/turnos";
 	}
 
 
 	@RequestMapping("/turnos/buscar")
 	public String turnosBuscar() {
-		return "html/turnos/buscar";
+		return "turnos/buscar";
 	}
 
 	

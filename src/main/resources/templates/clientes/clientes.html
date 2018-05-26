@@ -2,11 +2,11 @@
 <html>
 <head>
 	<title>Clientes</title>
-  <#include "/html/common/head.html">
+  <#include "/common/head.html">
   
 </head>
 <body ng-app=figaro ng-controller=clientesController data-ng-init="init()" >
-  <#include "/html/common/menu.html">
+  <#include "/common/menu.html">
   <div id=content class="content fade-in" ng-cloak>
     <div class="banner">
         
@@ -53,8 +53,8 @@
     </table>
   </div>
   <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
-  <#include "/html/clientes/clientes-modal.html">
-  <#include "/html/common/javascript.html">
+  <#include "/clientes/clientes-modal.html">
+  <#include "/common/javascript.html">
   <script src="js/clientesController.js" ></script>
 </body>
 </html>

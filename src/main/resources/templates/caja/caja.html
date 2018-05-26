@@ -2,10 +2,10 @@
 <html>
 <head> 
   <title>Caja</title>
-  <#include "/html/common/head.html">   
+  <#include "/common/head.html">   
 </head>
 <body ng-app=figaro ng-controller=movimientosController>
-<#include "/html/common/menu.html">
+<#include "/common/menu.html">
 <div id=content class="content fade-in">
   <div class=banner>
       <label class="banner-button add" ng-click="newMovimiento()"><i class="material-icons" >attach_money</i>Nuevo</label>   
@@ -150,12 +150,12 @@
 
 
 <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
-<#include "/html/caja/caja-modal.html">
-<#include "/html/caja/caja-modal-venta.html">
-<#include "/html/caja/caja-modal-turno.html">
-<#include "/html/caja/caja-modal-empleado.html">
-<#include "/html/common/javascript.html">
-<#include "/html/common/confirm.html">
+<#include "/caja/caja-modal.html">
+<#include "/caja/caja-modal-venta.html">
+<#include "/caja/caja-modal-turno.html">
+<#include "/caja/caja-modal-empleado.html">
+<#include "/common/javascript.html">
+<#include "/common/confirm.html">
 <script src="js/movimientosController.js" ></script>
 </body>
 </html>

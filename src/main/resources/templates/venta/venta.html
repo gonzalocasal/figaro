@@ -2,11 +2,11 @@
 <html>
   <head> 
 	  <title>Ventas</title>
-    <#include "/html/common/head.html"> 
+    <#include "/common/head.html"> 
     <link rel="stylesheet" type="text/css" href="/css/venta-stock.css">
   </head>
   <body ng-app=figaro ng-controller=ventaController >
-    <#include "/html/common/menu.html">
+    <#include "/common/menu.html">
     <div id=content class="content fade-in">
       
       <div class="banner">
@@ -83,9 +83,9 @@
 
 
     </div>
-    <#include "/html/venta/cobrar.html">
-    <#include "/html/common/confirm.html">
-    <#include "/html/common/javascript.html">
+    <#include "/venta/cobrar.html">
+    <#include "/common/confirm.html">
+    <#include "/common/javascript.html">
     <script src="../js/ventaController.js" ></script>
   </body>
 </html>

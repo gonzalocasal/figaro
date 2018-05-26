@@ -2,11 +2,11 @@
 <html>
 <head> 
   <title>Turnos</title>
-  <#include "/html/common/head.html">
+  <#include "/common/head.html">
 
 </head>
 <body ng-app=figaro ng-controller=turnosBusquedaController  data-ng-init="init()" >
-  <#include "/html/common/menu.html">
+  <#include "/common/menu.html">
   <div id=content class="content fade-in">
 
     <div class=banner>
@@ -113,9 +113,9 @@
   
   </div>
 
-  <#include "/html/turnos/cobrar.html">
-  <#include "/html/turnos/deshacer-cobrado-pagado.html">
-  <#include "/html/common/javascript.html">
+  <#include "/turnos/cobrar.html">
+  <#include "/turnos/deshacer-cobrado-pagado.html">
+  <#include "/common/javascript.html">
   <script src="/js/turnosBusquedaController.js" ></script>
 </body>
 </html>

@@ -2,11 +2,11 @@
 <html>
 <head> 
 	<title>Stock</title>
-  <#include "/html/common/head.html"> 
+  <#include "/common/head.html"> 
   <link rel="stylesheet" type="text/css" href="/css/venta-stock.css">
 </head>
 <body ng-app=figaro ng-controller=stockController data-ng-init="init()" >
-  <#include "/html/common/menu.html">
+  <#include "/common/menu.html">
   <div ng-cloak id=content class="content fade-in">
     <div class="banner">
         <label class="banner-button add boton-stock" ng-click="newProducto()"><i class=material-icons>store_mall_directory</i>Nuevo</label>
@@ -47,8 +47,8 @@
   <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
 
   <#include "stock-modal.html">
-  <#include "/html/common/confirm.html">
-  <#include "/html/common/javascript.html">
+  <#include "/common/confirm.html">
+  <#include "/common/javascript.html">
   <script src="js/stockController.js" ></script>
 </body>
 </html>

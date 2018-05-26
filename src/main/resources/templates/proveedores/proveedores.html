@@ -2,10 +2,10 @@
 <html>
 <head>
 	<title>Proveedores</title>
-  <#include "/html/common/head.html">
+  <#include "/common/head.html">
 </head>
 <body ng-app=figaro ng-controller=proveedoresController data-ng-init="init()" >
-  <#include "/html/common/menu.html">
+  <#include "/common/menu.html">
   <div id=content class="content fade-in">
     <div class="banner">
         <label class="banner-button add" ng-click="newProveedor()"><i class=material-icons  >local_shipping</i> Nuevo</label>
@@ -37,9 +37,9 @@
     </table>
   </div>
   <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
-  <#include "/html/proveedores/proveedores-modal.html">
-  <#include "/html/common/confirm.html">
-  <#include "/html/common/javascript.html">
+  <#include "/proveedores/proveedores-modal.html">
+  <#include "/common/confirm.html">
+  <#include "/common/javascript.html">
   <script src="js/proveedoresController.js" ></script>
 </body>
 </html>

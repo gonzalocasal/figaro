@@ -2,11 +2,11 @@
 <html>
 <head>
 	<title>Empleados</title>
-  <#include "/html/common/head.html">
+  <#include "/common/head.html">
   <link rel="stylesheet" type="text/css" href="/css/empleados.css">
 </head>
 <body ng-app=figaro ng-controller=empleadosController data-ng-init="init()" >
-  <#include "/html/common/menu.html">
+  <#include "/common/menu.html">
   <div ng-cloak id=content class="content fade-in">     
      <div class=banner>
       <label class="banner-button add" ng-click="newEmpleado()"><i class="material-icons" >assignment_ind</i>Nuevo</label>
@@ -30,8 +30,8 @@
   
   </div>
   <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
-  <#include "/html/empleados/empleados-modal.html">
-  <#include "/html/common/javascript.html">
+  <#include "/empleados/empleados-modal.html">
+  <#include "/common/javascript.html">
   <script src="js/empleadosController.js" ></script>
 </body>
 </html>

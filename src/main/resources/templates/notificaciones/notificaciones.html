@@ -2,11 +2,11 @@
 <html>
 <head> 
   <title>Notificaciones</title>
-  <#include "/html/common/head.html">
+  <#include "/common/head.html">
   <link rel="stylesheet" type="text/css" href="/css/notificaciones.css">
 </head>
 <body  ng-app=figaro ng-controller=notificacionesController  data-ng-init="init()" >
-  <#include "/html/common/menu.html">
+  <#include "/common/menu.html">
   <div ng-cloak id=content class="content fade-in">
   
   <div ng-cloak ng-if="!notificacion.leida" ng-class="notificacion.leida ? 'leida' : ''" class="notificacion fade-in" ng-repeat="notificacion in notificaciones | orderBy:'notificacion.fecha'">
@@ -45,8 +45,8 @@
 
   </div>
 
-  <#include "/html/common/javascript.html">
-  <#include "/html/common/confirm.html">
+  <#include "/common/javascript.html">
+  <#include "/common/confirm.html">
   <script src="/js/notificacionesController.js" ></script>
 </body>
 </html>

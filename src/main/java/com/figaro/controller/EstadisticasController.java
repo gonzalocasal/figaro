@@ -8,7 +8,7 @@ public class EstadisticasController {
 	
 	@RequestMapping("/estadisticas")
 	public String estadisticas() {
-		return "html/estadisticas/estadisticas";
+		return "estadisticas/estadisticas";
 	}
 
 }

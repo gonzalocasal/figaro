@@ -1,0 +1,22 @@
+<!Doctype html>
+<html>
+<head>
+    <title>F&iacute;garo</title>
+    <#include "/common/head.html">
+    <body class=login-body>
+        <div class="login-form fade-in">
+            <img class=login-logo src="/imgs/logo.png"><br>
+            <form action="/login" method="post">
+                <div class=form-field><label><i class="material-icons">person </i></label><input type="text"  name="username" required="" /><br></div>
+                <div class=form-field><label><i class="material-icons">lock </i></label><input type="password" name="password" required/><br></div>
+                <input class="ingresar"  type="submit" value="INGRESAR"/><br>
+                <div class=fail-login>Usuario o contraseña incorrectos</div>
+            </form>
+        </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script >
+        if(window.location.href.indexOf("error") > -1)
+            $('.fail-login').show();
+    </script>
+    </body>
+</html>

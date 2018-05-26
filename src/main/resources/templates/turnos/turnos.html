@@ -2,11 +2,11 @@
 <html>
 <head> 
   <title>Turnos</title>
-  <#include "/html/common/head.html">
+  <#include "/common/head.html">
   <link rel="stylesheet" type="text/css" href="/css/turnos.css">
 </head>
 <body ng-app=figaro ng-controller=turnosController  data-ng-init="init()" >
-  <#include "/html/common/menu.html">
+  <#include "/common/menu.html">
   <div id=content class="content fade-in">
     <div class=banner>
         <label class="banner-button" ng-click="newTurno()" ><i class=material-icons>date_range</i> Nuevo</label>
@@ -55,7 +55,7 @@
 
   </div>
 
-  <#include "/html/turnos/turnos-modal.html">
+  <#include "/turnos/turnos-modal.html">
   <div ng-cloak ng-if="turnos.length < 1" class="message fade-in">
     <div class="message-content">No hay turnos para este d&iacute;a.</div>
   </div>
@@ -63,14 +63,14 @@
   <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
   
   <div data-ng-init="init()" ng-controller=clientesController >
-  <#include "/html/clientes/clientes-modal.html">
+  <#include "/clientes/clientes-modal.html">
   </div>
 
-  <#include "/html/turnos/cobrar.html">
-  <#include "/html/turnos/buscar-modal.html">
-  <#include "/html/turnos/deshacer-cobrado-pagado.html">
-  <#include "/html/common/javascript.html">
-  <#include "/html/common/confirm.html">
+  <#include "/turnos/cobrar.html">
+  <#include "/turnos/buscar-modal.html">
+  <#include "/turnos/deshacer-cobrado-pagado.html">
+  <#include "/common/javascript.html">
+  <#include "/common/confirm.html">
   <script src="/js/turnosController.js" ></script>
   <script src="/js/clientesController.js" ></script>
   <script src="/js/configuracionController.js" ></script>
