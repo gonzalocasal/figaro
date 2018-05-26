@@ -13,8 +13,16 @@
       <label class=banner-button ng-click="ShowHideDia()"><i class=material-icons>search</i> D&iacute;as </label>
       <div class="separator"></div>
       <label class=banner-button ng-click="ShowHideCategoria()"><i class=material-icons>search</i> Categor&iacute;a </label>
-  </div>
 
+      <div class=export>
+          <label title="Imprimir" class="banner-button" onclick="imprimir()"><i class="material-icons">print</i></label>
+          <div class="separator"></div>
+          <label title="Exportar a PDF" class="banner-button" id=export ng-click=exportPDF()><i class="far fa-file-pdf file-type-icon"></i></label>   
+          <div class="separator"></div>
+          <label title="Exportar a Excel" class="banner-button" id=export ng-click=exportExcel()><i class="far fa-file-excel file-type-icon"></i></label>
+      </div>
+
+  </div>
   
   <div class=banner-busqueda ng-hide = "IsHiddenDia" ng-cloak>
     <div>       

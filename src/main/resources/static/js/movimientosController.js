@@ -436,7 +436,128 @@ app.controller('movimientosController', function ($scope, $http) {
         	$scope.IsHiddenMenos = true;
         	$scope.IsHiddenMas = false;
             $scope.IsHiddenMenos = $scope.IsHiddenMenos ? true : false;  
-        }    
+        }   
+
+        // LEER TURNOS DESDE LA TABLA HTML
+    function leerCaja(){
+        var movimientosCaja = [];
+        var rows = document.querySelectorAll("table tr");
+        var movsLength = rows.length - 8;
+        for (var i = 1; i < movsLength; i++) {
+            let movimientoCaja = {};
+            cols = rows[i].querySelectorAll("td, th");
+            movimientoCaja.fecha = cols[0].innerText;
+            movimientoCaja.categoria = cols[1].innerText;
+            movimientoCaja.monto = cols[2].innerText;
+            var pagoPrevio = cols[3].innerText;
+            if (pagoPrevio.includes('credit_cardD')) {
+            	var res = pagoPrevio.replace("credit_cardD", "D ");
+            } else {
+            	if (pagoPrevio.includes('credit_card')) {
+            		var res = pagoPrevio.replace("credit_card", "C ");            		
+            	} else {
+            		var res = pagoPrevio;
+            	}
+            }
+            movimientoCaja.pago = res;            
+            movimientoCaja.detalle = cols[4].innerText;            
+            movimientosCaja.push(movimientoCaja);
+        }        
+        return movimientosCaja;
+    }
+
+    function leerCaja2(){
+        var movimientosCaja = [];
+        var rows = document.querySelectorAll("table tr");
+        var movsini = rows.length - 6;
+        var movsLength = movsini + 3;
+        for (var i = movsini; i < movsLength; i++) {
+            let movimientoCaja = {};
+            cols = rows[i].querySelectorAll("td, th");
+            movimientoCaja.categoria = cols[0].innerText;
+            movimientoCaja.efectivo = cols[1].innerText;
+            movimientoCaja.tarjeta = cols[2].innerText;                      
+            movimientoCaja.general = cols[3].innerText;            
+            movimientosCaja.push(movimientoCaja);
+        }        
+        return movimientosCaja;
+    }
+
+        //EXPORTAR A PDF
+    $scope.exportPDF = function() {
+        var columns = [
+            {title: "FECHA", dataKey: "fecha"}, 
+            {title: "CATEGORIA", dataKey: "categoria"},
+            {title: "MONTO", dataKey: "monto"},
+            {title: "PAGO", dataKey: "pago"},
+            {title: "DETALLE", dataKey: "detalle"}            
+        ];
+        var doc = new jsPDF('l', 'pt');
+        var movs = leerCaja();
+        doc.autoTable(columns, movs,{headerStyles: {fillColor: [41,41,97]}});
+        
+        var columns2 = [
+        	{title: "", dataKey: "categoria"}, 
+            {title: "EFECTIVO", dataKey: "efectivo"}, 
+            {title: "TARJETA", dataKey: "tarjeta"},
+            {title: "GENERAL", dataKey: "general"}          
+        ];
+        var movs2 = leerCaja2();	
+		doc.autoTable(columns2, movs2, {headerStyles: {fillColor: [41,41,97]},startY: doc.autoTableEndPosY() + 50});
+		doc.save('figaro-movimientos.pdf');
+    }
+
+    //EXPORTAR A EXCEL
+    $scope.exportExcel = function () {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
+        var cols = rows[0].querySelectorAll("td, th");
+        //HEADER
+        var row = [];
+        for (var j = 0; j < cols.length; j++){       
+            row.push(cols[j].innerText);
+        }
+        csv.push(row.join(","));
+        //BODY
+        var movsLength = rows.length - 8;
+        for (var i = 1; i < movsLength; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+            row.push(cols[0].innerText);
+            row.push(cols[1].innerText);
+            row.push(cols[2].innerText);
+            var pagoPrevio = cols[3].innerText;
+            if (pagoPrevio.includes('credit_cardD')) {
+            	var res = pagoPrevio.replace("credit_cardD", "D ");
+            } else {
+            	if (pagoPrevio.includes('credit_card')) {
+            		var res = pagoPrevio.replace("credit_card", "C ");            		
+            	} else {
+            		var res = pagoPrevio;
+            	}
+            }
+            row.push(res);
+            row.push(cols[4].innerText);           
+            csv.push(row.join(","));             
+        }     
+        var movsini = rows.length - 7;
+        var movsLength = movsini + 4;
+        for (var i = movsini; i < movsLength; i++) {        	
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+            row.push(cols[0].innerText);
+            row.push(cols[1].innerText);
+            row.push(cols[2].innerText);
+            row.push(cols[3].innerText);
+            csv.push(row.join(",")); 
+        }   
+        csv=csv.join("\n")
+        var csvFile = new Blob([csv], {type: "text/csv"});
+        var downloadLink = document.createElement("a");
+        downloadLink.download = 'figaro-turnos.csv';
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+    } 
         
        
 	    //INIT
