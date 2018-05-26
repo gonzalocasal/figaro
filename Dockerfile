@@ -1,7 +1,6 @@
 FROM ubuntu:latest
 FROM java
 
-
 RUN apt update -qq && apt install git -qqy
 
 RUN git clone https://github.com/gonzalocasal/figaro.git

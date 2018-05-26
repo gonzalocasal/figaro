@@ -82,6 +82,7 @@ public class TurnosServiceTest {
 	
 		service.setPagado(0);
 		
+		
 		assertTrue(turno.getPagado());
 		assertEquals(new BigDecimal(40), turno.getMontoPago());
 		assertEquals("Luis Lopez",turno.getPago().getDetalle());

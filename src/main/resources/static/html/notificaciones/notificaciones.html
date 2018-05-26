@@ -27,12 +27,13 @@
     <label>{{notificacion.detalle}}</label>
   </div>
  
-
- <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
+  <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
+ 
   <div class=ver-mas id=ver-mas  ng-cloak ng-show = "(notificaciones.length < cantidadTotal)">
-        <label  ng-click=verMas() > VER M&Aacute;S</label>
+    <label  ng-click=verMas() ><i class=material-icons>view_headline</i>VER M&Aacute;S</label>
+    <div class="separator"></div>
+    <label ng-click=eliminarTodas()><i class=material-icons>delete</i>ELIMINAR TODAS</label>
   </div>
-
 
 <div ng-repeat="group in groups | filter:{value:true}">
     {{group.name}} {{group.value}}
