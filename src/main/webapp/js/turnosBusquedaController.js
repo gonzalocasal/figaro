@@ -212,10 +212,10 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
             {title: "PRECIO", dataKey: "precio"},
             {title: "PAGO", dataKey: "pago"},
             {title: "EMPLEADO", dataKey: "empleado"},
-            {title: "COBRADO", dataKey: "cobrado"},
-            {title: "PAGADO", dataKey: "pagado"}
+            {title: "C", dataKey: "cobrado"},
+            {title: "P", dataKey: "pagado"}
         ];
-        var doc = new jsPDF('p', 'pt');
+        var doc = new jsPDF('l', 'pt');
         var turnos = leerTurnos();
         doc.autoTable(columns, turnos,{headerStyles: {fillColor: [41,41,97]}});
         doc.save('figaro-turnos.pdf');
