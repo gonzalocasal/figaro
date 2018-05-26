@@ -8,12 +8,12 @@ RUN git clone https://github.com/gonzalocasal/figaro.git
 
 ENV JAVA_HOME=$JAVA_HOME
 
-RUN cd /figaro && ./gradlew build
+RUN cd /figaro && git fetch && git checkout docker && ./gradlew build
 
 
 EXPOSE 8080
 
-#ENTRYPOINT ["java","-Dspring.profiles.active=dev","-jar","/figaro/build/libs/figaro-1.0.0.jar"]
+ENTRYPOINT ["java","-Dspring.profiles.active=dev","-jar","/figaro/build/libs/figaro-1.0.0.jar"]
 
 
 
