@@ -9,17 +9,16 @@
   <#include "/common/menu.html">
   <div ng-cloak id=content class="content fade-in">
   
-  <div ng-cloak ng-if="!notificacion.leida" ng-class="notificacion.leida ? 'leida' : ''" class="notificacion fade-in" ng-repeat="notificacion in notificaciones | orderBy:'notificacion.fecha'">
-    
+  <div ng-cloak ng-mouseover="showDelete(notificacion)" ng-mouseleave="hideDelete(notificacion)" ng-if="!notificacion.leida" ng-class="notificacion.leida ? 'leida' : ''" class="notificacion fade-in" ng-repeat="notificacion in notificaciones | orderBy:'notificacion.fecha'">
+    <i class="material-icons eliminar" id=notificacion-{{notificacion.id}}  ng-click=eliminar(notificacion)>delete</i>
     <i class=material-icons>{{getIcon(notificacion)}}</i><label>{{notificacion.categoria}}</label>
     <label class=fecha>{{notificacion.fecha | date}}</label>
     <hr>
-    
     <label>{{notificacion.detalle}}</label>
   </div>
  
-  <div ng-cloak ng-if="notificacion.leida" ng-class="notificacion.leida ? 'leida' : ''" class="notificacion fade-in" ng-repeat="notificacion in notificaciones | orderBy:'notificacion.fecha'">
-    
+  <div ng-cloak ng-mouseover="showDelete(notificacion)"  ng-mouseleave="hideDelete(notificacion)" ng-if="notificacion.leida" ng-class="notificacion.leida ? 'leida' : ''" class="notificacion fade-in" ng-repeat="notificacion in notificaciones | orderBy:'notificacion.fecha'">
+    <i class="material-icons eliminar" id=notificacion-{{notificacion.id}} ng-click=eliminar(notificacion)>delete</i>
     <i class=material-icons>{{getIcon(notificacion)}}</i><label>{{notificacion.categoria}}</label>
     <label class=fecha>{{notificacion.fecha | date}}</label>
     <hr>
@@ -29,20 +28,15 @@
  
   <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
  
-  <div class=ver-mas id=ver-mas  ng-cloak ng-show = "(notificaciones.length < cantidadTotal)">
-    <label  ng-click=verMas() ><i class=material-icons>view_headline</i>VER M&Aacute;S</label>
-    <div class="separator"></div>
-    <label ng-click=eliminarTodas()><i class=material-icons>delete</i>ELIMINAR TODAS</label>
+  <div class=ver-mas id=ver-mas  ng-cloak >
+    <label  ng-click=verMas() ng-show="(notificaciones.length < cantidadTotal)"><i class=material-icons>view_headline</i>VER M&Aacute;S</label>
+    <div class="separator" ng-show="(notificaciones.length < cantidadTotal)"></div>
+    <label ng-click=eliminarTodas() ng-show="(notificaciones.length >1)" ><i class=material-icons>delete</i>ELIMINAR TODAS</label>
   </div>
 
-<div ng-repeat="group in groups | filter:{value:true}">
-    {{group.name}} {{group.value}}
-</div>
-<div ng-repeat="group in groups | filter:{value:false}">
-    {{group.name}} {{group.value}}
-</div>
-
-
+   <div ng-cloak ng-if="notificaciones.length < 1" class="message fade-in">
+    <div class="message-content">No hay notificaciones.</div>
+  </div>
 
   </div>
 

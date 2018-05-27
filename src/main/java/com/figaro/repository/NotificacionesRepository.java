@@ -2,12 +2,15 @@ package com.figaro.repository;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.figaro.model.Notificacion;
 
 @SuppressWarnings("unchecked")
 public class NotificacionesRepository extends AbstractRepository{
+	
+	final static Logger LOGGER = Logger.getLogger(EmpleadosRepository.class);
 	
 	@Value("${page.size}")
 	private Integer pageSize;
@@ -20,10 +23,20 @@ public class NotificacionesRepository extends AbstractRepository{
 	public void update(Notificacion notificacion) {
 		getCurrentSession().update(notificacion);
 	}
+
 	
+	public void deleteAll() {
+		getCurrentSession().createQuery("DELETE FROM Notificacion").executeUpdate();
+	}
+	
+	public void delete(int notificacionId) {
+		Notificacion notificacion = getCurrentSession().load(Notificacion.class, notificacionId);
+		LOGGER.info("Eliminando la notificacion: "+ notificacion.getDetalle());
+		getCurrentSession().delete(notificacion);
+	}
 	
 	public List<Notificacion> getAll() {
-		return getCurrentSession().createQuery("from Notificacion n ORDER BY n.fecha DESC").list();		
+		return getCurrentSession().createQuery("FROM Notificacion n ORDER BY n.fecha DESC").list();		
 	}
 
 	public Integer getCantidadTotal() {
@@ -31,7 +44,7 @@ public class NotificacionesRepository extends AbstractRepository{
 	}
 	
 	public Integer getCantidadSinLeer() {
-		return getCurrentSession().createQuery("from Notificacion n WHERE n.leida=false").list().size();
+		return getCurrentSession().createQuery("FROM Notificacion n WHERE n.leida=false").list().size();
 	}
 
 	public List<Notificacion> getNotificaciones(int index) {
@@ -41,5 +54,7 @@ public class NotificacionesRepository extends AbstractRepository{
 					.setMaxResults(pageSize)
 					.list();
 	}
+
+	
 	
 }

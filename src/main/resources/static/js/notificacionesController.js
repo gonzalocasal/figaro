@@ -44,6 +44,35 @@ app.controller('notificacionesController', function ($scope, $http) {
         });
     }
 
+    //ELIMINAR TODAS
+    $scope.eliminarTodas = function(){
+        $http.delete("/rest/notificaciones/eliminar/todas").then(function (response) {
+            $scope.notificaciones = [];
+            $scope.cantidadTotal=0;
+        });
+    }
+
+     //ELIMINAR NOTIFICACION
+    $scope.eliminar = function(notifcacion){
+        $http.delete("/rest/notificaciones/eliminar/"+notifcacion.id).then(function (response) {
+            var index = $scope.notificaciones.indexOf(notifcacion);
+            $scope.notificaciones.splice(index, 1);  
+            $scope.cantidadTotal--;
+        });
+    }
+
+    //MOSTRAR ICONO ELIMINAR
+    $scope.showDelete = function(notificacion){
+       document.getElementById("notificacion-"+notificacion.id).style.display = "block";
+    }
+
+    //OCULTAR ICONO ELIMINAR
+    $scope.hideDelete = function(notificacion){
+       document.getElementById("notificacion-"+notificacion.id).style.display = "none";
+    }
+
+    
+
     //MAPER CATEGORIA DE NOTIFICACION CON ICONO
     $scope.getIcon=function(notifcacion){
     	return $scope.icons[notifcacion.categoria];
@@ -54,6 +83,5 @@ app.controller('notificacionesController', function ($scope, $http) {
         $scope.index ++;
         $scope.getNotificaciones();
     }
-
 
 });

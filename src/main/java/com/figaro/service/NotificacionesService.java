@@ -26,6 +26,15 @@ public class NotificacionesService {
 		return repository.getAll();
 	}
 	
+	public void delete(int notificacionId) {
+		repository.delete(notificacionId);
+	}
+
+	
+	public void deleteAll() {
+		repository.deleteAll();
+	}
+	
 	public Integer getCantidadTotal() {
 		return repository.getCantidadTotal();
 	}
@@ -44,8 +53,6 @@ public class NotificacionesService {
 	}
 	
 	
-	
-	
 	public void generarNotificacionStockMinimo(Producto producto) {
 		Notificacion notificacion = new Notificacion();
 		notificacion.setFecha(new Date());
@@ -60,4 +67,6 @@ public class NotificacionesService {
 		this.repository = repository;
 	}
 
+
+	
 }

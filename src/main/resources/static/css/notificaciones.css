@@ -1,5 +1,6 @@
 .notificacion {
     padding: 20px;
+    padding-top: 30px;
     justify-content: center;
     margin-top: 15px;
     margin-bottom: 15px;
@@ -19,4 +20,12 @@
 
 .notificacion .fecha{
 	float: right;
+}
+
+.eliminar{
+    cursor: pointer;
+    float: right;
+    margin-top: -24px;
+    margin-right: -16px;
+    display: none;
 }
