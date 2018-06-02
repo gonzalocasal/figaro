@@ -232,7 +232,7 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
         for (var j = 0; j < cols.length; j++){       
             row.push(cols[j].innerText);
         }
-        csv.push(row.join(","));
+        csv.push(row.join(";"));
         //BODY
         for (var i = 1; i < rows.length; i++) {
             var row = [], cols = rows[i].querySelectorAll("td, th");
@@ -244,16 +244,13 @@ app.controller('turnosBusquedaController', function ($scope, $http) {
             row.push(cols[5].innerText);
             row.push((cols[6].children[0].checked) ? "Sí" : "No");
             row.push((cols[7].children[0].checked) ? "Sí" : "No");
-            csv.push(row.join(","));        
+            csv.push(row.join(";"));        
         }
-        csv=csv.join("\n")
-        var csvFile = new Blob([csv], {type: "text/csv"});
-        var downloadLink = document.createElement("a");
-        downloadLink.download = 'figaro-turnos.csv';
-        downloadLink.href = window.URL.createObjectURL(csvFile);
-        downloadLink.style.display = "none";
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
+        csv=csv.join("\n")        
+        var link = window.document.createElement("a");
+        link.setAttribute("href", "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(csv));
+        link.setAttribute("download", "figaro-turnos.csv");
+        link.click();
     }
 
 

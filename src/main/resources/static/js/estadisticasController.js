@@ -3,6 +3,17 @@ app.controller('estadisticasController', function ($scope, $http) {
 		
 	$scope.activeEstadisticas = true;
 
+
+        //EXPORTAR A PDF
+            $scope.exportPDF = function() {
+
+                var canvas = $("#grafico1").get(0);
+                var dataURL = canvas.toDataURL();
+                var doc = new jsPDF('landscape');
+                doc.addImage(dataURL, 'JPEG', 25, 25);
+                doc.save('figaro-estadisticas.pdf');
+            }
+
 		//OBTENER LISTA DE CIUDADES
 		    $scope.getClientesCiudad = function() {
 		        $http.get("/rest/estadisticas/clientes/ciudad").then(function (response) {

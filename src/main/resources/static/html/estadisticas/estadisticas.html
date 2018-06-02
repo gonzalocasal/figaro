@@ -27,6 +27,11 @@
             
       </select>
       </label>    
+
+      <div class=export>          
+          <label title="Exportar a PDF" class="banner-button" id=export ng-click=exportPDF()><i class="far fa-file-pdf file-type-icon"></i></label> 
+      </div>
+
       <div  ng-show="muestra" ng-cloak>
             <div>
               <label class=banner-label-busqueda> Desde:</label>    
@@ -121,7 +126,6 @@
             </div>  
         </div>
       </div>
-
 
     </div>      
     

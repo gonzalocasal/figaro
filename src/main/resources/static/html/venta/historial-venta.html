@@ -1,7 +1,7 @@
 <!Doctype html>
 <html>
   <head> 
-	  <title>Historial</title>
+    <title>Historial</title>
     <#include "/common/head.html">
   </head>
   <body ng-app=figaro ng-controller=ventaController >
@@ -16,6 +16,13 @@
         <label class=banner-button title="Desplegar filtro por semana" ng-click="ShowHideEntreDia()"><i class=material-icons >search</i> Semana </label>
         <div class="separator"></div>
         <label class=banner-button title="Desplegar filtro por mes" ng-click="ShowHideMes()"><i class=material-icons >search</i> Mes </label>
+
+        <div class=export>          
+          <label title="Exportar a PDF" class="banner-button" id=export ng-click=exportPDF()><i class="far fa-file-pdf file-type-icon"></i></label>   
+          <div class="separator"></div>
+          <label title="Exportar a Excel" class="banner-button" id=export ng-click=exportExcel()><i class="far fa-file-excel file-type-icon"></i></label>
+        </div>
+
       </div>
 
       <div class=banner-busqueda ng-hide = "IsHiddenDia" ng-cloak>
@@ -52,14 +59,7 @@
               <th title="Eliminar venta" id={{venta.id}} data-id={{venta.id}} data-ng-click="confirmDelete(venta.id)" class="tachotd">
                 <lavel><i class="material-icons tachoi">clear</i></lavel></th>
             </tr>
-          </thead>
-          <tfoot class="negrita">
-            <tr>
-               <td colspan=4>TOTAL</td>
-               <td>{{venta.precio | currency}}</td>
-               <td></td>
-            </tr>
-          </tfoot>
+          </thead>          
           <tbody class="prueba">
             <tr ng-cloak class="data-row fade-in"  ng-repeat="item in venta.items" >
               <td class="colum-nombre-with">{{item.nombreProducto}}</td>
@@ -70,6 +70,13 @@
               <td></td>
             </tr>
           </tbody>
+          <tfoot class="negrita">
+            <tr>
+               <td colspan=4>TOTAL</td>
+               <td>{{venta.precio | currency}}</td>
+               <td></td>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>

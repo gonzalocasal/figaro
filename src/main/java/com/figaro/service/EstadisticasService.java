@@ -153,9 +153,9 @@ public class EstadisticasService {
 					horaDesde++;
 				} else {
 					minDesde = minDesde + 15;
-				}			
+				}						
 				
-				if (horaMinHasta.compareTo(horaMinDesde) == 0) {
+				if (horaMinDesde.equals(horaMinHasta)) {
 					i=1;
 				}
 				
@@ -238,7 +238,7 @@ public class EstadisticasService {
 			
 			String sexo = turno.getCliente().getSexo();
 			//String sexoCompara = "hombre";
-			if (sexo.compareTo("hombre") == 0) {
+			if ("hombre".equals(sexo)) {
 				Integer cantidadH = mapH.get(diaDesde);
 				cantidadH ++;
 				mapH.put(diaDesde, cantidadH);
@@ -356,8 +356,8 @@ public class EstadisticasService {
 			mapTotal.put(diaDesde, cantidadTotal);			
 			
 			String sexo = turno.getCliente().getSexo();
-			//String sexoCompara = "hombre";
-			if (sexo.compareTo("hombre") == 0) {
+			//String sexoCompara = "hombre";			
+			if ("hombre".equals(sexo)) {
 				Integer cantidadH = mapH.get(diaDesde);
 				cantidadH ++;
 				mapH.put(diaDesde, cantidadH);

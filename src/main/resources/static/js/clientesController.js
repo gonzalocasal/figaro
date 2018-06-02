@@ -60,7 +60,7 @@ app.controller('clientesController', function ($scope, $http) {
             $scope.ngCliente = response.data;
             $scope.ngCliente.nacimiento=stringToDate($scope.ngCliente.nacimiento);
             openModal("modal-clientes");
-	    });
+        });
     };
 
     //CLICK ACEPTAR FORMULARIO
@@ -135,9 +135,10 @@ app.controller('clientesController', function ($scope, $http) {
             cols = rows[i].querySelectorAll("td, th");
             cliente.nombre = cols[1].innerText;
             cliente.apellido = cols[2].innerText;
-            cliente.telefono = cols[3].innerText;
-            cliente.email = cols[4].innerText;
+            cliente.email = cols[3].innerText;
+            cliente.telefono = cols[4].innerText;
             cliente.ultimaVisita = cols[5].innerText;
+            cliente.notas = cols[6].innerText;
             clientes.push(cliente);
         }
         return clientes;
@@ -148,11 +149,13 @@ app.controller('clientesController', function ($scope, $http) {
         var columns = [
             {title: "NOMBRE", dataKey: "nombre"}, 
             {title: "APELLIDO", dataKey: "apellido"},
-            {title: "TELÉFONO", dataKey: "telefono"},
             {title: "EMAIL", dataKey: "email"},
-            {title: "ÚLTIMA VISITA", dataKey: "ultimaVisita"}
+            {title: "TELÉFONO", dataKey: "telefono"},
+            {title: "ÚLTIMA VISITA", dataKey: "ultimaVisita"},
+            {title: "NOTAS", dataKey: "notas"}
+            
         ];
-        var doc = new jsPDF('p', 'pt');
+        var doc = new jsPDF('l', 'pt');
         var clientes = leerClientes();
         doc.autoTable(columns, clientes,{headerStyles: {fillColor: [41,41,97]}});
         doc.save('figaro-clientes.pdf');
@@ -165,19 +168,16 @@ app.controller('clientesController', function ($scope, $http) {
         var rows = document.querySelectorAll("table tr");
         for (var i = 0; i < rows.length; i++) {
             var row = [], cols = rows[i].querySelectorAll("td, th");
-            //SE IGNORA LA PRIMER Y ULTIMA COLUMNA
-            for (var j = 1; j < cols.length-1; j++) 
+            //SE IGNORA LA PRIMER Y ULTIMA COLUMNA //no
+            for (var j = 1; j < cols.length; j++) 
                 row.push(cols[j].innerText);
-            csv.push(row.join(","));        
+            csv.push(row.join(";"));        
         }
-        csv=csv.join("\n")
-        var csvFile = new Blob([csv], {type: "text/csv"});
-        var downloadLink = document.createElement("a");
-        downloadLink.download = 'figaro-clientes.csv';
-        downloadLink.href = window.URL.createObjectURL(csvFile);
-        downloadLink.style.display = "none";
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
+        csv=csv.join("\n")   
+        var link = window.document.createElement("a");
+        link.setAttribute("href", "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(csv));
+        link.setAttribute("download", "figaro-clientes.csv");
+        link.click();
     }
 
 

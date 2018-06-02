@@ -23,17 +23,17 @@ app.controller('ventaController', function ($scope, $http) {
     $scope.ShowHideDia = function () {
         $scope.IsHiddenEntreDia = true;
         $scope.IsHiddenMes = true;
-        $scope.IsHiddenDia = $scope.IsHiddenDia ? false : true;        	
+        $scope.IsHiddenDia = $scope.IsHiddenDia ? false : true;         
         if($scope.IsHiddenDia === true){
             $scope.limpiaFecha();
-            $scope.getAllVentas();               	
+            $scope.getAllVentas();                  
         }
     }
  
     $scope.ShowHideEntreDia = function () {         
         $scope.IsHiddenDia = true;
         $scope.IsHiddenMes = true;
-        $scope.IsHiddenEntreDia = $scope.IsHiddenEntreDia ? false : true;        	
+        $scope.IsHiddenEntreDia = $scope.IsHiddenEntreDia ? false : true;           
         if($scope.IsHiddenEntreDia === true){
              $scope.limpiaFecha();
              $scope.getAllVentas();
@@ -43,14 +43,14 @@ app.controller('ventaController', function ($scope, $http) {
     $scope.ShowHideMes = function () {  
         $scope.IsHiddenDia = true;
         $scope.IsHiddenEntreDia = true;
-        $scope.IsHiddenMes = $scope.IsHiddenMes ? false : true;        	
+        $scope.IsHiddenMes = $scope.IsHiddenMes ? false : true;         
         if($scope.IsHiddenMes === true){
             $scope.limpiaFecha();
             $scope.getAllVentas();
         }
     }
 
-    $scope.searchVentaDia = function() {	    
+    $scope.searchVentaDia = function() {        
         $scope.fechaInicio = getStringDate(new Date($scope.search));
         $scope.fechaFin = getStringDate(new Date($scope.search));
         searchVenta($scope.fechaInicio , $scope.fechaFin);
@@ -65,7 +65,7 @@ app.controller('ventaController', function ($scope, $http) {
     }
 
     //FILTRO MES
-    $scope.searchVentaMes = function() {	
+    $scope.searchVentaMes = function() {    
         var mes = getMes($scope.search);
         $scope.fechaInicio = getStringDate(mes.dStart);
         $scope.fechaFin = getStringDate(mes.dEnd);
@@ -75,8 +75,8 @@ app.controller('ventaController', function ($scope, $http) {
     //FILTRO TOTAL
     function searchVenta(fInicio, fFin ) {
         loading();
-        $http.get('/rest/venta/historial-venta/buscar',{params: { from: fInicio, to: fFin}})		        
-        .then(function successCallback(response) {	  	        	
+        $http.get('/rest/venta/historial-venta/buscar',{params: { from: fInicio, to: fFin}})                
+        .then(function successCallback(response) {                  
             $scope.ngVentas = response.data;
             $scope.loaded = true;
             loadComplete();
@@ -84,7 +84,7 @@ app.controller('ventaController', function ($scope, $http) {
     }
         
     //LIMPIA FILTRO FECHA
-	$scope.limpiaFecha = function() {
+    $scope.limpiaFecha = function() {
         $scope.search = '';
         $scope.fechaInicio = getDateFormated();
         $scope.fechaFin = getDateFormated();
@@ -165,7 +165,7 @@ app.controller('ventaController', function ($scope, $http) {
 
     //ELIMINTAR VENTA
     $scope.deleteTarget = function(id) {      
-        $http.delete('/rest/venta/eliminar/'+id).then(function (response) {	           
+        $http.delete('/rest/venta/eliminar/'+id).then(function (response) {            
             closeModal("modal-confirmarDelete");
             $scope.getAllVentas();
         });
@@ -252,6 +252,126 @@ app.controller('ventaController', function ($scope, $http) {
         closeModal("modal-cobrar");
         $scope.initMovimiento();
     };
+
+
+    // LEER CLIENTES DESDE LA TABLA HTML
+    function leerVentas(){
+        var ventas = [];
+        var rows = document.querySelectorAll("table tr");        
+        let venta = {};
+        cols = rows[0].querySelectorAll("td, th");
+        colsLenght = cols.length;
+        venta.titulo = cols[0].innerText;           
+        ventas.push(venta);
+
+        for (var i = 1; i < rows.length; i++) {
+            let venta = {};
+            cols = rows[i].querySelectorAll("td, th");
+            colsLenght = cols.length;
+            if (colsLenght == 6) {                
+                venta.marca = cols[0].innerText;
+                venta.detalle = cols[1].innerText;
+                venta.precioUnitario = cols[2].innerText;
+                venta.cantidad = cols[3].innerText;
+                venta.precioTotal = cols[4].innerText; 
+            } else {
+                if (colsLenght == 3){
+                    venta.titulo = cols[0].innerText;
+                    venta.precioTotal = cols[1].innerText;
+                } else {
+                    venta.titulo = cols[0].innerText
+                }
+            }
+
+            if (colsLenght == 3){
+                var total = venta;
+            } else {
+                if (colsLenght == 2){
+                    ventas.push(total);
+                } 
+                ventas.push(venta);
+            }    
+            
+        }
+        ventas.push(total);
+        return ventas;
+    }
+
+    //EXPORTAR A PDF
+    $scope.exportPDF = function() {
+        var columns = [
+            {title:"", dataKey: "titulo"}, 
+            {title:"PRODUCTO", dataKey: "marca"},
+            {title:"DETALLE", dataKey: "detalle"},
+            {title:"PRECIO U.", dataKey: "precioUnitario"},
+            {title:"CANTIDAD", dataKey: "cantidad"},
+            {title:"PRECIO TOTAL", dataKey: "precioTotal"}
+            
+        ];
+        var doc = new jsPDF('l', 'pt');
+        var ventas = leerVentas();
+        doc.autoTable(columns,ventas,{headerStyles: {fillColor: [41,41,97]},columnStyles: {titulo: {fontStyle: 'bold'}}});
+        doc.save('figaro-ventas.pdf');
+    }
+
+
+    //EXPORTAR A EXCEL
+    $scope.exportExcel = function () {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
+        var cols = rows[0].querySelectorAll("td, th");
+        //HEADER
+        var row = []; 
+        row.push('');
+        row.push('PRODUCTO');
+        row.push('DETALLE');
+        row.push('PRECIO U.');
+        row.push('CANTIDAD');
+        row.push('PRECIO TOTAL');
+
+        csv.push(row.join(";"));
+        //BODY
+        let venta = {};
+        cols = rows[0].querySelectorAll("td, th");
+        
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+            colsLenght = cols.length;
+            if (colsLenght == 6) {   
+                row.push('');           
+                row.push(cols[0].innerText);
+                row.push(cols[1].innerText);          
+                row.push(cols[2].innerText);
+                row.push(cols[3].innerText);
+                row.push(cols[4].innerText);
+            } else {
+                if (colsLenght == 3){
+                    row.push(cols[0].innerText); 
+                    row.push('');
+                    row.push('');
+                    row.push('');
+                    row.push('');
+                    row.push('');                  
+                    row.push(cols[1].innerText);  
+                } else {  
+                    row.push(cols[0].innerText);                   
+                    row.push('');
+                    row.push('');
+                    row.push('');
+                    row.push('');
+                    row.push('');                                      
+                }
+            }           
+
+            csv.push(row.join(";"));             
+        }     
+
+        csv=csv.join("\n")
+        var link = window.document.createElement("a");
+        link.setAttribute("href", "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(csv));
+        link.setAttribute("download", "figaro-ventas.csv");
+        link.click();
+    } 
 
 //----------------------  Fin Utilidades  ---------------------------//
 

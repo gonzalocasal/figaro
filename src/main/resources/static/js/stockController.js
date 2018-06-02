@@ -112,6 +112,74 @@ app.controller('stockController', function ($scope, $http) {
         }
     });
 
+        // LEER STOCK DESDE LA TABLA HTML
+    function leerStock(){
+        var stocks = [];
+        var rows = document.querySelectorAll("table tr");
+        for (var i = 1; i < rows.length; i++) {
+            let stock = {};
+            cols = rows[i].querySelectorAll("td, th");
+            stock.nombre = cols[0].innerText;
+            stock.descripcion = cols[1].innerText;
+            disponible = cols[2].innerHTML;
+            disponible = disponible.substring(disponible.lastIndexOf("=")+2,disponible.lastIndexOf(">")-1);
+            stock.disponible = disponible;
+            stock.minimo = cols[3].innerText;
+            stock.precioVenta = cols[4].innerText; 
+            stocks.push(stock);
+        }
+        return stocks;
+    }
+
+    //EXPORTAR A PDF
+    $scope.exportPDF = function() {
+        var columns = [
+            {title: "NOMBRE", dataKey: "nombre"}, 
+            {title: "DESCRIPCION", dataKey: "descripcion"},
+            {title: "DISPONIBLE", dataKey: "disponible"},
+            {title: "MÍNIMO", dataKey: "minimo"},
+            {title: "PRECIO VENTA", dataKey: "precioVenta"}
+                        
+        ];
+        var doc = new jsPDF('l', 'pt');
+        var stocks = leerStock();
+        doc.autoTable(columns, stocks,{headerStyles: {fillColor: [41,41,97]}});
+        doc.save('figaro-stock.pdf');
+    }
+
+
+    //EXPORTAR A EXCEL
+    $scope.exportExcel = function () {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
+        
+        var row = [], cols = rows[0].querySelectorAll("td, th");
+            
+        for (var j = 0; j < cols.length; j++) {
+            row.push(cols[j].innerText);
+        }                          
+        csv.push(row.join(";"));       
+    
+        for (var i = 1; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+            
+            for (var j = 0; j < cols.length; j++) 
+                if (j == 2) {
+                    var disponible = cols[2].innerHTML;                   
+                    disponible = disponible.substring(disponible.lastIndexOf("=")+2,disponible.lastIndexOf(">")-1);
+                    row.push(disponible);
+                } else {
+                    row.push(cols[j].innerText);
+                }                
+            csv.push(row.join(";"));        
+        }
+        csv=csv.join("\n")   
+        var link = window.document.createElement("a");
+        link.setAttribute("href", "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(csv));
+        link.setAttribute("download", "figaro-stock.csv");
+        link.click();
+    }
+
     //INIT
     
 

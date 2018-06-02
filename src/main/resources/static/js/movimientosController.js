@@ -380,8 +380,7 @@ app.controller('movimientosController', function ($scope, $http) {
             $scope.searchMovimientoDia();
             if($scope.IsHiddenDia === true){
             	$scope.limpiaFecha();
-            	$scope.searchInicio = new Date(date.getFullYear(), date.getMonth(), 1);
-        		$scope.searchFin = new Date(date.getFullYear(), date.getMonth() + 1, 0);  
+      
             	$scope.limpiaCategoria();
             	$scope.getAll();	                    	
 	        }
@@ -447,8 +446,13 @@ app.controller('movimientosController', function ($scope, $http) {
             let movimientoCaja = {};
             cols = rows[i].querySelectorAll("td, th");
             movimientoCaja.fecha = cols[0].innerText;
-            movimientoCaja.categoria = cols[1].innerText;
-            movimientoCaja.monto = cols[2].innerText;
+            movimientoCaja.categoria = cols[1].innerText;            
+            var montoColor = cols[2].firstChild.className;
+            if (montoColor == 'ng-binding red') {
+            	movimientoCaja.monto = "-" + cols[2].innerText;
+            } else {
+            	movimientoCaja.monto = cols[2].innerText;
+            }            
             var pagoPrevio = cols[3].innerText;
             if (pagoPrevio.includes('credit_cardD')) {
             	var res = pagoPrevio.replace("credit_cardD", "D ");
@@ -507,6 +511,8 @@ app.controller('movimientosController', function ($scope, $http) {
 		doc.save('figaro-movimientos.pdf');
     }
 
+
+
     //EXPORTAR A EXCEL
     $scope.exportExcel = function () {
         var csv = [];
@@ -517,14 +523,20 @@ app.controller('movimientosController', function ($scope, $http) {
         for (var j = 0; j < cols.length; j++){       
             row.push(cols[j].innerText);
         }
-        csv.push(row.join(","));
+        csv.push(row.join(";"));
         //BODY
         var movsLength = rows.length - 8;
         for (var i = 1; i < movsLength; i++) {
             var row = [], cols = rows[i].querySelectorAll("td, th");
             row.push(cols[0].innerText);
             row.push(cols[1].innerText);
-            row.push(cols[2].innerText);
+            var montoColor = cols[2].firstChild.className;
+            if (montoColor == 'ng-binding red') {
+            	var monto = "-" + cols[2].innerText;
+            } else {
+            	var monto = cols[2].innerText;
+            } 
+            row.push(monto);
             var pagoPrevio = cols[3].innerText;
             if (pagoPrevio.includes('credit_cardD')) {
             	var res = pagoPrevio.replace("credit_cardD", "D ");
@@ -535,28 +547,26 @@ app.controller('movimientosController', function ($scope, $http) {
             		var res = pagoPrevio;
             	}
             }
-            row.push(res);
+            row.push(res);            
             row.push(cols[4].innerText);           
-            csv.push(row.join(","));             
+            csv.push(row.join(";"));             
         }     
         var movsini = rows.length - 7;
         var movsLength = movsini + 4;
         for (var i = movsini; i < movsLength; i++) {        	
             var row = [], cols = rows[i].querySelectorAll("td, th");
             row.push(cols[0].innerText);
-            row.push(cols[1].innerText);
+            row.push(cols[1].innerText);            
             row.push(cols[2].innerText);
             row.push(cols[3].innerText);
-            csv.push(row.join(",")); 
+            csv.push(row.join(";")); 
         }   
+
         csv=csv.join("\n")
-        var csvFile = new Blob([csv], {type: "text/csv"});
-        var downloadLink = document.createElement("a");
-        downloadLink.download = 'figaro-turnos.csv';
-        downloadLink.href = window.URL.createObjectURL(csvFile);
-        downloadLink.style.display = "none";
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
+        var link = window.document.createElement("a");
+		link.setAttribute("href", "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(csv));
+		link.setAttribute("download", "figaro-movimientos.csv");
+		link.click();
     } 
         
        
