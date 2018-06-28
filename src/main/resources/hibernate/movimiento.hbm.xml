@@ -14,7 +14,7 @@
 	 	<property name="tipoPago" 		column="TIPOPAGO"  	type="string"/>
 	 	<property name="cuotas" 		column="CUOTAS"  	type="int"/>
 	 	<property name="descuento" 		column="DESCUENTO"  type="big_decimal"/>	 	 
+	 	<property name="turnoId" 		column="ID_TURNO"  	type="int"/>
 	 	
-     	
 	</class>
 </hibernate-mapping>

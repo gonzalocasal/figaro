@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.figaro.model.Notificacion" table="NOTIFICACION">
+		
+		<id name="id" type="int" column="ID_NOTIFICACION" >
+			<generator class="increment"/>
+		</id>
+	 	<property name="detalle"  		column="DETALLE"   type="string"/>
+	 	<property name="categoria"  	column="CATEGORIA"   type="string"/>
+	 	<property name="fecha"			column="FECHA"	type="java.sql.Timestamp"/>
+	 	<property name="leida"			column="leida"	type="boolean"/>
+     			 
+	</class>
+</hibernate-mapping>

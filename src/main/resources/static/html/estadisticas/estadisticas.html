@@ -1,0 +1,144 @@
+<!Doctype html>
+<html>
+<head> 
+  <title>Estad&iacute;sticas</title>
+  <#include "/common/head.html">
+  <link rel="stylesheet" type="text/css" href="/css/estadisticas.css">
+</head>
+<body ng-app=figaro ng-controller=estadisticasController >
+<#include "/common/menu.html">
+<div id=content class="content fade-in">
+    <div class=banner>
+     
+      <label class=banner-button><i class=material-icons>timeline</i>SELECCIONAR ESTAD&Iacute;STICA:
+      <select  class=input-banner ng-model="grafico" ng-change="selectGrafico(grafico)" ng-cloak>
+            <option data-id="grafico1" value="sexo">Clientes por Sexo</option>
+            <option data-id="grafico1" value="ciudad">Clientes por Ciudad</option>
+            <option data-id="grafico1" value="productoMasVendido">Venta de Productos</option>
+            <option data-id="grafico1" value="turnoMasSolicitado">Turno m&aacute;s Solicitado</option>
+            <option data-id="grafico1" value="trabajomasrequerido">Trabajo m&aacute;s Solicitado</option>
+            <option data-id="grafico1" value="turnomes">Turnos por Mes</option>
+            <option data-id="grafico1" value="turnosemana">Turnos por Semana</option>
+            <option data-id="grafico1" value="turnosexomes">Turnos Sexo/Mes</option>
+            <option data-id="grafico1" value="turnosexosemana">Turnos Sexo/Semana</option>
+            <option data-id="grafico1" value="turnosPorEmpleadoCant">Turnos por Empleado (Cant)</option>
+            <option data-id="grafico1" value="turnosPorEmpleadoIngreso">Turnos por Empleado (Ingreso)</option>
+            <option data-id="grafico1" value="totalesDeCaja">Totales de Caja</option>
+            
+      </select>
+      </label>    
+
+      <div class=export>          
+          <label title="Exportar a PDF" class="banner-button" id=export ng-click=exportPDF()><i class="far fa-file-pdf file-type-icon"></i></label> 
+      </div>
+
+      <div  ng-show="muestra" ng-cloak>
+            <div>
+              <label class=banner-label-busqueda> Desde:</label>    
+              <input class=input-banner type="date" ng-model="searchFrom"></input>
+              <label class=banner-label-busqueda> Hasta:</label>    
+              <input class=input-banner type="date" ng-model="searchTo"></input>              
+              <label class=button-estadisticas ng-click="selectGrafico(grafico)"><i class=material-icons  >search</i> </label>            
+              <label class=button-estadisticas ng-show="muestraSuma" ng-click="muestraSumaMesSemana(grafico)"><i class=material-icons  >add</i> </label>
+            </div>
+      </div>
+
+      <div class="addEstadistica" ng-show="muestraConSuma2" ng-cloak>
+            <div class="divBusqueda">
+              <label class=banner-label-busqueda> Desde:</label>    
+              <input class=input-banner type="date" ng-model="searchFrom"></input>
+              <label class=banner-label-busqueda> Hasta:</label>    
+              <input class=input-banner type="date" ng-model="searchTo"></input>
+            </div>
+            <div class="separator divBusquedaMargin"></div>
+            <div>
+              <label class=banner-label-busqueda> Desde:</label>    
+              <input class=input-banner type="date" ng-model="searchFrom2"></input>
+              <label class=banner-label-busqueda> Hasta:</label>    
+              <input class=input-banner type="date" ng-model="searchTo2"></input>              
+              <label class=button-estadisticas ng-click="selectGrafico2(grafico)"><i class=material-icons  >search</i> </label>              
+              <label class=button-estadisticas ng-click="muestraConSuma2 = false; muestra = true"><i class=material-icons  >clear</i> </label>   
+              <label class=button-estadisticas ng-show="muestraSuma2" ng-click="muestraConSuma3 = true; muestraConSuma2 = false"><i class=material-icons  >add</i> </label>
+            </div>
+      </div>
+
+      <div ng-show="muestraConSuma3" ng-cloak>
+        <div class="addEstadistica">
+            <div class="divBusqueda">
+              <label class=banner-label-busqueda> Desde:</label>    
+              <input class=input-banner type="date" ng-model="searchFrom"></input>
+              <label class=banner-label-busqueda> Hasta:</label>    
+              <input class=input-banner type="date" ng-model="searchTo"></input>
+            </div>
+            <div class="separator divBusquedaMargin"></div>
+            <div class="divBusqueda">
+              <label class=banner-label-busqueda> Desde:</label>    
+              <input class=input-banner type="date" ng-model="searchFrom2"></input>
+              <label class=banner-label-busqueda> Hasta:</label>    
+              <input class=input-banner type="date" ng-model="searchTo2"></input>
+            </div>
+        </div>
+        <div>
+          <div>
+              <label class=banner-label-busqueda> Desde:</label>    
+              <input class=input-banner type="date" ng-model="searchFrom3"></input>
+              <label class=banner-label-busqueda> Hasta:</label>    
+              <input class=input-banner type="date" ng-model="searchTo3"></input>              
+              <label class=button-estadisticas ng-click="selectGrafico3(grafico)"><i class=material-icons  >search</i> </label>              
+              <label class=button-estadisticas ng-click="muestraConSuma3 = false; muestraConSuma2 = true"><i class=material-icons  >clear</i> </label>
+              <label class=button-estadisticas ng-click="muestraConSuma4 = true; muestraConSuma3 = false"><i class=material-icons  >add</i> </label>
+            </div>  
+        </div>
+      </div>
+
+      <div ng-show="muestraConSuma4" ng-cloak>
+        <div class="addEstadistica">
+            <div class="divBusqueda">
+              <label class=banner-label-busqueda> Desde:</label>    
+              <input class=input-banner type="date" ng-model="searchFrom"></input>
+              <label class=banner-label-busqueda> Hasta:</label>    
+              <input class=input-banner type="date" ng-model="searchTo"></input>
+            </div>
+            <div class="separator divBusquedaMargin"></div>
+            <div class="divBusqueda">
+              <label class=banner-label-busqueda> Desde:</label>    
+              <input class=input-banner type="date" ng-model="searchFrom2"></input>
+              <label class=banner-label-busqueda> Hasta:</label>    
+              <input class=input-banner type="date" ng-model="searchTo2"></input>
+            </div>
+        </div>
+        <div class="addEstadistica">
+          <div class="divBusqueda">
+              <label class=banner-label-busqueda> Desde:</label>    
+              <input class=input-banner type="date" ng-model="searchFrom3"></input>
+              <label class=banner-label-busqueda> Hasta:</label>    
+              <input class=input-banner type="date" ng-model="searchTo3"></input>
+          </div>
+          <div class="separator divBusquedaMargin"></div>
+          <div>
+              <label class=banner-label-busqueda> Desde:</label>    
+              <input class=input-banner type="date" ng-model="searchFrom4"></input>
+              <label class=banner-label-busqueda> Hasta:</label>    
+              <input class=input-banner type="date" ng-model="searchTo4"></input> 
+              <label class=button-estadisticas ng-click="selectGrafico4(grafico)"><i class=material-icons  >search</i> </label>      
+              <label class=button-estadisticas ng-click="muestraConSuma4 = false; muestraConSuma3=true"><i class=material-icons  >clear</i> </label>
+                                        
+            </div>  
+        </div>
+      </div>
+
+    </div>      
+    
+  <div class=graf-caja>  
+    <canvas id="grafico1" class="chart chart-bar"></canvas>
+  </div>
+  
+</div>
+<#include "/common/javascript.html">
+<#include "/common/confirm.html">
+<script src="js/vendor/Chart-min.js"></script>
+<script src="js/vendor/Chart.js"></script>
+<script src="js/vendor/angular-chart.min.js"></script>
+<script src="js/estadisticasController.js" ></script>
+</body>
+</html>

@@ -2,15 +2,11 @@ package com.figaro.service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Hibernate;
 
 import com.figaro.model.Item;
 import com.figaro.model.Movimiento;
-import com.figaro.model.Trabajo;
-import com.figaro.model.Turno;
 import com.figaro.model.Venta;
 import com.figaro.repository.MovimientosRepository;
 
@@ -58,20 +54,6 @@ public class MovimientosService {
 		List<Item> idItem = laVenta.getItems();			
 		return idItem;
 	}
-	
-	public Turno getTurnoId(Integer id){
-		Turno turno = repository.getTurnoId(id);
-		Hibernate.initialize(turno.getTrabajos());
-		return turno;
-	}
-	
-	public Set<Trabajo> getListTurnoId(Integer id){
-		Turno turno = repository.getTurnoId(id);
-		Hibernate.initialize(turno.getTrabajos());
-		Set<Trabajo> idTrabajo = turno.getTrabajos();			
-		return idTrabajo;
-	}
-	
 	public MovimientosRepository getRepository() {
 		return repository;
 	}

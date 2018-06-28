@@ -21,6 +21,7 @@ public class Empleado extends Persona {
 		this.setApellido(empleado.getApellido());
 		this.setEmail(empleado.getEmail());
 		this.setSexo(empleado.getSexo());
+		this.setNacimiento(empleado.getNacimiento());
 		this.setTelefono(empleado.getTelefono());
 		this.setDirCiudad(empleado.getDirCiudad());
 		this.setDirCalle(empleado.getDirCalle());

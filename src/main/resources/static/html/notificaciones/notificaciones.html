@@ -1,0 +1,47 @@
+<!Doctype html>
+<html>
+<head> 
+  <title>Notificaciones</title>
+  <#include "/common/head.html">
+  <link rel="stylesheet" type="text/css" href="/css/notificaciones.css">
+</head>
+<body  ng-app=figaro ng-controller=notificacionesController  data-ng-init="init()" >
+  <#include "/common/menu.html">
+  <div ng-cloak id=content class="content fade-in">
+  
+  <div ng-cloak ng-mouseover="showDelete(notificacion)" ng-mouseleave="hideDelete(notificacion)" ng-if="!notificacion.leida" ng-class="notificacion.leida ? 'leida' : ''" class="notificacion fade-in" ng-repeat="notificacion in notificaciones | orderBy:'notificacion.fecha'">
+    <i class="material-icons eliminar" id=notificacion-{{notificacion.id}}  ng-click=eliminar(notificacion)>notifications_off</i>
+    <i class=material-icons>{{getIcon(notificacion)}}</i><label>{{notificacion.categoria}}</label>
+    <label class=fecha>{{notificacion.fecha | date}}</label>
+    <hr>
+    <label>{{notificacion.detalle}}</label>
+  </div>
+ 
+  <div ng-cloak ng-mouseover="showDelete(notificacion)"  ng-mouseleave="hideDelete(notificacion)" ng-if="notificacion.leida" ng-class="notificacion.leida ? 'leida' : ''" class="notificacion fade-in" ng-repeat="notificacion in notificaciones | orderBy:'notificacion.fecha'">
+    <i class="material-icons eliminar" id=notificacion-{{notificacion.id}} ng-click=eliminar(notificacion)>notifications_off</i>
+    <i class=material-icons>{{getIcon(notificacion)}}</i><label>{{notificacion.categoria}}</label>
+    <label class=fecha>{{notificacion.fecha | date}}</label>
+    <hr>
+    
+    <label>{{notificacion.detalle}}</label>
+  </div>
+ 
+  <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
+ 
+  <div class=ver-mas id=ver-mas  ng-cloak >
+    <label  ng-click=verMas() ng-show="(notificaciones.length < cantidadTotal)"><i class=material-icons>view_headline</i>VER M&Aacute;S</label>
+    <div class="separator" ng-show="(notificaciones.length < cantidadTotal)"></div>
+    <label ng-click=eliminarTodas() ng-show="(notificaciones.length >1)" ><i class=material-icons>notifications_off</i>ELIMINAR TODAS</label>
+  </div>
+
+   <div ng-cloak ng-if="notificaciones.length < 1" class="message fade-in">
+    <div class="message-content"><i class=material-icons>notifications_off</i>No hay notificaciones.</div>
+  </div>
+
+  </div>
+
+  <#include "/common/javascript.html">
+  <#include "/common/confirm.html">
+  <script src="/js/notificacionesController.js" ></script>
+</body>
+</html>

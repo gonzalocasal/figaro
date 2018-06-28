@@ -1,0 +1,91 @@
+<!Doctype html>
+<html>
+  <head> 
+	  <title>Ventas</title>
+    <#include "/common/head.html"> 
+    <link rel="stylesheet" type="text/css" href="/css/venta-stock.css">
+  </head>
+  <body ng-app=figaro ng-controller=ventaController >
+    <#include "/common/menu.html">
+    <div id=content class="content fade-in">
+      
+      <div class="banner">
+       
+          <label class="banner-button">
+              <a class="button-link" title="Ir a la p&aacute;gina historial de ventas" href="/venta/historial-venta">
+              <i class="material-icons">history</i>Historial
+              </a>
+          </label>
+        
+      </div>
+<!--Inicio Seleccion de producto -->
+      <div class="card venta">
+        <form ng-submit="sumarCarrito(ngProductoVenta, aVender)" ng-cloak >
+            
+          <div class=card-title><i class="material-icons">add_shopping_cart</i><label>Productos</label></div>
+          <div class=form-field title=""><label>Seleccionar producto: </label>
+            <select name="producto" class=productos ng-model="producto" ng-change="verProducto(producto)">
+              <option value="{{producto.id}}" ng-repeat= "producto in productos" ng-disabled="producto.cantidad<1" >{{producto.nombre}} ({{producto.descripcion}})</option>
+            </select>
+          </div>
+          <table id=tableDetalle>
+            <tbody>
+              <tr><td title="Nombre del producto">Nombre: {{ngProductoVenta.nombre}}</td></tr>
+              <tr><td title="Descripción del producto">Descripci&oacute;n: {{ngProductoVenta.descripcion}}</td></tr>
+              <tr><td title="Cantidad disponible del producto">Disponibilidad: {{ngProductoVenta.cantidad}}</td></tr>
+              <tr><td title="Precio del producto">Precio: {{ngProductoVenta.precio | currency}}</td></tr>
+              <tr></tr>
+              <tr>
+                <td class=form-field><label title="seleccionar cantidad a vender">Cantidad a vender:</label>
+                  <input ng-model="aVender" ng-value="aVender" type="number" ng-init="aVender=0" min="1" max="{{ngProductoVenta.cantidad}}"></input>
+                </td>
+              </tr>
+            </tbody>
+          </table>          
+          <button type="submit" title="incluir en carrito de su venta">SUMAR AL CARRITO</button>
+        </form>
+      </div>
+<!-- Fin seleccionar producto -->
+      
+<!--Inicio Carrito -->
+      <div class="card venta" ng-cloak >
+        <form ng-submit="setTipoPago()">
+          <div class=card-title><i class="material-icons">local_grocery_store</i><label>Carrito</label></div>
+          <table id=tableCarrito>
+            <tbody>
+              <tr class="text-align">
+                <th class="colum-width">Producto</th>
+                <th>Unidades</th>
+                <th>Precio</th>     
+              </tr>
+              <tr ng-cloak class=data-row  ng-repeat="prodCarrito in ngCarrito" >
+                <td>{{prodCarrito.nombreProducto}} ({{prodCarrito.descripcionProducto}}) {{prodCarrito.precioUnitario | currency}}</td>
+                <td>{{prodCarrito.cantidad}}</td>
+                <td>{{prodCarrito.precioTotal | currency}}</td>
+                <td id={{prodCarrito}} data-id={{prodCarrito}} data-ng-click="quitarItem($index)" class="tachotd">
+                  <lavel><i class="material-icons tachoi">clear</i></lavel>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+          <div class=banner>
+            <label class=banner-label title="Total a pagar"><i class=material-icons >account_balance_wallet</i> Total: {{ ngTotalVenta | currency }}</font></label>
+          </div>
+          <button type="submit" title="Vender productos" >VENDER</button>
+          <div ng-class="messageError ? 'form-message' : 'form-message-ok'">
+              <label >{{message}}</label>
+          </div>
+
+        </form>
+      </div>
+<!--Fin Carrito -->
+
+
+    </div>
+    <#include "/venta/cobrar.html">
+    <#include "/common/confirm.html">
+    <#include "/common/javascript.html">
+    <script src="../js/ventaController.js" ></script>
+  </body>
+</html>

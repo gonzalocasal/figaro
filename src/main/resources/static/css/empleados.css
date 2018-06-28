@@ -1,0 +1,128 @@
+
+.dias-disponible{
+    padding-left: 10px;
+}
+
+.dias-empleado{
+    margin-top: 50px;
+}
+
+
+.empleado label{
+    cursor: pointer;
+}
+
+.empleado a:link , .empleado a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+.trabajos-list, .dias-disponible-list{
+    width: 335px
+}
+
+.modal-trabajos-list tbody{
+    display: inline-block;
+    width: 100%;
+    max-height: 150px;
+    overflow: auto;
+}
+
+.trabajos-empleado{
+    height: 250px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    overflow: auto;
+}
+
+
+.trabajo-comision{
+    text-align: right;
+}
+
+.dias-disponible-list{
+    display: inline;
+}
+
+.dias-disponible-list td {
+    text-align: center;
+}
+
+.trabajos-list input{
+   border-width: 0px;
+   max-width: 45px;
+   background-color: transparent
+}
+
+
+.trabajos-list th{
+    text-align: left
+}
+
+.trabajos-list tr:nth-child(odd) ,.dias-disponible-list tr:nth-child(odd) {
+    background-color: #FFF
+}
+
+.trabajos-list tr:hover td , .dias-disponible-list tr:hover td{
+    background-color: white;
+    color: inherit;
+    cursor: inherit;
+}
+
+.dias-laborables{
+    margin-top: 40px;
+}
+
+
+.empleado{
+    border-bottom-style: solid;
+    border-bottom-color: white;
+    border-bottom-width: 3px;
+    
+    display: inline-block;
+    cursor: pointer;
+    width: 250px;
+    padding: 10px;
+    margin-top: 0px;
+    line-height: 3;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+.empleado-selected{
+    border-bottom-style: solid;
+    border-bottom-color: #292961;
+    border-bottom-width: 3px;
+}
+.empleado-disponible, .empleado-indisponible{
+    font-family: 'Material Icons';
+    float: right;
+    font-size: 9px;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.empleado-disponible{
+    animation: glowdisponible .5s infinite alternate;
+    color: #29d629;
+}
+
+.empleado-indisponible{
+    animation: glowindisponible .5s infinite alternate;
+    color: red;
+}
+
+
+@keyframes glowdisponible {
+    to {
+        text-shadow: 0 0 10px #29d629;
+    }
+}
+
+@keyframes glowindisponible {
+    to {
+        text-shadow: 0 0 10px red;
+    }
+}
+

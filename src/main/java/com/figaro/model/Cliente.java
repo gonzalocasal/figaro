@@ -31,6 +31,7 @@ public class Cliente extends Persona {
 		this.setApellido(cliente.getApellido());
 		this.setEmail(cliente.getEmail());
 		this.setSexo(cliente.getSexo());
+		this.setNacimiento(cliente.getNacimiento());
 		this.setTelefono(cliente.getTelefono());
 		this.setDirCiudad(cliente.getDirCiudad());
 		this.setDirCalle(cliente.getDirCalle());

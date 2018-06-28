@@ -13,6 +13,7 @@
 		<property name="descripcionTrabajos" column="DESCRIPCION_TRABAJOS" type="string"/>
 	 	<property name="montoCobro" column="MONTO_COBRO" type="big_decimal"/>
 	 	<property name="montoPago" column="MONTO_PAGO" type="big_decimal"/>
+	 	<property name="notas" 		    column="NOTAS"    type="string"/>
 		
 	 	<many-to-one name="cliente" class="com.figaro.model.Cliente" lazy="false" fetch="select">
             <column name="ID_CLIENTE" not-null="true" />

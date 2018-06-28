@@ -22,12 +22,12 @@ public class ClientesRepository extends AbstractRepository{
 
 	@SuppressWarnings("unchecked")
 	public List<Cliente> getAll() {
-		return getCurrentSession().createQuery("from Cliente").list();		
+		return getCurrentSession().createQuery("FROM Cliente c ORDER BY c.nombre").list();		
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Cliente> buscar(String search) {
-	    Query<Cliente> query = getCurrentSession().createQuery("FROM Cliente c WHERE CONCAT(c.nombre, ' ', c.apellido) LIKE CONCAT('%',:search,'%')");
+	    Query<Cliente> query = getCurrentSession().createQuery("FROM Cliente c WHERE CONCAT(c.nombre, ' ', c.apellido) LIKE CONCAT('%',:search,'%') ORDER BY c.nombre");
 		query.setParameter("search", search);
 	    return query.getResultList();
 	}

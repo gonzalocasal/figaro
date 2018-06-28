@@ -16,21 +16,30 @@ import com.figaro.service.ConfiguracionService;
 @Service
 public class CredentialsService {
 	
-	
 	final static Logger LOGGER = Logger.getLogger(ConfiguracionService.class);
+
+	public Credential getEmail() {
+		Credential credential = new Credential();
+		credential.setEmail(System.getenv(FIGARO_EMAIL));
+		return credential;
+	}
+	
+	public void updateEmail(String email) {
+		LOGGER.info("Actualizando email");
+		MultiValueMap<String, String> body = new LinkedMultiValueMap<String, String>();     
+        body.add(FIGARO_EMAIL, email);
+        String url = String.format(FIGADO_API_URL, System.getenv(FIGARO_APP_NAME)) ;
+        RestTemplate restTemplate = generateRestTemplate();
+        HttpEntity<?> entity = new HttpEntity<>(body, generateHeaders(System.getenv(FIGARO_API_KEY)));
+        restTemplate.exchange(url, HttpMethod.PATCH, entity, String.class);
+	}
 	
 	public void updatePassword (Credential credential) {
-		
 		LOGGER.info("Actualizando password");
-		
 		validate(credential);
-		
-        String appName = System.getenv(FIGARO_APP_NAME);
-	    String apikey  = System.getenv(FIGARO_API_KEY);
-	    String url = String.format(FIGADO_API_URL, appName) ;
-
+	    String url = String.format(FIGADO_API_URL, System.getenv(FIGARO_APP_NAME)) ;
         RestTemplate restTemplate = generateRestTemplate();
-        HttpEntity<?> entity = new HttpEntity<>(generateBody(credential.getPass()), generateHeaders(apikey));
+        HttpEntity<?> entity = new HttpEntity<>(generateBody(credential.getPass()), generateHeaders(System.getenv(FIGARO_API_KEY)));
         restTemplate.exchange(url, HttpMethod.PATCH, entity, String.class);
 	}
 
@@ -60,5 +69,5 @@ public class CredentialsService {
         headers.add(FIGARO_API_AUTHORIZATION, String.format(FIGARO_API_BEARER, apikey));
 		return headers;
 	}
-	
+
 }

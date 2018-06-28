@@ -1,0 +1,15 @@
+.menu{
+    display: none
+}
+
+.banner{
+	display: none
+}
+
+.main-table{
+	box-shadow : none
+}
+
+.no-print{
+	display: none;
+}

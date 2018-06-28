@@ -123,6 +123,17 @@ public class ConfiguracionControllerREST {
 		return new ResponseEntity<>(credential, HttpStatus.OK);
 	}
 
+	@PatchMapping("/email")
+    public ResponseEntity<String> updatePasswoerd(@RequestBody String email) {
+		credentialsService.updateEmail(email);
+		return new ResponseEntity<>(email, HttpStatus.OK);
+	}
+
+	@GetMapping("/email")
+    public ResponseEntity<Credential> getEmail() {
+		return new ResponseEntity<>(credentialsService.getEmail(), HttpStatus.OK);
+	}
+	
 	public void setCredentialsService(CredentialsService service) {
 		this.credentialsService = service;
 	}

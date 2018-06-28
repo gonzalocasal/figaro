@@ -1,0 +1,60 @@
+<!Doctype html>
+<html>
+<head> 
+	<title>Stock</title>
+  <#include "/common/head.html"> 
+  <link rel="stylesheet" type="text/css" href="/css/venta-stock.css">
+</head>
+<body ng-app=figaro ng-controller=stockController data-ng-init="init()" >
+  <#include "/common/menu.html">
+  <div ng-cloak id=content class="content fade-in">
+    <div class="banner">
+        <label class="banner-button add boton-stock" ng-click="newProducto()"><i class=material-icons>store_mall_directory</i>Nuevo</label>
+        <div class="separator"></div>
+        <label class="banner-button boton-stock" ng-click="getAll()"> <i class="material-icons" >reorder</i>Ver todos</label>
+        <div class="separator"></div>
+        <label class="banner-button boton-stock" ng-click="searchProductoFaltante()"> <i class="material-icons">filter_list</i>Ver faltantes </label>
+        <div class="separator"></div>
+        <i class=material-icons>search</i>
+        <input class=input-banner type="text" placeholder="Buscar producto" ng-model="search" ng-keyup="searchProducto()">
+
+        <div class=export>          
+          <label title="Exportar a PDF" class="banner-button" id=export ng-click=exportPDF()><i class="far fa-file-pdf file-type-icon"></i></label>   
+          <div class="separator"></div>
+          <label title="Exportar a Excel" class="banner-button" id=export ng-click=exportExcel()><i class="far fa-file-excel file-type-icon"></i></label>
+        </div>        
+    
+    </div>
+    
+    <table id=table class=main-table ng-cloak >
+      <thead>
+        <tr>
+            <th>NOMBRE</th>
+            <th>DESCRIPCI&Oacute;N</th>
+            <th class="numericotr">DISPONIBLES</th>
+            <th class="numericotr">M&Iacute;NIMO</th>
+            <th class="numericotr">PRECIO VENTA</th>
+            <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="data-row fade-in" ng-repeat="producto in productos" ng-class='{red : producto.cantidadMinima > producto.cantidad}'>
+          <td id={{producto.id}} data-id={{producto.nombre}} data-ng-click="detailProducto($event)">{{producto.nombre}}</td>
+          <td id={{producto.id}} data-id={{producto.descrip}} data-ng-click="detailProducto($event)">{{producto.descripcion}}</td>
+          <td class=numericotr id={{producto.id}} data-id={{producto.id}}>
+          <input  class="disponibletr" type="number" ng-model="producto.cantidad" ng-value="producto.cantidad" min="0" ng-model-options="{debounce:1000 }" ng-change="updateCantidadProducto(producto.id, producto.cantidad)"  ng-class='{red : producto.cantidadMinima > producto.cantidad}'></td>
+          <td class=numericotr id={{producto.id}} data-id={{producto.id}} data-ng-click="detailProducto($event)">{{producto.cantidadMinima}}</td>
+          <td class=numericotr id={{producto.id}} data-id={{producto.id}} data-ng-click="detailProducto($event)">{{producto.precio | currency}}</td>
+          <td id={{producto.id}} data-id={{producto.id}} data-ng-click="confirmDelete(producto.id)" class="tachotd"><lavel><i class="material-icons tachoi">clear</i></lavel></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
+
+  <#include "stock-modal.html">
+  <#include "/common/confirm.html">
+  <#include "/common/javascript.html">
+  <script src="js/stockController.js" ></script>
+</body>
+</html>

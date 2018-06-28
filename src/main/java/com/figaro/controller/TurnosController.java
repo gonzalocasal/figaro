@@ -8,24 +8,14 @@ public class TurnosController {
 
 	@RequestMapping("/")
 	public String turnos() {
-		return "html/turnos/turnos";
+		return "turnos/turnos";
 	}
 
-	@RequestMapping("/turnos/cliente/{clienteId}")
-	public String turnosDeCliente() {
-		return "html/turnos/turnos-cliente";
+
+	@RequestMapping("/turnos/buscar")
+	public String turnosBuscar() {
+		return "turnos/buscar";
 	}
 
-	@RequestMapping("/turnos/empleados/{empleadoId}")
-	public String turnosDeEmpleado() {
-		return "html/turnos/turnos-empleado";
-	}
-
-	@RequestMapping("/turnos/empleados/{empleadoId}/sinpagar")
-	public String turnosDeEmpleadoSinPagar() {
-		return "html/turnos/turnos-empleado";
-	}
-
-	
 	
 }

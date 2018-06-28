@@ -23,6 +23,7 @@ public class Turno {
 	private BigDecimal montoCobro;
 	private BigDecimal montoPago;
 	private String descripcionTrabajos;
+	private String notas;
 	
 	@JsonFormat(pattern=DATE_TIME_FORMAT)
 	private Date desde;
@@ -44,10 +45,11 @@ public class Turno {
 		this.hasta = turno.getHasta();
 		this.cobrado = turno.getCobrado();
 		this.cobro = turno.getCobro();
+		this.notas = turno.getNotas();
 		this.trabajos.removeAll(new ArrayList<Trabajo>(this.trabajos));
 		this.trabajos.addAll(turno.getTrabajos());
 		
-		generateTurnoInfo();
+		calculateMontosTurno();
 		
 		this.cobro = turno.getCobro();
 		this.pago =  turno.getPago();
@@ -83,7 +85,7 @@ public class Turno {
 
 	
 
-	public void generateTurnoInfo() {
+	public void calculateMontosTurno() {
 		this.montoCobro = calculatePrecio();
 		this.montoPago  = calculatePrecioPago();
 		this.descripcionTrabajos = generateDescripcionTrabajos();
@@ -201,6 +203,14 @@ public class Turno {
 
 	public void setEmpleado(Empleado empleado) {
 		this.empleado = empleado;
+	}
+
+	public String getNotas() {
+		return notas;
+	}
+
+	public void setNotas(String notas) {
+		this.notas = notas;
 	}
 
 

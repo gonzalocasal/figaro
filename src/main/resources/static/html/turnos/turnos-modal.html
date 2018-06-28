@@ -1,0 +1,72 @@
+<div id=modal-turnos class="fade-in modal">
+    <div class=modal-content>
+      <form ng-submit="sendTurno()">      
+        
+        <div class=form-field >
+          <label >CLIENTE:</label>
+          <select name=cliente ng-change="search()" ng-model="ngTurno.cliente" ng-options="cliente as cliente.nombre + ' ' + cliente.apellido   for cliente in clientes">
+            <option></option>
+          </select>
+          <i class="material-icons add" ng-controller=clientesController ng-init="isModalOpen=true" ng-click="newClient()" >person_add</i>
+        </div>
+        <div class="form-field nota-modal-turno">{{ngTurno.cliente.notas}}</div>
+        
+        <div class=form-field><label>NOTAS:</label><input type="text" ng-model="ngTurno.notas"></div>
+
+        <div class=form-field><label>FECHA: </label><input type="date" ng-model="ngDateTurno" ng-change="getAllEmpleados()" required></input></div>
+        <div class=form-field>
+        <label>DESDE:</label>
+          <select  class=time-input ng-model="startHour" ng-change="isEmpleadoOcupado()"  ng-options="item for item in horario.rangoUsuario" required>
+             <option></option>
+          </select>
+      
+        <label>HASTA:</label>
+          <select class=time-input ng-model="endHour" ng-change="isEmpleadoOcupado()"  ng-options="item for item in horario.rangoUsuario" required>
+             <option></option>
+          </select>
+        </div> 
+              
+        <div class=form-field><label>EMPLEADO:</label>
+          <select name=empleado  ng-model="empleado" ng-change="bindTrabajos();isEmpleadoOcupado()" ng-options="empleado as empleado.nombre + ' ' + empleado.apellido   for empleado in empleados" required>
+          <option></option>
+          </select>
+        </div>
+
+        <div class="trabajos-list modal-trabajos-list">
+          <div class=form-field><label>TRABAJOS:</label></div>
+          <div class=trabajos-empleado ng-hide="trabajosEmpleado < 1">
+            <table id=table >
+              <tbody>
+              <tr ng-cloak   class=data-row  ng-repeat="trabajo in trabajosEmpleado | orderBy : 'servicio.descripcion'" >
+              <td ><input id={{trabajo.id}} type="checkbox"  value="trabajo"  ng-click="toggleTrabajo(trabajo)" ng-model=trabajo.selected> </td>
+              <td  ng-click="toggleTrabajo(trabajo)" >{{trabajo.servicio.descripcion}} </td>
+              <td   ng-click="toggleTrabajo(trabajo)" >{{trabajo.servicio.precio | currency}}</td>
+              </tr>
+            </tbody>
+            </table>
+          </div>
+        </div>
+        
+        
+
+        <hr class=resume noshade>
+        <div class="form-field"  ng-repeat="trabajo in trabajosSeleccionados" >
+          {{trabajo.descripcion}} {{trabajo.precio | currency}}
+        </div>
+
+        <div class="form-field" ng-if="ngTurno.cobro.descuento>0"><i class=material-icons >favorite_border</i>DESCUENTO: <span >{{ngTurno.cobro.descuento | currency}}</span></div>
+
+        <div class="form-field"><i class=material-icons >account_balance_wallet</i>PRECIO: <span >{{totalTrabajosSeleccionados | currency}}</span></div>
+        
+       
+        
+        <div class=buttons>
+          <button class="button cancel" type="button" ng-click="discardTurno()">CANCELAR</button>
+          <button class="button accept" type="submit">ACEPTAR</button>
+        </div>
+        
+        <label class=form-message>{{message}}</label><br>
+        <label class=form-warn>{{warnmessage}}</label>
+      </form>
+    </div>
+</div>

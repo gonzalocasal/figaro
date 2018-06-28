@@ -8,7 +8,7 @@ public class EmpleadosController {
 	
 	@RequestMapping("/empleados")
 	public String caja() {
-		return "html/empleados/empleados";
+		return "empleados/empleados";
 	}
 	
 }

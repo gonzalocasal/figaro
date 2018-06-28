@@ -36,5 +36,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-security")
     compile 'com.sendgrid:sendgrid-java:3.0.9'
 	compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.2.1'
+	compile 'org.mockito:mockito-core:2.18.3'
+	
     testCompile("junit:junit")
 }

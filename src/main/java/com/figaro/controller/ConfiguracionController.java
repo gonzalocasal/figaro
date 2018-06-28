@@ -8,6 +8,6 @@ public class ConfiguracionController {
 	
 	@RequestMapping("/configuracion")
 	public String turnos() {
-		return "html/configuracion/configuracion";
+		return "configuracion/configuracion";
 	}
 }

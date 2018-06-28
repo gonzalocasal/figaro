@@ -16,6 +16,7 @@ public abstract class Persona {
 	private Integer dirPiso;
 	private String dirDpto;
 	private Date fechaIngreso;
+	private Date nacimiento;
 	
 	
 	
@@ -127,6 +128,12 @@ public abstract class Persona {
 		} else if (!nombre.equals(other.nombre))
 			return false;
 		return true;
+	}
+	public Date getNacimiento() {
+		return nacimiento;
+	}
+	public void setNacimiento(Date nacimiento) {
+		this.nacimiento = nacimiento;
 	}
 	
 	

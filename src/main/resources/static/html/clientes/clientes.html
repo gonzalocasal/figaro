@@ -1,0 +1,58 @@
+<!Doctype html>
+<html>
+<head>
+  <title>Clientes</title>
+  <#include "/common/head.html">
+  
+</head>
+<body ng-app=figaro ng-controller=clientesController data-ng-init="init()" >
+  <#include "/common/menu.html">
+  <div id=content class="content fade-in" ng-cloak>
+    <div class="banner">
+        
+        <label class=banner-button ng-click="newClient()"><i class=material-icons  >person</i>Nuevo</label>
+        <div class="separator"></div>
+        <label class=banner-button ng-click="irTurnos()" ><i class=material-icons >date_range</i>Turnos</label>   
+        <div class="separator"></div>
+        <i class="material-icons search-input-icon ">search</i>
+        <input class=input-banner type="text" placeholder="Buscar..." ng-model="search" ng-keyup="searchCliente()">
+
+        <div class=export>
+          <label title="Exportar a PDF" class="banner-button" id=export ng-click=exportPDF()><i class="far fa-file-pdf file-type-icon"></i></label>   
+          <div class="separator"></div>
+          <label title="Exportar a Excel" class="banner-button" id=export ng-click=exportExcel()><i class="far fa-file-excel file-type-icon"></i></label>
+        </div>
+
+
+    </div>
+    <table id=table class=main-table>
+      <thead>
+        <tr>
+            <th class=no-print></th>
+            <th>NOMBRE</th>
+            <th>APELLIDO</th>
+            <th>EMAIL</th>
+            <th>TEL&Eacute;FONO</th>
+            <th>&Uacute;LTIMA VISITA</th>
+            <th>NOTAS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id={{cliente.id}} data-id={{cliente.id}} class="data-row fade-in" ng-repeat="cliente in clientes"  >
+          <td class=no-print><input ng-model="cliente.checked" ng-click="actualizarSeleccion($index, clientes)" type="checkbox" /></td>
+          <td ng-click="detailClient(cliente.id)">{{cliente.nombre}}</td>
+          <td ng-click="detailClient(cliente.id)">{{cliente.apellido}}</td>
+          <td ng-click="detailClient(cliente.id)">{{cliente.email}}</td>
+          <td ng-click="detailClient(cliente.id)">{{cliente.telefono}}</td>
+          <td ng-click="detailClient(cliente.id)">{{cliente.ultimaVisita | date}}</td>
+          <td ng-click="detailClient(cliente.id)">{{cliente.notas}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
+  <#include "/clientes/clientes-modal.html">
+  <#include "/common/javascript.html">
+  <script src="js/clientesController.js" ></script>
+</body>
+</html>

@@ -10,6 +10,7 @@ public class Movimiento {
 
 	
 	private Integer id;
+	private Integer turnoId;
 	private String categoria;
 	private BigDecimal precio;
 	private BigDecimal descuento;
@@ -24,7 +25,8 @@ public class Movimiento {
 		this.descuento = new BigDecimal(0);
 	}
 
-	public void update(Movimiento movimiento) {		
+	public void update(Movimiento movimiento) {
+		this.setTurnoId(movimiento.getTurnoId());
 		this.setCategoria(movimiento.getCategoria());
 		this.setDetalle(movimiento.getDetalle());
 		this.setFecha(movimiento.getFecha());
@@ -50,6 +52,15 @@ public class Movimiento {
 		this.descuento = descuento;
 		
 	}
+	
+	public Integer getTurnoId() {
+		return turnoId;
+	}
+
+	public void setTurnoId(Integer turnoId) {
+		this.turnoId = turnoId;
+	}
+
 	
 	public Integer getId() {
 		return id;
@@ -117,5 +128,7 @@ public class Movimiento {
 		return "Movimiento [id=" + id + ", categoria=" + categoria + ", precio=" + precio + ", fecha=" + fecha + ", detalle=" + detalle + ", isGasto=" + isGasto + ", tipoPago=" + tipoPago + ", cuotas=" + cuotas + ", descuento=" + descuento + "]";
 	}
 
+
+	
 
 }

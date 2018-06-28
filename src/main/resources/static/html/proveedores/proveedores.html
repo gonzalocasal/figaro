@@ -1,0 +1,45 @@
+<!Doctype html>
+<html>
+<head>
+	<title>Proveedores</title>
+  <#include "/common/head.html">
+</head>
+<body ng-app=figaro ng-controller=proveedoresController data-ng-init="init()" >
+  <#include "/common/menu.html">
+  <div id=content class="content fade-in">
+    <div class="banner">
+        <label class="banner-button add" ng-click="newProveedor()"><i class=material-icons  >local_shipping</i> Nuevo</label>
+        <div class="separator"></div>
+        <i class="material-icons search-input-icon ">search</i>
+        <input class=input-banner type="text" placeholder="Buscar..." ng-model="search" ng-keyup="searchProveedor()">
+    </div>
+    <table id=table class=main-table>
+      <thead>
+        <tr>
+            <th>NOMBRE</th>
+            <th>EMAIL</th>
+            <th>TEL&Eacute;FONO</th>
+            <th>CIUDAD</th>
+            <th>NOTAS</th>
+            <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id={{proveedor.id}} data-id={{proveedor.id}} class="data-row fade-in" ng-repeat="proveedor in proveedores"  ng-cloak>
+          <td data-id={{proveedor.id}} data-ng-click="detailProveedor($event)">{{proveedor.nombre}}</td>
+          <td data-id={{proveedor.id}} data-ng-click="detailProveedor($event)">{{proveedor.email}}</td>
+          <td data-id={{proveedor.id}} data-ng-click="detailProveedor($event)">{{proveedor.telefono}}</td>
+          <td data-id={{proveedor.id}} data-ng-click="detailProveedor($event)">{{proveedor.dirCiudad}}</td>
+          <td data-id={{proveedor.id}} data-ng-click="detailProveedor($event)">{{proveedor.notas}}</td>
+          <td data-id={{proveedor.id}} data-ng-click="confirmDelete(proveedor.id)" class="tachotd" ><i class="material-icons tachoi">clear</i></td></tr>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class=loading><div class="fa-3x"><i class="fas fa-circle-notch fa-spin"></i></div></div>
+  <#include "/proveedores/proveedores-modal.html">
+  <#include "/common/confirm.html">
+  <#include "/common/javascript.html">
+  <script src="js/proveedoresController.js" ></script>
+</body>
+</html>

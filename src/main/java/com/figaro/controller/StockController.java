@@ -8,7 +8,7 @@ public class StockController {
 	
 	@RequestMapping("/stock")
 	public String stock() {
-		return "html/stock/stock";
+		return "stock/stock";
 	}
 	
 	/*
